@@ -1,0 +1,532 @@
+/* Base styles for the root element */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+
+
+
+    --color-primary: hsl(0, 0%, 100%);
+      /*for body background  */
+    
+      --color-secondary: hsl(0, 0%, 11%);
+    
+      --color-secondary-m: hsla(0, 0%, 11% 0.4);
+      /* Transparency (Alpha):
+    
+            The 0.4 at the end indicates 40% opacity (or 60% transparency). This makes the color partially transparent, which is ideal for use in overlays, shadows, or background effects. Practical Use: Transparency is helpful when layering elements, such as dimming a background while keeping it visible behind text or other elements. */
+      /* gd for hoover effects and stuff  */
+    
+    
+      --color-tertiary: hsl(0, 0%, 17%);
+    
+      --color-quaternary: hsl(0, 1%, 50%);
+      /* colors ----------------------------1 */
+
+
+}
+/* 
+
+CSS file, listed clearly:
+
+General Containers:
+
+fieldset-container----------
+center-----------------
+form-container------
+container-white---------
+box-white-------
+container-----------
+box--------
+Logo:
+-------------------------------------
+logo
+logo.react
+Form Elements:
+-----------------------------------
+label-tag
+input-btn
+text-area
+------------------------------
+Links:----------------------------
+
+a-tag
+Buttons:-----------------------------------------------------
+
+btn-btn
+upload-btn
+label-btn
+sign-btn
+back-btn
+login-btn
+signUp-btn
+logout-btn
+Text Elements:
+----------------------------------------------
+p-tag
+h-tag
+big-text
+medium-text
+small-text-----------------
+ */
+
+ /*------------ website themes --------------------------------  */
+ /* colors 
+  ------------------------------------1 */
+
+
+
+
+.fieldset-container {
+  border: 2px solid #D4AC0D;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background: #1A1A1A;
+}
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Centers horizontally */
+  align-items: center;
+  /* Centers vertically */
+  /* height: 100vh; */
+  /* Full viewport height */
+  text-align: center;
+  /* Centers text inside the elements */
+}
+
+/* Logo Styling */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+
+}
+
+/* Form Styling */
+.form-container {
+  background: #1A1A1A;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+  max-width: 400px;
+  width: 90%;
+  margin-top: 2rem;
+}
+
+.form-container:hover {
+  border-color: #D4AC0D;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+/* White Elegant Container Box */
+.container-white {
+  background: #FFFFFF;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+  max-width: 400px;
+  width: 90%;
+  margin-top: 2rem;
+}
+
+.container-white:hover {
+  border-color: #D4AC0D;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+/* White Box Styling */
+.box-white {
+  background: #FFFFFF;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s;
+}
+
+.box-white:hover {
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+/* ------------------------ Elegant Container Box ------------------------ */
+.container {
+  background: #1A1A1A;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+  max-width: 400px;
+  width: 90%;
+  margin-top: 2rem;
+}
+
+.container:hover {
+  border-color: #D4AC0D;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+/* Box Styling */
+.box {
+  background: #1E1E1E;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s;
+}
+
+.box:hover {
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+/* Labels */
+.label-tag {
+  font-size: 14px;
+  color: #ccc;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Inputs & Text Areas */
+.input-btn,
+.text-area {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #444;
+  border-radius: 6px;
+  background: #222;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 0.2rem;
+}
+
+.input-btn:focus,
+.text-area:focus {
+  border-color: #D4AC0D;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+/* Links */
+.a-tag {
+  color: #bbb;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s, border-bottom 0.3s;
+  border-bottom: 2px solid transparent;
+}
+
+.a-tag:hover {
+  color: #D4AC0D;
+  border-bottom: 2px solid #D4AC0D;
+}
+
+/* Buttons */
+.btn-btn {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s, border-color 0.3s;
+}
+
+/* Custom buttons - Label and Sign Up */
+
+/* Upload Button */
+.upload-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: white;
+  color: #D4AC0D;
+  border: 2px solid #D4AC0D;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+}
+
+.upload-btn:hover {
+  background-color: #D4AC0D;
+  color: #121212;
+  transform: scale(1.05);
+}
+.label-btn,
+.sign-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: white;
+  color: #D4AC0D;
+  border: 2px solid #D4AC0D;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.label-btn:hover,
+.sign-btn:hover {
+  background-color: #D4AC0D;
+  color: #121212;
+  transform: scale(1.05);
+}
+
+/* Back Button */
+.back-btn {
+  border: 1px solid #D4AC0D;
+  border-radius: 1rem 2rem;
+  padding: 1rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #222;
+  color: #D4AC0D;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+}
+
+.back-btn:hover {
+  background-color: #444;
+  border-color: #D4AC0D;
+  transform: scale(1.05);
+  border-radius: 2rem 1rem;
+}
+
+/* Login & Sign Up Buttons */
+.login-btn,
+.signUp-btn {
+  border: 1px solid #D4AC0D;
+  border-radius: 2rem 1rem;
+  padding: 1rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.login-btn {
+  background-color: #D4AC0D;
+  color: #121212;
+}
+
+.login-btn:hover {
+  background-color: #b68d40;
+  border-color: #D4AC0D;
+  transform: scale(1.05);
+}
+
+.signUp-btn {
+  background-color: transparent;
+  color: #D4AC0D;
+}
+
+.signUp-btn:hover {
+  background-color: #222;
+  border-color: #D4AC0D;
+  transform: scale(1.05);
+}
+
+/* Text Styles */
+.p-tag {
+  font-size: 16px;
+  color: #ddd;
+  line-height: 1.6;
+  text-align: justify;
+  transition: color 0.3s;
+}
+
+.p-tag:hover {
+  color: #f5f5f5;
+}
+
+.h-tag {
+  font-size: 28px;
+  font-weight: bold;
+  color: #D4AC0D;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  transition: color 0.3s;
+}
+
+.h-tag:hover {
+  color: #f5f5f5;
+}
+
+.big-text {
+  font-size: 36px;
+  font-weight: bold;
+  color: #D4AC0D;
+}
+
+.medium-text {
+  font-size: 22px;
+  color: #ddd;
+}
+
+.small-text {
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Logout Button */
+.logout-btn {
+  border: 1px solid #D4AC0D;
+  border-radius: 2rem 1rem;
+  padding: 1rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  background-color: transparent;
+  color: #D4AC0D;
+  width: 100%;
+}
+
+.logout-btn:hover {
+  background-color: #222;
+  border-color: #D4AC0D;
+  transform: scale(1.05);
+  border-radius: 1rem 2rem;
+}
+
+/* ------------------------ Responsive Styles ------------------------ */
+@media (max-width: 900px) {
+  .container {
+    max-width: 350px;
+  }
+
+  .box {
+    padding: 20px;
+  }
+
+  .input-btn,
+  .text-area {
+    padding: 10px;
+  }
+
+  .btn-btn {
+    padding: 12px;
+  }
+
+  .label-btn,
+  .sign-btn {
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .container {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .input-btn,
+  .text-area {
+    padding: 8px;
+  }
+
+  .label-btn,
+  .sign-btn {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  .big-text {
+    font-size: 30px;
+  }
+
+  .medium-text {
+    font-size: 18px;
+  }
+
+  .p-tag {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .label-btn,
+  .sign-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .input-btn,
+  .text-area {
+    padding: 6px;
+  }
+
+  .btn-btn {
+    padding: 10px;
+  }
+
+  .big-text {
+    font-size: 26px;
+  }
+
+  .medium-text {
+    font-size: 16px;
+  }
+}
+
+/* Keyframe for logo animation */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
