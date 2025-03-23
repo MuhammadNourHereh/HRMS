@@ -1,5 +1,4 @@
 # HRMS
-Malak Ali Eldor
-Malak Atieh
-Ghady Matta
-# Sleiman El Yahfoufi
+# geolocation-based clock-in and clock-out system prototype
+# documents management
+# Ghady Matta
