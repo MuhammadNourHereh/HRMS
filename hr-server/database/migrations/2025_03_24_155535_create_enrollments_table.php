@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
-            $table->date('enrollment_date');
-            $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending'); 
+            $table->date('completion_date');
+            $table->enum('status', ['InProgress', 'Completed', 'Failed'])->default('InProgress'); 
+            $table->decimal('score', 5, 2)->nullable;
+            $table->decimal('progress', 5, 2)->nullable;
             $table->timestamps();
             $table->softDeletes();
+            $table->unique(['employee_id', 'program_id']);
         });
     }
 
