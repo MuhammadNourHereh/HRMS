@@ -15,10 +15,8 @@ return new class extends Migration
 
         Schema::create('benefits', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('bpid');
-            $table->foreign('bpid')->references('id')->on('benefit_policies');
-            $table->bigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreignId('bpid')->constrained('benefit_policies')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

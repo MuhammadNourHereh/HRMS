@@ -15,18 +15,13 @@ return new class extends Migration
 
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('emp_id');
-            $table->foreign('emp_id')->references('id')->on('employees')->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->bigInteger('pref_rev_id');
-            $table->foreign('pref_rev_id')->references('id')->on('performances_reviews')->onDelete('cascade')
-            ->onUpdate('cascade');
+            $table->foreignId('emp_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pref_rev_id')->constrained('performances_reviews')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
-            $table->string('description');
-            $table->enum('priortiy', ["Low", "Medium", "High"]);
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->text('description');
+            $table->enum('priority', ["Low", "Medium", "High"]);
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();

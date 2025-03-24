@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->integer('balance')->default(0);
-            $table->enum('leave_type', ['Maternity', 'Paternity', 'Sick', 'Annual','Other']);
-            $table->timestamps();  
-            $table->softDeletes(); 
-
-            $table->unique(['employee_id', 'leave_type']); // Important to have each employee has only one record per leave type
+            $table->enum('leave_type', ['Maternity', 'Paternity', 'Sick', 'Annual', 'Other']);
+            $table->timestamps();
+            $table->softDeletes();
+        
+            $table->unique(['employee_id', 'leave_type']);
         });
     }
 

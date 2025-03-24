@@ -15,17 +15,12 @@ return new class extends Migration
 
         Schema::create('performances_reviews', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('emp_id');
-            $table->foreign('emp_id')->references('id')->on('employees')->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->bigInteger('rev_cyc_id');
-            $table->foreign('rev_cyc_id')->references('id')->on('review_cycles')->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->bigInteger('overall_rating');
-            $table->string('comments');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->foreignId('emp_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('rev_cyc_id')->constrained('review_cycles')->onDelete('cascade')->onUpdate('cascade');
+            $table->decimal('overall_rating');
+            $table->text('comments');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();

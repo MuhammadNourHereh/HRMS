@@ -15,11 +15,10 @@ return new class extends Migration
 
         Schema::create('deductions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->string('reason');
-            $table->decimal('amount');
-            $table->integer('percentage');
+            $table->decimal('amount', 10, 2);
+            $table->unsignedTinyInteger('percentage');
             $table->timestamp('payed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

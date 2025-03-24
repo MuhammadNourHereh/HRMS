@@ -15,14 +15,11 @@ return new class extends Migration
 
         Schema::create('goal_progresses', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('goal_id');
-            $table->foreign('goal_id')->references('id')->on('goals')->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->string('progress_note');
-            $table->timestamp('created_at');
-            $table->decimal('progress_bar');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->foreignId('goal_id')->constrained('goals')->onDelete('cascade')->onUpdate('cascade');
+            $table->text('progress_note');
+            $table->decimal('progress_bar', 5, 2);
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
-            $table->foreignId('leave_policy_id')->constrained('leave_types')->onDelete('cascade');
+            $table->foreignId('leave_policy_id')->constrained('leave_policies')->onDelete('cascade');
             $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending');
             $table->date('start_date');
             $table->date('end_date');

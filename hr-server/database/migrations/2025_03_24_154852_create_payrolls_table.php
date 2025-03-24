@@ -15,9 +15,8 @@ return new class extends Migration
 
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')->on('employees');
-            $table->decimal('amount');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->decimal('amount', 10, 2);
             $table->json('payroll_details');
             $table->dateTime('payed_at');
             $table->timestamps();
