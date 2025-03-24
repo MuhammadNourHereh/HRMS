@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('emp_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('review_cycle_id')->constrained('review_cycles')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
             $table->text('description'); // Use text for longer feedback

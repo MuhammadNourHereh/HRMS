@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('performances_reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('emp_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('rev_cyc_id')->constrained('review_cycles')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('overall_rating');
             $table->text('comments');

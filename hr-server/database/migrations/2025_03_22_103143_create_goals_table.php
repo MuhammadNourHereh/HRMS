@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('emp_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('pref_rev_id')->constrained('performances_reviews')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
             $table->text('description');
