@@ -20,14 +20,13 @@ return new class extends Migration
             $table->date('end_date');
             $table->unsignedBigInteger('provided_hr_id');
             $table->foreign('provided_hr_id')
-            ->references('id')
-            ->on('employees')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');            
+                ->references('id')
+                ->on('employees')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->timestamp('deleted_at');
-
         });
 
         Schema::enableForeignKeyConstraints();
