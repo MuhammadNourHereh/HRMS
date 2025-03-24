@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('address');
             $table->integer('phone_number');
             $table->enum('gender', ["male, female"]);
+            $table->enum('role', ["employee, hr"]);
             $table->decimal('salary');
             $table->timestamps();
             $table->softDeletes();
