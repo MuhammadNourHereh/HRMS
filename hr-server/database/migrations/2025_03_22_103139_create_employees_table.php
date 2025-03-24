@@ -28,9 +28,8 @@ return new class extends Migration
             $table->foreign('pos_id')->references('id')->on('positions');
             $table->enum('gender', ["Male", "Female"]);
             $table->decimal('salary');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();
