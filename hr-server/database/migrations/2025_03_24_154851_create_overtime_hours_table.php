@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('performances_reviews', function (Blueprint $table) {
+        Schema::create('overtime_hours', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('rev_cyc_id')->constrained('review_cycles')->onDelete('cascade')->onUpdate('cascade');
-            $table->decimal('overall_rating');
-            $table->text('comments');
+            $table->decimal('hours', 5, 2);
+            $table->decimal('pay_rate', 8, 2);
+            $table->dateTime('payed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('performances_reviews');
+        Schema::dropIfExists('overtime_hours');
     }
 };

@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('goal_progresses', function (Blueprint $table) {
+        Schema::create('progressive_tax_rates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('goal_id')->constrained('goals')->onDelete('cascade')->onUpdate('cascade');
-            $table->text('progress_note');
-            $table->decimal('progress_bar', 5, 2);
-            $table->timestamps();
-            $table->softDeletes();
+            $table->bigInteger('salary_min')->unique();
+            $table->bigInteger('salary_max')->unique();
+            $table->bigInteger('tax_rate');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('goal_progresses');
+        Schema::dropIfExists('progressive_tax_rates');
     }
 };

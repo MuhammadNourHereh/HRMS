@@ -15,17 +15,12 @@ return new class extends Migration
 
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('emp_id');
-            $table->foreign('emp_id')->references('id')->on('employees')->onDelete('cascade')
-            ->onUpdate('cascade');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('review_cycle_id')->constrained('review_cycles')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
-            $table->string('description');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
-            $table->bigInteger('review_cycle_id');
-            $table->foreign('review_cycle_id')->references('id')->on('review_cycles')->onDelete('cascade')
-            ->onUpdate('cascade');
+            $table->text('description'); // Use text for longer feedback
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();

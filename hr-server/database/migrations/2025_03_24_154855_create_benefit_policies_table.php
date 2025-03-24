@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('performances_reviews', function (Blueprint $table) {
+        Schema::create('benefit_policies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('rev_cyc_id')->constrained('review_cycles')->onDelete('cascade')->onUpdate('cascade');
-            $table->decimal('overall_rating');
-            $table->text('comments');
+            $table->string('policy_name');
+            $table->string('asset_url');
+            $table->string('description');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('performances_reviews');
+        Schema::dropIfExists('benefit_policies');
     }
 };

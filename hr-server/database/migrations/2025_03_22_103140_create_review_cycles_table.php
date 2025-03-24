@@ -15,19 +15,17 @@ return new class extends Migration
 
         Schema::create('review_cycles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('provided_hr_id');
             $table->string('cycle_name');
             $table->date('start_date');
             $table->date('end_date');
-            $table->unsignedBigInteger('provided_hr_id');
             $table->foreign('provided_hr_id')
-            ->references('id')
-            ->on('employees')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');            
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
-
+                ->references('id')
+                ->on('employees')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+                $table->timestamps();
+                $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();
