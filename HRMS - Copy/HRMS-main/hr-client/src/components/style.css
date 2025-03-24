@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #122620;
+    display: flex;
+    align-items: center;
+    /* Align items vertically */
+    padding: 15px 20px;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* Align logo to the left */
+}
+
+.logo img {
+    height: 50px;
+    /* Adjust size as needed */
+    width: auto;
+    max-width: 100%;
+}
+
+/* Adjust navbar links */
+.nav-links {
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+    /* Pushes links to the right */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.nav-links a:hover {
+    color: #1ABC9C;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #2E4053;
+    color: white;
+    width: 100px;
+    height: 100vh;
+    position: fixed;
+    top: 10px;
+    /* Push down below navbar */
+    left: 0;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+        align-items: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+    
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #3498DB;
+}
+
+/* Main Content */ 
+.wrapper {
+    display: flex;
+    margin-top: 60px;
+    /* Push content below navbar */
+}
+
+.content {
+    border: 1px solid;
+    margin-left: 100px;
+    /* Move content to the right of the sidebar */
+    padding: 20px;
+    width: calc(100% - 100px);
+    /* Remaining space after sidebar */
+}
+.logo img {
+    height: 60px;
+    /* Adjust size as needed */
+    width: auto;
+    /* Maintain aspect ratio */
+    max-width: 100%;
+    /* Prevent overflow */
+}
