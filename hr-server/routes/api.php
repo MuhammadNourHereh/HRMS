@@ -9,6 +9,7 @@ use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ReviewCycleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,12 @@ Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
             Route::post('/delete-employee/{id}', [EmployeeController::class, "deleteEmployee"]);
         });
 
+        Route::prefix('review-cycles')->group(function () {
+            Route::get('/get-review-cycles', [ReviewCycleController::class, "getReviewCycles"]);
+            Route::get('/get-review-cycle-by-id/{id}', [ReviewCycleController::class, "getReviewCycleById"]);
+            Route::post('/add-update-review-cycle/{id}', [ReviewCycleController::class, "addOrUpdateReviewCycle"]);
+            Route::post('/delete-review-cycle/{id}', [ReviewCycleController::class, "deleteReviewCycle"]);
+        });
 
         // payrolls apis
         Route::prefix('salaries')->group(function () {
