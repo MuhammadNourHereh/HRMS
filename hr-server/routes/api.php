@@ -1,23 +1,28 @@
 <?php
 
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 use App\Http\Controllers\MainClockedWorkers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 
+// Authentication Test Route
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 
-use App\Http\Controllers\DocumentController;
+// Document Routes (Upload, Get, Update, Delete)
+Route::prefix('documents')->group(function () {
+    Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
+    Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
+    Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
+    Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
+});
 
-
-
-// Route for uploading a document
-Route::post('documents/upload', [DocumentController::class, 'uploadDocument']);
-Route::put('/document/{documentId}/update', [DocumentController::class, 'updateDocument']);
-Route::delete('/document/{documentId}/delete', [DocumentController::class, 'deleteDocument']);
-Route::match(['get', 'put', 'delete'], 'documents/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']);
-
-
-
-// For API (routes/api.php)
+// Employee Clocking Routes
 Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
 Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
+
+Route::post('/documents/upload/test', function () {
+    return response()->json(['message' => 'API is working!']);
+});

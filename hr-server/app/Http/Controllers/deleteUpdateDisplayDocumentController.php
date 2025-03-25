@@ -28,11 +28,11 @@ class deleteUpdateDisplayDocumentController extends Controller
             return response()->json($document);
         }
 
-        // If it's a DELETE request, delete the document
-        if ($request->isMethod('delete')) {
-            $document->delete();
-            return response()->json(['message' => 'Document deleted successfully']);
-        }
+        // // If it's a DELETE request, delete the document
+        // if ($request->isMethod('delete')) {
+        //     $document->delete();
+        //     return response()->json(['message' => 'Document deleted successfully']);
+        // }
 
         // If it's a PUT request, update the document
         if ($request->isMethod('put')) {
@@ -56,5 +56,18 @@ class deleteUpdateDisplayDocumentController extends Controller
 
         // If none of the above, return an error
         return response()->json(['message' => 'Invalid request'], 400);
+    }
+    public function deleteDocument($id)
+    {
+        $document = DocumentManagement::find($id);
+
+        // Check if the document exists
+        if (!$document) {
+            return response()->json(['message' => 'Document not found'], 404);
+        }
+
+        // Delete the document
+        $document->delete();
+        return response()->json(['message' => 'Document deleted successfully']);
     }
 }

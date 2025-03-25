@@ -101,7 +101,7 @@ import "./App.css";
 import React from 'react'; 
 import DocumentUpload from './components/DocumentUpload';
 //  import DocumentDetail from "./components/DocumentDisplay";
-import DocumentSearch from './DocumentSearch';
+import DocumentSearch from './components/DocumentSearch';
 import GeolocationLogger from './components/GeolocationLogger';
 
 function App() {
