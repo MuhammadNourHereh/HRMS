@@ -16,7 +16,8 @@ class Certification extends Model
         'document_id', 
         'certificate_name', 
         'issued_date', 
-        'expiry_date'
+        'expiry_date',
+        'status'
     ];
 
     protected $casts = [
