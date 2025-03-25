@@ -24,7 +24,7 @@ class ReviewCycle extends Model
         'deleted_at'
     ];
     
-    public function employee()
+    public function hr()
     {
         return $this->belongsTo(Employee::class, 'provided_hr_id');
     }

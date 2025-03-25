@@ -89,40 +89,6 @@ class ReviewCycleController extends Controller
         ]);
     }
     
-    public function getCurrentReviewCycle()
-    {
-        $currentDate = now()->format('Y-m-d');
-        
-        $reviewCycle = ReviewCycle::where('start_date', '<=', $currentDate)
-            ->where('end_date', '>=', $currentDate)
-            ->with('hr')
-            ->first();
-            
-        if (!$reviewCycle) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No active review cycle found for the current date'
-            ], 404);
-        }
-        
-        return response()->json([
-            'status' => 'success',
-            'data' => $reviewCycle
-        ]);
-    }
     
-    public function getUpcomingReviewCycles()
-    {
-        $currentDate = now()->format('Y-m-d');
-        
-        $reviewCycles = ReviewCycle::where('start_date', '>', $currentDate)
-            ->with('hr')
-            ->orderBy('start_date')
-            ->get();
-            
-        return response()->json([
-            'status' => 'success',
-            'data' => $reviewCycles
-        ]);
-    }
+    
 }
