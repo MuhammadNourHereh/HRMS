@@ -11,9 +11,8 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-
 // version v0.1
-Route::group(["prefix" => "v0.1"], function () {
+Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
     // Unauthorized APIs
     Route::post('/login', [UserController::class, "login"]);
     Route::post('/signup', [UserController::class, "signUp"]);

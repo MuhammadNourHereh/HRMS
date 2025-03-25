@@ -26,4 +26,14 @@ class DocumentManagement extends Model
     {
         return $this->belongsTo(Employee::class, 'employee_id');
     }
+
+    public function reports()
+{
+    return $this->hasMany(Report::class);
+}
+
+public function candidates()
+{
+    return $this->hasMany(Candidate::class);
+}
 }
