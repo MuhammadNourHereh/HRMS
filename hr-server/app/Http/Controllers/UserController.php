@@ -7,8 +7,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
@@ -104,5 +102,11 @@ class UserController extends Controller
             'status' => 'success',
             'message' => 'Successfully logged out',
         ]);
+    }
+    public function update($id) {
+        // TODO
+    }
+    public function destroy($id) {
+        // TODO
     }
 }

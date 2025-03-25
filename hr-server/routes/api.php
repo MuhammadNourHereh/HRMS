@@ -22,6 +22,8 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post('/logout', [UserController::class, "logout"]);
             Route::put('/me', [UserController::class, "update"]);
             Route::delete('/me', [UserController::class, "destroy"]);
+            Route::put('/{id}', [UserController::class, "update"]);
+            Route::delete('/{id}', [UserController::class, "destroy"]);
         });
 
 
