@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class LeaveRequest extends Model {
+class Leave extends Model {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -24,7 +24,7 @@ class LeaveRequest extends Model {
     }
 
     public function leavePolicy() {
-        return $this->belongsTo(LeavePolicies::class);
+        return $this->hasMany(LeavePolicies::class);
     }
 }
 

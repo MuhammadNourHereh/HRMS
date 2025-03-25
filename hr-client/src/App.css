@@ -1,0 +1,261 @@
+/* ========== BASE STYLES ========== */
+:root {
+    --color-primary: #ffffff;
+    --color-secondary: #022b3a;
+    --color-accent: #1f7a8c;
+    --color-border: #bfdbf7;
+    --color-bg: #e1e5f2;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg);
+    font-family: Arial, sans-serif;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ========== FORM ELEMENTS ========== */
+.label-tag {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+.input-tag,
+.input-btn,
+.text-area {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 2px solid var(--color-accent);
+    border-radius: 6px;
+    background: var(--color-secondary);
+    color: var(--color-primary);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-tag:focus,
+.input-btn:focus,
+.text-area:focus {
+    border-color: var(--color-border);
+    box-shadow: 0 0 8px rgba(191, 219, 247, 0.5);
+}
+
+/* ========== CONTAINERS ========== */
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.container-white,
+.container-dark {
+    width: 90%;
+    max-width: 900px;
+    padding: 2rem;
+    margin: 1rem auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(31, 122, 140, 0.2);
+    border: 2px solid transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.container-white {
+    background: var(--color-primary);
+}
+
+.container-dark {
+    background: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+.container-white:hover,
+.container-dark:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 25px rgba(31, 122, 140, 0.3);
+}
+
+/* ========== SNIPPET BOXES ========== */
+.box-white,
+.box-accent {
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s;
+}
+
+.box-white {
+    background: var(--color-primary);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.box-accent {
+    background: var(--color-accent);
+    color: var(--color-primary);
+    box-shadow: 0 4px 10px rgba(191, 219, 247, 0.1);
+}
+
+.box-white:hover,
+.box-accent:hover {
+    box-shadow: 0 8px 25px rgba(31, 122, 140, 0.3);
+    transform: translateY(-3px);
+}
+
+/* ========== BUTTONS ========== */
+.btn-btn,
+.back-btn,
+.upload-btn,
+.label-btn,
+.sign-btn,
+.signUp-btn,
+.login-btn,
+.logout-btn {
+    width: auto;
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-btn,
+.signUp-btn {
+    background: var(--color-primary);
+    color: var(--color-secondary);
+    border: 1px solid var(--color-accent);
+}
+
+.back-btn,
+.logout-btn {
+    background: var(--color-secondary);
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+}
+
+.login-btn,
+.label-btn,
+.upload-btn,
+.sign-btn {
+    background: var(--color-accent);
+    color: var(--color-primary);
+    border: 2px solid var(--color-accent);
+    width: 100%;
+}
+
+.btn-btn:hover,
+.back-btn:hover,
+.logout-btn:hover,
+.signUp-btn:hover,
+.login-btn:hover,
+.upload-btn:hover,
+.label-btn:hover,
+.sign-btn:hover {
+    transform: scale(1.05);
+    background: var(--color-secondary);
+    color: var(--color-accent);
+}
+
+/* ========== TEXT & LINKS ========== */
+.a-tag {
+    color: var(--color-border);
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.a-tag:hover {
+    color: var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.h-tag {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.p-tag,
+.small-text,
+.medium-text,
+.big-text {
+    color: var(--color-border);
+    line-height: 1.6;
+}
+
+.big-text {
+    font-size: 2rem;
+}
+
+.medium-text {
+    font-size: 1.25rem;
+}
+
+.small-text {
+    font-size: 0.875rem;
+}
+
+/* ========== RESPONSIVENESS ========== */
+@media (max-width: 900px) {
+
+    .container-white,
+    .container-dark,
+    .modal-content {
+        padding: 1.5rem;
+    }
+
+    .h-tag {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .btn-btn,
+    .back-btn,
+    .signUp-btn,
+    .login-btn,
+    .logout-btn {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .h-tag {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .container-white,
+    .container-dark,
+    .modal-content {
+        padding: 1rem;
+    }
+
+    .h-tag {
+        font-size: 1.25rem;
+    }
+
+    .text-area,
+    .input-btn {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}

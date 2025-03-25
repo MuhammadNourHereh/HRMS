@@ -12,8 +12,14 @@ class Enrollment extends Model {
     protected $fillable = [
         'employee_id', 
         'program_id', 
-        'enrollment_date', 
-        'status'
+        'completion_date', 
+        'status',
+        'score',
+        'progress'
+    ];
+
+    protected $casts = [
+        'completion_date' => 'date'
     ];
 
     public function employee() {
