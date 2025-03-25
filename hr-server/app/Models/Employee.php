@@ -5,14 +5,18 @@ use App\Models\LeavePolicy;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class Employee extends Authenticatable
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+
+class Employee extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
     use SoftDeletes;
+    
     protected $fillable = [
         'department_id',
         'position_id',
@@ -61,11 +65,12 @@ class Employee extends Authenticatable
             }
         });
     }
-    
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
+    
     /**
      * Get the attributes that should be cast.
      *
@@ -80,6 +85,7 @@ class Employee extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
     public function salaries()
     {
         return $this->hasMany(Salary::class);
@@ -100,6 +106,7 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(LeavePolicy::class);
     }
+
     public function department()
     {
         return $this->belongsTo(Department::class);
@@ -108,6 +115,7 @@ class Employee extends Authenticatable
     {
         return $this->belongsTo(Position::class);
     }
+
     // Relationship: Employee has many Documents
     public function documents()
     {
@@ -150,10 +158,26 @@ class Employee extends Authenticatable
         return $this->hasMany(Report::class, 'emp_id');
     }
 
+
     public function onboardingTasks()
     {
         return OnboardingTask::whereHas('employeeOnboardings', function($query) {
             $query->where('employee_id', $this->id);
         });
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

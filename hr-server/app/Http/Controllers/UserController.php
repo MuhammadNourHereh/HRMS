@@ -63,7 +63,7 @@ class UserController extends Controller
     {
         // Define validation rules
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string|min:6',
         ]);
 
@@ -76,7 +76,7 @@ class UserController extends Controller
         }
         // login
         $credentials = [
-            "username" => $request["username"],
+            "email" => $request["email"],
             "password" => $request["password"]
         ];
 

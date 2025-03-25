@@ -3,27 +3,25 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\LeaveController;
-use App\Http\Controllers\LeavePolicyController;
-use App\Http\Controllers\EnrollmentController;
-use App\Http\Controllers\ProgramController;
-
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\DeductionController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\ReviewCycleController;
+use App\Http\Controllers\LeavePolicyController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
-    Route::post('/login', [UserController::class, "login"]);
-    Route::post('/signup', [UserController::class, "signUp"]);
-
+    Route::post('/login', [EmployeeController::class, "login"]);
     // authorised apis
     Route::middleware('auth:api')->group(function () {
         Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
@@ -36,10 +34,19 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::delete('/{id}', [UserController::class, "destroy"]);
             });
         
-            Route::get('/getEmployees', [EmployeeController::class, "getEmployees"]);
-            Route::get('/getEmployeeById/{id}', [EmployeeController::class, "getEmployeeById"]);
-            Route::post('/addOrUpdateEmployee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
-            Route::post('/deleteEmployee/{id}', [EmployeeController::class, "deleteEmployee"]);
+            Route::prefix('employees')->group(function () {
+                Route::get('/get-employees', [EmployeeController::class, "getEmployees"]);
+                Route::get('/get-employee-by-id/{id}', [EmployeeController::class, "getEmployeeById"]);
+                Route::post('/add-update-employee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
+                Route::post('/delete-employee/{id}', [EmployeeController::class, "deleteEmployee"]);
+            });
+
+            Route::prefix('review-cycles')->group(function () {
+                Route::get('/get-review-cycles', [ReviewCycleController::class, "getReviewCycles"]);
+                Route::get('/get-review-cycle-by-id/{id}', [ReviewCycleController::class, "getReviewCycleById"]);
+                Route::post('/add-update-review-cycle/{id}', [ReviewCycleController::class, "addOrUpdateReviewCycle"]);
+                Route::post('/delete-review-cycle/{id}', [ReviewCycleController::class, "deleteReviewCycle"]);
+            });
             Route::get('/leaves', [LeaveController::class, 'index']);
             Route::get('/leaves/department/{departmentId}', [LeaveController::class, 'getByDepartment']);
         
@@ -81,7 +88,16 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
                 Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
                 Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
+            });    
+            
+            Route::middleware('auth:employee')->group(function () {
+                Route::prefix('users')->group(function () {
+                Route::get('/me', [EmployeeController::class, "me"]);
+                Route::post('/logout', [EmployeeController::class, "logout"]);
+                });
             });
+
+
 
             Route::patch('/leave/{leave}/approve', [LeaveController::class, 'approve']);
             Route::patch('/leave/{leave}/reject', [LeaveController::class, 'reject']);
@@ -115,3 +131,4 @@ Route::group(["prefix" => "v0.1"], function () {
 
     });
 });
+
