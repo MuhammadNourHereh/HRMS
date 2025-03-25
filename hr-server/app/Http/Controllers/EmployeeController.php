@@ -7,10 +7,13 @@ use App\Models\Department;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class EmployeeController extends Controller
 {
-   
+    // Get all employees with pagination (existing functionality)
     public function getEmployees(Request $request)
     {
         $perPage = $request->input('per_page', 10);
@@ -26,6 +29,7 @@ class EmployeeController extends Controller
         ]);
     }
 
+    // Get employee by ID (existing functionality)
     public function getEmployeeById($id)
     {
         $employee = Employee::with(['department', 'position'])->findOrFail($id);
@@ -36,6 +40,7 @@ class EmployeeController extends Controller
         ]);
     }
 
+    // Add or update employee (existing functionality)
     public function addOrUpdateEmployee(Request $request, $id)
     {
         try {
@@ -121,7 +126,7 @@ class EmployeeController extends Controller
         ]);
     }
 
-   
+    // Delete employee (existing functionality)
     public function deleteEmployee($id)
     {
         $employee = Employee::findOrFail($id);
@@ -130,6 +135,74 @@ class EmployeeController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Employee deleted successfully'
+        ]);
+    }
+
+    // NEW AUTHENTICATION METHODS
+
+    // Get all employees (simplified version without pagination for auth purposes)
+    public function all()
+    {
+        $employees = Employee::all();
+        $status = $employees->isEmpty() ? 204 : 200;
+        return response()->json($employees, $status);
+    }
+
+    // Get the currently authenticated employee
+    public function me()
+    {
+        return response()->json(Auth::guard('employee')->user());
+    }
+
+   
+
+    // Employee login with token
+    public function login(Request $request)
+    {
+        // Define validation rules
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                "msg" => "missing attr",
+                "errors" => $validator->errors()
+            ], 422);
+        }
+        
+        // Login credentials
+        $credentials = [
+            "email" => $request["email"],
+            "password" => $request["password"]
+        ];
+
+        if (!$token = Auth::guard('employee')->attempt($credentials)) {
+            return response()->json([
+                "success" => false,
+                "error" => "Unauthorized"
+            ], 401);
+        }
+
+        $employee = Auth::guard('employee')->user();
+        $employee->token = $token;
+
+        return response()->json([
+            "success" => true,
+            "employee" => $employee
+        ]);
+    }
+    
+    // Logout employee
+    public function logout()
+    {
+        Auth::guard('employee')->logout();
+        
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully logged out',
         ]);
     }
 }

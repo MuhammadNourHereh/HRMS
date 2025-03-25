@@ -8,6 +8,7 @@ use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,21 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [UserController::class, "login"]);
-    Route::post('/signup', [UserController::class, "signUp"]);
-
     // authorised apis
     Route::middleware('auth:api')->group(function () {
-
         Route::prefix('users')->group(function () {
-            Route::get('/me', [UserController::class, "me"]);
-            Route::post('/logout', [UserController::class, "logout"]);
-            Route::put('/me', [UserController::class, "update"]);
-            Route::delete('/me', [UserController::class, "destroy"]);
-            Route::put('/{id}', [UserController::class, "update"]);
-            Route::delete('/{id}', [UserController::class, "destroy"]);
+            Route::get('/me', [EmployeeController::class, "me"]);
+            Route::post('/logout', [EmployeeController::class, "logout"]);
         });
 
-
+        Route::prefix('employees')->group(function () {
+            Route::get('/getEmployees', [EmployeeController::class, "getEmployees"]);
+            Route::get('/getEmployeeById/{id}', [EmployeeController::class, "getEmployeeById"]);
+            Route::post('/addOrUpdateEmployee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
+            Route::post('/deleteEmployee/{id}', [EmployeeController::class, "deleteEmployee"]);
+        });
 
 
         // payrolls apis
@@ -85,12 +84,4 @@ Route::group(["prefix" => "v0.1"], function () {
 });
 
 
-/* Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
-    Route::get('/getEmployees', [EmployeeController::class, "getEmployees"]);
-			Route::get('/getEmployeeById/{id}', [EmployeeController::class, "getEmployeeById"]);
-            Route::post('/addOrUpdateEmployee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
-            Route::post('/deleteEmployee/{id}', [EmployeeController::class, "deleteEmployee"]);
-
-            
-            
-		}); */
+/*         */

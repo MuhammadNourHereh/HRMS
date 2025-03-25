@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employee extends Model
+class Employee extends Authenticatable
 {
     use HasFactory, Notifiable;
     use SoftDeletes;
+    
     protected $fillable = [
         'department_id',
         'position_id',
@@ -26,10 +26,27 @@ class Employee extends Model
         'role',
         'salary'
     ];
-    protected $casts = [
-        'date_of_birth' => 'datetime',
-        'salary' => 'decimal:2',
+    
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
+    
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'date_of_birth' => 'datetime',
+            'salary' => 'decimal:2',
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+    
     public function salaries()
     {
         return $this->hasMany(Salary::class);
@@ -64,9 +81,6 @@ class Employee extends Model
     {
         return $this->belongsTo(Position::class);
     }
-
-
-
 
     // Relationship: Employee has many Documents
     public function documents()
