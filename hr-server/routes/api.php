@@ -23,7 +23,7 @@ Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);
     // authorised apis
-    Route::middleware('auth:api')->group(function () {
+    Route::middleware('auth:employee')->group(function () {
         Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
             Route::prefix('users')->group(function () {
                 Route::get('/me', [UserController::class, "me"]);
@@ -90,13 +90,11 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
             });    
             
-            Route::middleware('auth:employee')->group(function () {
-                Route::prefix('users')->group(function () {
+    
+            Route::prefix('users')->group(function () {
                 Route::get('/me', [EmployeeController::class, "me"]);
                 Route::post('/logout', [EmployeeController::class, "logout"]);
-                });
             });
-
 
 
             Route::patch('/leave/{leave}/approve', [LeaveController::class, 'approve']);

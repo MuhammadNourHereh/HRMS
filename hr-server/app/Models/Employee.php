@@ -65,7 +65,7 @@ class Employee extends Authenticatable implements JWTSubject
             }
         });
     }
-
+    
     protected $hidden = [
         'password',
         'remember_token',
@@ -157,7 +157,6 @@ class Employee extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Report::class, 'emp_id');
     }
-
 
     public function onboardingTasks()
     {
