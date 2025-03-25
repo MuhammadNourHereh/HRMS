@@ -16,19 +16,19 @@ use Illuminate\Support\Facades\Route;
 // version v0.1
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
-    Route::post('/login', [UserController::class, "login"]);
+    Route::post('/login', [EmployeeController::class, "login"]);
     // authorised apis
-    Route::middleware('auth:api')->group(function () {
+    Route::middleware('auth:employee')->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);
             Route::post('/logout', [EmployeeController::class, "logout"]);
         });
 
         Route::prefix('employees')->group(function () {
-            Route::get('/getEmployees', [EmployeeController::class, "getEmployees"]);
-            Route::get('/getEmployeeById/{id}', [EmployeeController::class, "getEmployeeById"]);
-            Route::post('/addOrUpdateEmployee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
-            Route::post('/deleteEmployee/{id}', [EmployeeController::class, "deleteEmployee"]);
+            Route::get('/get-employees', [EmployeeController::class, "getEmployees"]);
+            Route::get('/get-employee-by-id/{id}', [EmployeeController::class, "getEmployeeById"]);
+            Route::post('/add-update-employee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
+            Route::post('/delete-employee/{id}', [EmployeeController::class, "deleteEmployee"]);
         });
 
 

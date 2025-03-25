@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class EmployeeController extends Controller
 {
-    // Get all employees with pagination (existing functionality)
     public function getEmployees(Request $request)
     {
         $perPage = $request->input('per_page', 10);
@@ -29,7 +29,6 @@ class EmployeeController extends Controller
         ]);
     }
 
-    // Get employee by ID (existing functionality)
     public function getEmployeeById($id)
     {
         $employee = Employee::with(['department', 'position'])->findOrFail($id);
@@ -40,80 +39,53 @@ class EmployeeController extends Controller
         ]);
     }
 
-    // Add or update employee (existing functionality)
-    public function addOrUpdateEmployee(Request $request, $id)
+    public function addOrUpdateEmployee(Request $request, $id=null)
     {
-        try {
-            $validatedData = $request->validate([
-                'department_id' => 'required|exists:departments,id',
-                'position_id' => 'required|exists:positions,id',
-                'first_name' => 'required|string',
-                'last_name' => 'required|string',
-                'date_of_birth' => 'required|date',
-                'address' => 'required|string',
-                'phone_number' => 'required|string',
-                'gender' => 'required|in:male,female',
-                'role' => 'required|in:employee,hr',
-                'salary' => 'required|numeric|min:0',
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        $rules = [
+            'department_id' => 'required|exists:departments,id',
+            'position_id' => 'required|exists:positions,id',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'date_of_birth' => 'required|date',
+            'address' => 'required|string',
+            'phone_number' => 'required|string',
+            'gender' => 'required|in:male,female',
+            'role' => 'required|in:employee,hr',
+            'salary' => 'required|numeric|min:0',
+        ];
+
+        if ($id === 'add') {
+            $rules['email'] = 'required|email|unique:employees,email';
+            $rules['password'] = 'required|string|min:8';
+        } else {
+            if ($request->has('email')) {
+                $rules['email'] = 'email|unique:employees,email,' . $id;
+            }
+            if ($request->has('password')) {
+                $rules['password'] = 'string|min:8';
+            }
+        }
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Validation failed',
-                'errors' => $e->errors()
+                'errors' => $validator->errors()
             ], 422);
         }
 
+        $validatedData = $validator->validated();
+
+        if (isset($validatedData['password'])) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
+
         if ($id === 'add') {
-            try {
-                $request->validate([
-                    'email' => 'required|email|unique:employees,email',
-                    'password' => 'required|string|min:8',
-                ]);
-            } catch (\Illuminate\Validation\ValidationException $e) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Validation failed',
-                    'errors' => $e->errors()
-                ], 422);
-            }
-
-            $validatedData['password'] = Hash::make($request->password);
-            $validatedData['email'] = $request->email;
-
             $employee = Employee::create($validatedData);
             $message = 'Employee created successfully';
         } else {
-            if ($request->has('email')) {
-                try {
-                    $request->validate([
-                        'email' => 'email|unique:employees,email,' . $id,
-                    ]);
-                } catch (\Illuminate\Validation\ValidationException $e) {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Email validation failed',
-                        'errors' => $e->errors()
-                    ], 422);
-                }
-                $validatedData['email'] = $request->email;
-            }
-            
-            if ($request->has('password')) {
-                try {
-                    $request->validate([
-                        'password' => 'string|min:8',
-                    ]);
-                } catch (\Illuminate\Validation\ValidationException $e) {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Password validation failed',
-                        'errors' => $e->errors()
-                    ], 422);
-                }
-                $validatedData['password'] = Hash::make($request->password);
-            }
-
             $employee = Employee::findOrFail($id);
             $employee->update($validatedData);
             $message = 'Employee updated successfully';
@@ -138,9 +110,8 @@ class EmployeeController extends Controller
         ]);
     }
 
-    // NEW AUTHENTICATION METHODS
+    //  AUTHENTICATION METHODS
 
-    // Get all employees (simplified version without pagination for auth purposes)
     public function all()
     {
         $employees = Employee::all();
@@ -148,24 +119,18 @@ class EmployeeController extends Controller
         return response()->json($employees, $status);
     }
 
-    // Get the currently authenticated employee
     public function me()
     {
         return response()->json(Auth::guard('employee')->user());
     }
 
-   
-
-    // Employee login with token
     public function login(Request $request)
     {
-        // Define validation rules
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
 
-        // Check if validation fails
         if ($validator->fails()) {
             return response()->json([
                 "msg" => "missing attr",
@@ -173,7 +138,6 @@ class EmployeeController extends Controller
             ], 422);
         }
         
-        // Login credentials
         $credentials = [
             "email" => $request["email"],
             "password" => $request["password"]
@@ -187,7 +151,7 @@ class EmployeeController extends Controller
         }
 
         $employee = Auth::guard('employee')->user();
-        $employee->token = $token;
+        $employee->token = JWTAuth::fromUser($employee);
 
         return response()->json([
             "success" => true,
@@ -195,7 +159,6 @@ class EmployeeController extends Controller
         ]);
     }
     
-    // Logout employee
     public function logout()
     {
         Auth::guard('employee')->logout();

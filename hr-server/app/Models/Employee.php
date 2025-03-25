@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-class Employee extends Authenticatable
+class Employee extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
     use SoftDeletes;
@@ -92,5 +93,19 @@ class Employee extends Authenticatable
     public function clockedWorkers()
     {
         return $this->hasMany(ClockedWorker::class, 'employee_id');
+    }
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
