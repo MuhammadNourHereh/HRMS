@@ -9,7 +9,4 @@ Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
 			Route::get('/getEmployeeById/{id}', [EmployeeController::class, "getEmployeeById"]);
             Route::post('/addOrUpdateEmployee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
             Route::post('/deleteEmployee/{id}', [EmployeeController::class, "deleteEmployee"]);
-
-            
-            
-		});
+        		});
