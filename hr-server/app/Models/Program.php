@@ -11,7 +11,11 @@ class Program extends Model {
 
     protected $fillable = [
         'name', 
-        'description'
+        'description',
+        'type',
+        'difficulty',
+        'duration_days',
+        'passing_score'
     ];
 
     public function certifications() {

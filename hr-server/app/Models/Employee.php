@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 use Illuminate\Notifications\Notifiable;
 
 class Employee extends Model
@@ -12,6 +13,7 @@ class Employee extends Model
 
     use HasFactory, Notifiable;
     use SoftDeletes;
+
 
     protected $fillable = [
         'department_id',
@@ -26,6 +28,11 @@ class Employee extends Model
         'gender',
         'role',
         'salary',
+    ];
+
+    protected $casts = [
+        'date_of_birth' => 'datetime',
+        'salary' => 'decimal:2',
     ];
 
     // Define relationships with other models
@@ -63,5 +70,20 @@ class Employee extends Model
     public function position()
     {
         return $this->belongsTo(Position::class);
+    }
+
+
+
+
+    // Relationship: Employee has many Documents
+    public function documents()
+    {
+        return $this->hasMany(DocumentManagement::class, 'employee_id');
+    }
+
+    // Relationship: Employee has many Clocked Workers
+    public function clockedWorkers()
+    {
+        return $this->hasMany(ClockedWorker::class, 'employee_id');
     }
 }
