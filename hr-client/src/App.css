@@ -7,255 +7,607 @@
     --color-bg: #e1e5f2;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    background: var(--color-bg);
-    font-family: Arial, sans-serif;
-    width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* ========== FORM ELEMENTS ========== */
-.label-tag {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-right: 10px;
-}
-
-.input-tag,
-.input-btn,
-.text-area {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 2px solid var(--color-accent);
-    border-radius: 6px;
-    background: var(--color-secondary);
-    color: var(--color-primary);
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.input-tag:focus,
-.input-btn:focus,
-.text-area:focus {
-    border-color: var(--color-border);
-    box-shadow: 0 0 8px rgba(191, 219, 247, 0.5);
-}
-
 /* ========== CONTAINERS ========== */
-.center {
+
+/* Main container for layout */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-primary);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* For boxes inside the container */
+.box {
+    padding: 20px;
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Dark container for specific sections */
+.dark-container {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark box for deeper emphasis */
+.dark-box {
+    background-color: #1c2a34;
+    border: 1px solid var(--color-border);
+    color: var(--color-primary);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== FORM STYLES ========== */
+
+/* Styling for form tags */
+form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    gap: 15px;
+    padding: 20px;
 }
 
-.container-white,
-.container-dark {
-    width: 90%;
-    max-width: 900px;
-    padding: 2rem;
-    margin: 1rem auto;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(31, 122, 140, 0.2);
-    border: 2px solid transparent;
-    transition: all 0.3s ease-in-out;
-}
-
-.container-white {
-    background: var(--color-primary);
-}
-
-.container-dark {
-    background: var(--color-secondary);
-    color: var(--color-primary);
-}
-
-.container-white:hover,
-.container-dark:hover {
-    border-color: var(--color-accent);
-    box-shadow: 0 8px 25px rgba(31, 122, 140, 0.3);
-}
-
-/* ========== SNIPPET BOXES ========== */
-.box-white,
-.box-accent {
-    padding: 2rem;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-    transition: box-shadow 0.3s ease-in-out, transform 0.2s;
-}
-
-.box-white {
-    background: var(--color-primary);
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-}
-
-.box-accent {
-    background: var(--color-accent);
-    color: var(--color-primary);
-    box-shadow: 0 4px 10px rgba(191, 219, 247, 0.1);
-}
-
-.box-white:hover,
-.box-accent:hover {
-    box-shadow: 0 8px 25px rgba(31, 122, 140, 0.3);
-    transform: translateY(-3px);
-}
-
-/* ========== BUTTONS ========== */
-.btn-btn,
-.back-btn,
-.upload-btn,
-.label-btn,
-.sign-btn,
-.signUp-btn,
-.login-btn,
-.logout-btn {
-    width: auto;
-    padding: 0.8rem 1.5rem;
-    margin: 0.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.btn-btn,
-.signUp-btn {
-    background: var(--color-primary);
+/* Input tag styling */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background-color: var(--color-bg);
     color: var(--color-secondary);
-    border: 1px solid var(--color-accent);
-}
-
-.back-btn,
-.logout-btn {
-    background: var(--color-secondary);
-    color: var(--color-accent);
-    border: 1px solid var(--color-accent);
-}
-
-.login-btn,
-.label-btn,
-.upload-btn,
-.sign-btn {
-    background: var(--color-accent);
-    color: var(--color-primary);
-    border: 2px solid var(--color-accent);
     width: 100%;
+    transition: 0.3s ease;
 }
 
-.btn-btn:hover,
-.back-btn:hover,
-.logout-btn:hover,
-.signUp-btn:hover,
-.login-btn:hover,
-.upload-btn:hover,
-.label-btn:hover,
-.sign-btn:hover {
-    transform: scale(1.05);
-    background: var(--color-secondary);
-    color: var(--color-accent);
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 8px var(--color-accent);
 }
 
-/* ========== TEXT & LINKS ========== */
-.a-tag {
-    color: var(--color-border);
-    text-decoration: none;
-    font-weight: bold;
-    border-bottom: 2px solid transparent;
-    transition: color 0.3s, border-bottom 0.3s;
+/* Label for form elements */
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-secondary);
 }
 
-.a-tag:hover {
-    color: var(--color-accent);
-    border-bottom: 2px solid var(--color-accent);
+/* Textarea styling */
+textarea {
+    resize: vertical;
+    height: 120px;
 }
 
-.h-tag {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--color-accent);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
+/* ========== BUTTON STYLES ========== */
+
+/* Default button style */
+.btn-btn {
+    padding: 12px 25px;
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.p-tag,
-.small-text,
-.medium-text,
+.btn-btn:hover {
+    background-color: #1c2a34;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    /* Slight lift effect */
+}
+
+/* Dark button variant */
+.btn-dark {
+    background-color: #1c2a34;
+    color: var(--color-primary);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-dark:hover {
+    background-color: var(--color-accent);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    /* Slight lift effect */
+}
+
+/* Login button */
+.login-btn {
+    background-color: #1ABC9C;
+    color: var(--color-primary);
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-btn:hover {
+    background-color: #16A085;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    /* Slight lift effect */
+}
+
+/* Logout button */
+.logout-btn {
+    background-color: #E74C3C;
+    color: var(--color-primary);
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn:hover {
+    background-color: #C0392B;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    /* Slight lift effect */
+}
+
+/* Back button */
+.back-btn {
+    background-color: #7f8c8d;
+    color: var(--color-primary);
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn:hover {
+    background-color: #95a5a6;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    /* Slight lift effect */
+}
+
+/* ========== ADDITIONAL STYLES ========== */
+
+p {
+    font-size: 16px;
+    color: var(--color-secondary);
+    line-height: 1.6;
+}
+/* ========== TEXT STYLES ========== */
+
+/* Small text */
+.small-text {
+    font-size: 12px;
+    color: var(--color-secondary);
+    line-height: 1.5;
+}
+
+/* Medium text */
+.medium-text {
+    font-size: 16px;
+    color: var(--color-secondary);
+    line-height: 1.5;
+}
+
+/* Big text */
 .big-text {
-    color: var(--color-border);
+    font-size: 24px;
+    color: var(--color-secondary);
+    line-height: 1.5;
+}
+
+/* ========== TYPOGRAPHY ========== */
+
+/* Paragraph text */
+p {
+    font-size: 16px;
+    color: var(--color-secondary);
     line-height: 1.6;
 }
 
-.big-text {
-    font-size: 2rem;
+/* Header tags for titles */
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: var(--color-secondary);
+    font-weight: 600;
 }
 
-.medium-text {
-    font-size: 1.25rem;
+/* Header 1 */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
 }
 
-.small-text {
-    font-size: 0.875rem;
+/* Header 2 */
+h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
 }
 
-/* ========== RESPONSIVENESS ========== */
-@media (max-width: 900px) {
+/* Header 3 */
+h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
 
-    .container-white,
-    .container-dark,
-    .modal-content {
-        padding: 1.5rem;
+/* ========== ADDITIONAL STYLES ========== */
+
+/* Links styling */
+a {
+    text-decoration: none;
+    color: var(--color-accent);
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-secondary);
+}
+
+/* ========== MISC STYLES ========== */
+
+/* To add spacing between sections */
+.section {
+    margin: 40px 0;
+}
+
+/* A simple alert box */
+.alert {
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 5px;
+    margin: 15px 0;
+    border: 1px solid #f5c6cb;
+}
+
+/* Success alert box */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Default Navbar styles */
+.navbar {
+    background-color: #122620;
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    z-index: 1000;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px;
+}
+
+.logo img {
+    height:50px;
+    width: auto;
+    max-width: 100%;
+    
+}
+
+/* Center search bar */
+.nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.search-container {
+    position: relative;
+    width: 300px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px 40px 8px 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(26, 182, 156, 0.6);
+}
+
+.search-container .fa-magnifying-glass {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #122620;
+}
+
+/* Right side icons */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-right: 3rem;
+}
+
+.nav-right a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-right a:hover {
+    color: #1ABC9C;
+}
+
+/* Wrapper for Sidebar and Main Content */
+.wrapper {
+    display: flex;
+    margin-top: 60px;
+    /* To account for the fixed navbar */
+}
+
+/* Sidebar with scrolling */
+.sidebar {
+    background-color: #2E4053;
+    color: white;
+    width: 125px;
+    height: 100vh;
+    position: fixed;
+    top: 20px;
+    left: 0;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+    /* Enables scrolling */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #3498DB;
+}
+
+/* Main Content */
+.content {
+    margin-left: 100px;
+    padding: 20px;
+    width: calc(100% - 100px);
+}
+
+.content section {
+    margin-bottom: 30px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #bfdbf7;
+}
+
+.content section h2 {
+    margin-bottom: 15px;
+    color: #022b3a;
+}
+
+.content section h3 {
+    margin-top: 0;
+    color: #1ABC9C;
+}
+
+.content section p {
+    margin-bottom: 10px;
+}
+
+
+/* Sidebar item titles under icons */
+.sidebar ul {
+    list-style-type: none;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 30px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+    text-align: center;
+}
+
+.sidebar ul li a:hover {
+    background-color: #3498DB;
+}
+
+/* Style for the icon */
+.sidebar ul li a i {
+    font-size: 24px;
+    /* Adjust icon size */
+    margin-bottom: 5px;
+    /* Space between icon and title */
+}
+
+/* Title under the icon */
+.sidebar-title {
+    display: block;
+    font-size: 12px;
+    /* Small font size */
+    color: white;
+    margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+/* For screens between 900px and 600px */
+@media screen and (max-width: 900px) {
+    .nav-center {
+        margin: 0 5px;
     }
 
-    .h-tag {
-        font-size: 1.75rem;
+    .search-container {
+        width: 250px;
+        /* Decrease width of search bar */
+    }
+
+    .nav-right {
+        gap: 1rem;
+        /* Reduced space between icons */
+    }
+
+    .logo img {
+        height: 50px;
+        /* Reduce logo size */
+    }
+
+    .nav-right a {
+        font-size: 18px;
+        /* Reduce icon size */
     }
 }
 
-@media (max-width: 600px) {
-
-    .btn-btn,
-    .back-btn,
-    .signUp-btn,
-    .login-btn,
-    .logout-btn {
-        width: 100%;
-        padding: 1rem;
+/* For screens between 600px and 400px */
+@media screen and (max-width: 600px) {
+    .navbar {
+        padding: 0 10px;
+        /* Add padding to navbar */
     }
 
-    .h-tag {
-        font-size: 1.5rem;
+    .logo img {
+        height: 40px;
+        /* Further reduce logo size */
+    }
+
+    .search-container input {
+        font-size: 14px;
+        /* Smaller font size in search bar */
+    }
+
+    .search-container {
+        width: 200px;
+        /* Further reduce width of search bar */
+    }
+
+    .nav-right {
+        gap: 0.5rem;
+        /* Further reduce space between icons */
+    }
+
+    .nav-right a {
+        font-size: 16px;
+        /* Smaller icons */
     }
 }
 
-@media (max-width: 400px) {
-
-    .container-white,
-    .container-dark,
-    .modal-content {
-        padding: 1rem;
+/* For screens below 400px */
+@media screen and (max-width: 400px) {
+    .navbar {
+        padding: 0 5px;
+        /* Add smaller padding */
     }
 
-    .h-tag {
-        font-size: 1.25rem;
+    .logo img {
+        height: 35px;
+        /* Further reduce logo size */
     }
 
-    .text-area,
-    .input-btn {
-        font-size: 0.9rem;
-        padding: 10px;
+    .search-container input {
+        font-size: 12px;
+        /* Smaller font size in search bar */
+    }
+
+    .search-container {
+        width: 150px;
+        /* Further reduce width of search bar */
+    }
+
+    .nav-right {
+        gap: 0.5rem;
+        /* Reduced gap between icons */
+        margin-right: 1rem;
+        /* Adjust right margin */
+    }
+
+    .nav-right a {
+        font-size: 14px;
+        /* Further reduce icon size */
     }
 }

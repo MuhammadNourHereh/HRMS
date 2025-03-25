@@ -63,32 +63,30 @@
 
 
 
+// import "./App.css"; 
+// import React from 'react';
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import Navbar from './components/Navbar';
+// import Sidebar from './components/Sidebar';
+// import Content from './components/Content';
+// import GeolocationLogger from './components/GeolocationLogger';
 
+// function App() {
+//   return (
+//     <Router>
+//       <Navbar />
+//       <div className="wrapper">
+//         <Sidebar />
+//         <Switch>
+//           <Route exact path="/" component={Content} />
+//           <Route path="/geolocation" component={GeolocationLogger} /> {/* Correct path here */}
+//         </Switch>
+//       </div>
+//     </Router>
+//   );
+// }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// export default App;
 
 
 
@@ -98,40 +96,88 @@
 
 
 import "./App.css"; 
-import React from 'react'; 
-import DocumentUpload from './components/DocumentUpload';
-//  import DocumentDetail from "./components/DocumentDisplay";
-import DocumentSearch from './components/DocumentSearch';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import Content from './components/Content';
 import GeolocationLogger from './components/GeolocationLogger';
+import DocumentManagement from './components/DocumentManagement'; // Import DocumentManagement component
 
 function App() {
-    return (
-//        <div className="container-white">  
-//   <h1 className="h-tag">Code Snippet Manager</h1>
-      
-//   <SnippetForm />
-//   <SnippetList />
-        
-        //         </div>
-        <div>
-      <h1>Employee Document Upload</h1>
-        <DocumentUpload /> {/* Use the component here */}
-        <div className="box-accent"></div>
-        <div>
-          <DocumentSearch />
-        
-
-        </div>
-        <div className="box-accent"></div>
-        <div>
-          <h1>Employee Clock-In/Out</h1>
-          <GeolocationLogger />
-
-        </div>
-    </div>
-        
-
-    );
+  return (
+    <Router>
+      <Navbar /> {/* Navbar will be at the top */}
+      <div className="wrapper">
+        <Sidebar /> {/* Sidebar on the left */}
+        <Routes>
+          <Route path="/" element={<Content />} /> {/* Default route for Content */}
+          <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
+          <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import "./App.css"; 
+// import React from 'react'; 
+// import DocumentUpload from './components/DocumentUpload';
+// //  import DocumentDetail from "./components/DocumentDisplay";
+// import DocumentSearch from './components/DocumentSearch';
+// import GeolocationLogger from './components/GeolocationLogger';
+
+// function App() {
+//     return (
+// //        <div className="container-white">  
+// //   <h1 className="h-tag">Code Snippet Manager</h1>
+      
+// //   <SnippetForm />
+// //   <SnippetList />
+        
+//         //         </div>
+//         <div>
+//       <h1>Employee Document Upload</h1>
+//         <DocumentUpload /> {/* Use the component here */}
+//         <div className="box-accent"></div>
+//         <div>
+//           <DocumentUpload />
+        
+
+//         </div>
+//         <div className="box-accent"></div>
+//         <div>
+//           <h1>Employee Clock-In/Out</h1>
+//           <GeolocationLogger />
+
+//         </div>
+//     </div>
+        
+
+//     );
+// }
+
+// export default App;

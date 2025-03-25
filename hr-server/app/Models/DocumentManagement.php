@@ -11,7 +11,7 @@ class DocumentManagement extends Model
     use HasFactory, SoftDeletes;
 
     // Explicitly set the correct table name
-    protected $table = 'document_management';
+    protected $table = 'documents';
 
     // Mass assignable attributes
     protected $fillable = ['file_type', 'file_url', 'file_description', 'employee_id', 'deleted_at'];
