@@ -69,12 +69,13 @@ const GeolocationLogger = () => {
   };
 
   return (
-    <div className="container-white">
+    <div className="container">
       {/* Action selection */}
       {action === null && (
         <div className="action-buttons box-accent">
-          <button className="btn" onClick={() => setAction("clockIn")}>Clock In</button>
-          <button className="btn" onClick={() => setAction("clockOut")}>Clock Out</button>
+          <h1>clock in / out</h1>
+          <button className="btn-btn" onClick={() => setAction("clockIn")}>Clock In</button>
+          <button className="btn-btn" onClick={() => setAction("clockOut")}>Clock Out</button>
         </div>
       )}
 
@@ -94,7 +95,7 @@ const GeolocationLogger = () => {
       {/* Location Input for Clock In */}
       {action === "clockIn" && (
         <div>
-          <button className="btn" onClick={getLocation}>Get Location</button>
+          <button className="btn-btn" onClick={getLocation}>Get Location</button>
           {/* Display location */}
           {location && (
             <div>
@@ -107,7 +108,7 @@ const GeolocationLogger = () => {
 
       {/* Clock In Button */}
       {action === "clockIn" && (
-        <button className="back-btn" onClick={clockIn} disabled={clockedIn}>
+        <button className="login-btn" onClick={clockIn} disabled={clockedIn}>
           Clock In
         </button>
       )}
