@@ -18,6 +18,10 @@ class Program extends Model {
         'passing_score'
     ];
 
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
     public function certifications() {
         return $this->hasMany(Certification::class);
     }

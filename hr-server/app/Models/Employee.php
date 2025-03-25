@@ -30,6 +30,19 @@ class Employee extends Model
         return $this->belongsTo(Position::class);
     }
 
+    public function leaves() {
+        return $this->hasMany(Leave::class);
+    }
 
+    public function enrollments() {
+        return $this->hasMany(Enrollment::class);
+    }
 
+    public function certifications() {
+        return $this->hasMany(Certification::class);
+    }
+
+    public function leavePolicy() {
+        return $this->hasMany(LeavePolicy::class);
+    }
 }
