@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,22 +51,18 @@ class Employee extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Salary::class);
     }
-
     public function deductions()
     {
         return $this->hasMany(Deduction::class);
     }
-
     public function payrolls()
     {
         return $this->hasMany(Payroll::class);
     }
-
     public function overtimes()
     {
         return $this->hasMany(Overtime::class);
     }
-
     public function leavePolicies()
     {
         return $this->hasMany(LeavePolicy::class);
@@ -77,7 +72,6 @@ class Employee extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Department::class);
     }
-
     public function position()
     {
         return $this->belongsTo(Position::class);
@@ -88,12 +82,34 @@ class Employee extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(DocumentManagement::class, 'employee_id');
     }
-
     // Relationship: Employee has many Clocked Workers
     public function clockedWorkers()
     {
         return $this->hasMany(ClockedWorker::class, 'employee_id');
     }
+
+    public function tasks()
+{
+    return $this->hasMany(Task::class);
+}
+
+public function onboardings()
+{
+    return $this->hasMany(EmployeeOnboarding::class);
+}
+
+public function reports()
+{
+    return $this->hasMany(Report::class, 'emp_id');
+}
+
+public function onboardingTasks()
+{
+    return OnboardingTask::whereHas('employeeOnboardings', function($query) {
+        $query->where('employee_id', $this->id);
+    });
+}
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
