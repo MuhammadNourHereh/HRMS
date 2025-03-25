@@ -13,6 +13,28 @@ use Illuminate\Validation\ValidationException;
 
 class LeaveController extends Controller
 {
+    public function index()
+    {
+        $leaves = Leave::with('employee')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $leavePolicies
+        ]);
+    }
+
+    public function getByDepartment($departmentName)
+    {
+        $leaves = Leave::whereHas('employee.department', function ($query) use ($departmentName) {
+            $query->where('name', $departmentName);
+        })->with('employee')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $leavePolicies
+        ]);
+    }
+
     public function store(Request $request)
     {
         try{
