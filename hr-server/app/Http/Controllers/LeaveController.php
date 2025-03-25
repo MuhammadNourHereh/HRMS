@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Carbon\Carbon;
 
 use App\Models\Leave;
 use App\Models\LeavePolicy;
@@ -19,19 +20,19 @@ class LeaveController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => $leavePolicies
+            'data' => $leaves
         ]);
     }
 
-    public function getByDepartment($departmentName)
+    public function getByDepartment($departmentId)
     {
-        $leaves = Leave::whereHas('employee.department', function ($query) use ($departmentName) {
-            $query->where('name', $departmentName);
+        $leaves = Leave::whereHas('employee.department', function ($query) use ($departmentId) {
+            $query->where('id', $departmentId);
         })->with('employee')->get();
-
+    
         return response()->json([
             'status' => 'success',
-            'data' => $leavePolicies
+            'data' => $leaves  
         ]);
     }
 
@@ -52,10 +53,11 @@ class LeaveController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
-
+        $validated['is_paid'] = $validated['is_paid'] ?? false;
+        
         $policy = LeavePolicy::findOrFail($validated['leave_policy_id']);
 
-        if ($policy->employee_id != auth()->id()) {
+        if (!$policy || $policy->employee_id != auth()->id()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized action'
@@ -83,7 +85,8 @@ class LeaveController extends Controller
                 'is_paid' => $validated['is_paid'],
                 'start_date' => $validated['start_date'],
                 'end_date' => $validated['end_date'],
-                'reason' => $validated['reason']
+                'reason' => $validated['reason'],
+                'status' => 'pending'
             ]);
 
             return response()->json([
@@ -143,7 +146,10 @@ class LeaveController extends Controller
                 'message' => 'Leave request is already processed'
             ], 400);
         }
-
+        $leaveDays = $this->calculateLeaveDays(
+           $leave->start_date,
+           $leave->end_date,
+        );
         if ($leave->is_paid) {
             $leavePolicy = $leave->leavePolicy;
             
@@ -158,7 +164,7 @@ class LeaveController extends Controller
         }
 
         $leave->update([
-            'status' => 'Approved',
+            'status' => 'Accepted',
         ]);
     
         return response()->json(['message' => 'Leave approved']);

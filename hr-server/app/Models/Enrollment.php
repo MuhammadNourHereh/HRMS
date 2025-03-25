@@ -23,11 +23,11 @@ class Enrollment extends Model {
     ];
 
     public function employee() {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class,'employee_id');
     }
 
     public function program() {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class, 'program_id');
     }
 }
 
