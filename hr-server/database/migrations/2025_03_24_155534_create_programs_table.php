@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->enum('type', ['Course', 'Assessment', 'Certification'])->default('Course');
+            $table->enum('difficulty', ['Beginner', 'Intermediate', 'Advanced'])->default('Beginner');
+            $table->integer('duration_days')->nullable()->comment('Total program duration');
+            $table->decimal('passing_score', 5, 2)->nullable()->comment('Minimum score to pass');
             $table->timestamps();
             $table->softDeletes();
         });

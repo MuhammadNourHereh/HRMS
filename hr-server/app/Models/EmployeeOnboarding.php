@@ -21,4 +21,14 @@ class EmployeeOnboarding extends Model
         'status' => 'string',
         'completed_date' => 'datetime'
     ];
+
+    public function employee()
+{
+    return $this->belongsTo(Employee::class);
+}
+
+public function onboardingTask()
+{
+    return $this->belongsTo(OnboardingTask::class);
+}
 }

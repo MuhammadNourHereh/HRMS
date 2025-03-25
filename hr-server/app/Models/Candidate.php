@@ -13,14 +13,14 @@ class Candidate extends Model
     protected $fillable = [
         'name',
         'email',
-        // 'document_id',
+        'document_id',
         'status'
     ];
 
-     /*
+     
     public function document()
     {
-        return $this->belongsTo(Document::class);
+        return $this->belongsTo(DocumentManagement::class);
     }
-    */
+    
 }

@@ -29,8 +29,8 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    // public function employee()
-    // {
-    //     return $this->belongsTo(Employee::class);
-    // }
+     public function employee()
+     {
+         return $this->belongsTo(Employee::class);
+     }
 }

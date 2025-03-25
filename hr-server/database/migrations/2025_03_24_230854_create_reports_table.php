@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->enum('document_type', ['tax', 'health', 'contract', 'certification', 'other']);
-           // $table->foreignId('document_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('document_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->enum('status', ['submitted', 'approved', 'rejected', 'pending'])->default('pending');
             $table->foreignId('emp_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

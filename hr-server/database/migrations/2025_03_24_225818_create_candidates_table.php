@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-           // $table->foreignId('document_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('document_id')->nullable()->constrained()->nullOnDelete();
             $table->enum('status', ['applied', 'interview', 'accepted', 'rejected'])->default('applied');
             $table->timestamps();
             $table->softDeletes();

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\DocumentManagement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ class Report extends Model
     protected $fillable = [
         'title',
         'document_type',
-        // 'document_id',
+        'document_id',
         'status',
         'emp_id'
     ];
@@ -23,16 +24,14 @@ class Report extends Model
         'status' => 'string'
     ];
 
-    // public function employee()
-    // {
-    //     return $this->belongsTo(Employee::class, 'emp_id');
-    // }
+     public function employee(){
+         return $this->belongsTo(Employee::class, 'emp_id');
+     }
 
-    // Commented relationship for future use
-    /*
+    
     public function document()
     {
-        return $this->belongsTo(Document::class);
+        return $this->belongsTo(DocumentManagement::class);
     }
-    */
+    
 }
