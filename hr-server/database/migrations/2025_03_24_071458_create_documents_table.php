@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('document_management', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id(); // Auto-incrementing primary key
             $table->unsignedBigInteger('employee_id'); // Employee ID (foreign key)
             $table->string('file_type', 25); // File type (e.g., CV, PDF, IMAGE, etc.)
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('document_management');
+        Schema::dropIfExists('documents');
     }
 };
