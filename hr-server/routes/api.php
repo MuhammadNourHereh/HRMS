@@ -8,20 +8,34 @@ use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
 // version v0.1
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
-
+    Route::post('/login', [UserController::class, "login"]);
+    Route::post('/signup', [UserController::class, "signUp"]);
 
     // authorised apis
     Route::middleware('auth:api')->group(function () {
+
+        Route::prefix('users')->group(function () {
+            Route::get('/me', [UserController::class, "me"]);
+            Route::post('/logout', [UserController::class, "logout"]);
+            Route::put('/me', [UserController::class, "update"]);
+            Route::delete('/me', [UserController::class, "destroy"]);
+            Route::put('/{id}', [UserController::class, "update"]);
+            Route::delete('/{id}', [UserController::class, "destroy"]);
+        });
+
+
+
+
+        // payrolls apis
         Route::prefix('salaries')->group(function () {
 
-
-            // payrolls apis
             Route::get('/', [SalaryController::class, 'index']);
             Route::get('{id}', [SalaryController::class, 'show']);
             Route::post('/', [SalaryController::class, 'store']);
