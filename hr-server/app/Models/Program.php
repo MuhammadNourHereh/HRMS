@@ -14,10 +14,29 @@ class Program extends Model {
         'description',
         'type',
         'difficulty',
-        'duration_days',
+        'duration',
         'passing_score'
     ];
 
+    public function scopeFilter($query, $filters){
+        if (!empty($filters['search'])) {
+            $query->where('name', 'like', "%{$filters['search']}%");
+        }
+        if (!empty($filters['duration'])) {
+            $query->where('duration', '<=', $filters['duration']);
+        }
+        return $query;
+    }
+    public function getCertificationCountAttribute()
+    {
+        return $this->type === 'Certification' 
+            ? $this->certifications()->count() 
+            : null;
+    }
+    public function shouldGenerateCertification()
+    {
+        return $this->type === 'certification';
+    }
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class);

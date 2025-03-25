@@ -18,6 +18,14 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::get('/leaves/department/{departmentName}', [LeaveController::class, 'getByDepartment']);
         Route::patch('/leave/{leave}/approve', [LeaveController::class, 'approve']);
         Route::patch('/leave/{leave}/reject', [LeaveController::class, 'reject']);
-    
+        Route::prefix('leave-policies')->group(function () {
+            Route::get('/', [LeavePolicyController::class, 'index']); 
+            Route::get('/{employeeId}', [LeavePolicyController::class, 'show']); 
+            Route::post('/', [LeavePolicyController::class, 'store']); 
+            Route::put('/{id}', [LeavePolicyController::class, 'update']); 
+            Route::delete('/{id}', [LeavePolicyController::class, 'destroy']);
+        });
+        Route::get('/programs', [ProgramController::class, 'index']);
+        Route::get('/programs/{program}', [ProgramController::class, 'show']);
     });
 });
