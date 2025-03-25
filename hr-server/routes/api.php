@@ -18,6 +18,8 @@ Route::group(["prefix" => "v0.1"], function () {
     Route::middleware('auth:api')->group(function () {
 
         Route::prefix('users')->group(function () {
+            Route::get('/me', [UserController::class, "me"]);
+            Route::post('/logout', [UserController::class, "logout"]);
             Route::put('/me', [UserController::class, "update"]);
             Route::delete('/me', [UserController::class, "destroy"]);
         });
