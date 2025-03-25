@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('onboarding_tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('password');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->boolean('is_required')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });
-
     }
 
     /**
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('onboarding_tasks');
     }
 };

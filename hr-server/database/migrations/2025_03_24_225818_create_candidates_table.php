@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('candidates', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('password');
+            $table->string('name');
+            $table->string('email');
+            $table->foreignId('document_id')->nullable()->constrained()->nullOnDelete();
+            $table->enum('status', ['applied', 'interview', 'accepted', 'rejected'])->default('applied');
             $table->timestamps();
             $table->softDeletes();
         });
-
     }
 
     /**
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('candidates');
     }
 };
