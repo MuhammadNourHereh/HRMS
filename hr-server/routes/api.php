@@ -33,9 +33,7 @@ use App\Http\Controllers\ClockedChartsController;
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
-    Route::get('/programs', [ProgramController::class, 'index']);
-    Route::get('/program/{program}', [ProgramController::class, 'show']);
-        
+
     Route::middleware('auth:employee')->group(function () {
         // Employee Clocking Routes
         Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
