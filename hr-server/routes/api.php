@@ -33,6 +33,14 @@ use App\Http\Controllers\ClockedChartsController;
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
+    Route::get('/certifications', [CertificationController::class, 'pending']);
+    Route::post('/certifications/{certification}', [CertificationController::class, 'approve']);
+    Route::prefix('documents')->group(function () {
+        Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
+        Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
+        Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
+        Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
+    });    
 
     Route::middleware('auth:employee')->group(function () {
         // Employee Clocking Routes
@@ -42,13 +50,7 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
 
             // Document Routes (Upload, Get, Update, Delete)
-            Route::prefix('documents')->group(function () {
-                Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
-                Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
-                Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
-                Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
-            });    
-        
+
             // Fetch Clocked Workers Data (New Route for ClockedChartsController)
             Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
 
@@ -134,8 +136,6 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get('/program/{program}', [ProgramController::class, 'show']);
                 
             //certifications
-            Route::get('/certifications', [CertificationController::class, 'pending']);
-            Route::put('/certifications/{certification}', [CertificationController::class, 'approve']);
 
             // payrolls apis
             Route::prefix('salaries')->group(function () {
