@@ -54,10 +54,10 @@ jobs:
           # Determine target server based on the branch
           if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
-            TARGET_SERVER_PATH="/path/to/staging/server/folder"
+            TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           elif [[ "${GITHUB_REF}" == "refs/heads/release" ]]; then
             TARGET_SERVER_IP=$RELEASE_SERVER_IP
-            TARGET_SERVER_PATH="/path/to/release/server/folder"
+            TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           fi
 
           # Deploy the build folder to the appropriate server
