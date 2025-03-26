@@ -29,5 +29,19 @@ class ReviewCycle extends Model
         return $this->belongsTo(Employee::class, 'provided_hr_id');
     }
     
-  
+    public function performanceReviews()
+    {
+        return $this->hasMany(PerformancesReview::class);
+    }
+
+/*     public function feedbacks()
+{
+    return $this->hasMany(Feedback::class);
+}
+
+
+public function goals()
+{
+    return $this->hasMany(Goal::class);
+} */
 }

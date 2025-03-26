@@ -9,6 +9,7 @@ use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PerformancesReviewController;
 use App\Http\Controllers\ReviewCycleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,21 +24,29 @@ Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
             Route::get('/me', [EmployeeController::class, "me"]);
             Route::post('/logout', [EmployeeController::class, "logout"]);
         });
-
+        //empoloyees
         Route::prefix('employees')->group(function () {
             Route::get('/get-employees', [EmployeeController::class, "getEmployees"]);
             Route::get('/get-employee-by-id/{id}', [EmployeeController::class, "getEmployeeById"]);
             Route::post('/add-update-employee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
             Route::post('/delete-employee/{id}', [EmployeeController::class, "deleteEmployee"]);
         });
-
+        // review cycles
         Route::prefix('review-cycles')->group(function () {
             Route::get('/get-review-cycles', [ReviewCycleController::class, "getReviewCycles"]);
             Route::get('/get-review-cycle-by-id/{id}', [ReviewCycleController::class, "getReviewCycleById"]);
             Route::post('/add-update-review-cycle/{id}', [ReviewCycleController::class, "addOrUpdateReviewCycle"]);
             Route::post('/delete-review-cycle/{id}', [ReviewCycleController::class, "deleteReviewCycle"]);
         });
-
+        // performance reviews
+        Route::prefix('performance-reviews')->group(function () {
+            Route::get('/get-performance-reviews', [PerformancesReviewController::class, "getPerformanceReviews"]);
+            Route::get('/get-performance-review-by-id/{id}', [PerformancesReviewController::class, "getPerformanceReviewById"]);
+            Route::post('/add-update-performance-review/{id}', [PerformancesReviewController::class, "addOrUpdatePerformanceReview"]);
+            Route::post('/delete-performance-review/{id}', [PerformancesReviewController::class, "deletePerformanceReview"]);
+            Route::get('/get-employee-performance-reviews/{employeeId}', [PerformancesReviewController::class, "getEmployeePerformanceReviews"]);
+            Route::get('/get-review-cycle-performance-reviews/{reviewCycleId}', [PerformancesReviewController::class, "getReviewCyclePerformanceReviews"]);
+        });
         // payrolls apis
         Route::prefix('salaries')->group(function () {
 

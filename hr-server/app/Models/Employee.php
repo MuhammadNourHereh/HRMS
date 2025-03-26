@@ -110,6 +110,11 @@ public function onboardingTasks()
     });
 }
 
+public function performanceReviews()
+{
+    return $this->hasMany(PerformancesReview::class);
+}
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
