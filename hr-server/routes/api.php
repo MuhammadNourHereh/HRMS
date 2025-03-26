@@ -43,12 +43,12 @@ Route::group(["prefix" => "v0.1"], function () {
 
             // Document Routes (Upload, Get, Update, Delete)
             Route::prefix('documents')->group(function () {
-                Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
-                Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
-                Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
-                Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
-            });    
-        
+                Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload
+                Route::get('/{id}', [DocumentController::class, 'getDocumentById']); // Get Document by ID
+                Route::get('/employee/{employee_id}', [DocumentController::class, 'getDocumentsByEmployeeId']); // Get Documents by Employee ID
+                Route::put('/{id}/update', [DocumentController::class, 'manageDocument']); // Update Document
+                Route::delete('/{id}/delete', [DocumentController::class, 'deleteDocument']); // Delete Document
+            });
             // Fetch Clocked Workers Data (New Route for ClockedChartsController)
             Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
 
