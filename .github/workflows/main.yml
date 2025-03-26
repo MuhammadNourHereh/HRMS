@@ -21,18 +21,20 @@ jobs:
         with:
           node-version: '14'
 
+      # Install dependencies for React app
       - name: Install dependencies
         run: |
           cd hr-client
           npm install
 
+      # Build React app
       - name: Build React app
         run: |
           cd hr-client
           npm run build
 
       # Build the project from the main branch
-      - name: Build Project
+      - name: Build Project from main branch
         run: |
           git fetch origin main
           git checkout main
@@ -50,16 +52,18 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
           # Determine target server based on the branch
           if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
-            TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           elif [[ "${GITHUB_REF}" == "refs/heads/release" ]]; then
             TARGET_SERVER_IP=$RELEASE_SERVER_IP
-            TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           fi
-
+          
+          TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           # Deploy the build folder to the appropriate server
-          echo "Deploying to $TARGET_SERVER_IP"
-          scp -r dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
+          ssh $SERVER_USER@$TARGET_SERVER_IP "mkdir -p $TARGET_SERVER_PATH"
+          echo "Deploying to $TARGET_SERVER_IP:$TARGET_SERVER_PATH"
+          scp -v -r hr-client/dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
+
+
+          
