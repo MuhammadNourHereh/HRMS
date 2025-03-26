@@ -65,9 +65,10 @@
 }
 
 
-.margin-left{
+.margin-left {
     margin-left: 8rem !important;
 }
+
 /* Main container for layout */
 .container {
     width: 90%;
@@ -266,6 +267,7 @@ p {
     color: var(--color-secondary);
     line-height: 1.6;
 }
+
 /* ========== TEXT STYLES ========== */
 
 /* Small text */
@@ -388,10 +390,10 @@ a:hover {
 }
 
 .logo img {
-    height:50px;
+    height: 50px;
     width: auto;
     max-width: 100%;
-    
+
 }
 
 /* Center search bar */
@@ -509,7 +511,7 @@ a:hover {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border: 1px solid #bfdbf7;
-    
+
 }
 
 .content section h2 {
@@ -569,11 +571,29 @@ a:hover {
     margin-top: 5px;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.column {
+    flex-direction: column;
+}
 
+.circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    background-color: var(--color-accent);
+}
 
-
-
+.fill-image {
+    margin-top: 10px;
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+}
 
 
 
