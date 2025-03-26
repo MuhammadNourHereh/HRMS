@@ -9,7 +9,7 @@ use App\Models\Overtime;
 use App\Models\Deduction;
 use App\Models\Salary;
 
-class PayrollsSeeder extends Seeder
+class PayrollSeeder extends Seeder
 {
     /**
      * Run the database seeds.

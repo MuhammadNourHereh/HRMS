@@ -6,7 +6,7 @@ use App\Models\Employee;
 use App\Models\Salary;
 use Illuminate\Database\Seeder;
 
-class SalariesSeeder extends Seeder
+class SalarySeeder extends Seeder
 {
     /**
      * Run the database seeds.

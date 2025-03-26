@@ -53,10 +53,10 @@ class DatabaseSeeder extends Seeder
             OnboardingTaskSeeder::class,
             //ReportSeeder::class,
             TaskSeeder::class,
-            OvertimesSeeder::class,
-            SalariesSeeder::class,
-            DeductionsSeeder::class,
-            PayrollsSeeder::class,
+            OvertimeSeeder::class,
+            SalarySeeder::class,
+            DeductionSeeder::class,
+            PayrollSeeder::class,
         ]);
     }
 }

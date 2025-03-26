@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Employee;
 use App\Models\Overtime;
 
-class OvertimesSeeder extends Seeder
+class OvertimeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

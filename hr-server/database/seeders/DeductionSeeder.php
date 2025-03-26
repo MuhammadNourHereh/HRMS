@@ -6,7 +6,7 @@ use App\Models\Deduction;
 use App\Models\Employee;
 use Illuminate\Database\Seeder;
 
-class DeductionsSeeder extends Seeder
+class DeductionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
