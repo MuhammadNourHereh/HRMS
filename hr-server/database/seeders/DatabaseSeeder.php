@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\ReviewCycle;
-use App\Models\GoalProgress;
 use Illuminate\Database\Seeder;
 use Database\Seeders\GoalSeeder;
 use Database\Seeders\TaskSeeder;
@@ -52,6 +50,10 @@ class DatabaseSeeder extends Seeder
             TaskSeeder::class,
             FeedbackSeeder::class,
             ReportSeeder::class,
+            OvertimeSeeder::class,
+            SalarySeeder::class,
+            DeductionSeeder::class,
+            PayrollSeeder::class,
             
             
         ]);

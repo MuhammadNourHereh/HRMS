@@ -16,7 +16,6 @@ class Deduction extends Model
         'employee_id',
         'reason',
         'amount',
-        'percentage',
         'payed_at',
     ];
 
