@@ -79,7 +79,8 @@ const LeaveRequests = () => {
                         <span className="close" onClick={() => setSelectedLeave(null)}>&times;</span>
                         <h3>Leave Request Details{console.log(selectedLeave)}</h3>         
                         <p><strong>Employee:</strong> {selectedLeave.employee.first_name} {selectedLeave.employee.last_name}</p>
-                        <p><strong>Type:</strong> {selectedLeave?.leave_policy?.leave_type ?? 'No leave policy'}</p>                        <p><strong>Start Date:</strong> {selectedLeave.start_date}</p>
+                        <p><strong>Type:</strong> {selectedLeave?.leave_policy?.leave_type ?? 'No leave policy'}</p>                        
+                        <p><strong>Start Date:</strong> {selectedLeave.start_date}</p>
                         <p><strong>End Date:</strong> {selectedLeave.end_date}</p>
                         <p><strong>Status:</strong> {selectedLeave.status}</p>
                         <p><strong>Reason:</strong> {selectedLeave.reason}</p>
