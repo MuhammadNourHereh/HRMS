@@ -2,9 +2,25 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\GoalProgress;
+use App\Models\ReviewCycle;
 use Illuminate\Database\Seeder;
+use Database\Seeders\GoalSeeder;
+use Database\Seeders\TaskSeeder;
+use Database\Seeders\LeaveSeeder;
+use Database\Seeders\ReportSeeder;
+use Database\Seeders\ProgramSeeder;
+use Database\Seeders\ProjectSeeder;
+use Database\Seeders\EmployeeSeeder;
+use Database\Seeders\PositionSeeder;
+use Database\Seeders\candidatesSeeder;
+use Database\Seeders\DepartmentSeeder;
+use Database\Seeders\EnrollmentSeeder;
+use Database\Seeders\LeavePolicySeeder;
+use Database\Seeders\ReviewCycleSeeder;
+use Database\Seeders\OnboardingTaskSeeder;
+use Database\Seeders\EmployeeOnboardingSeeder;
+use Database\Seeders\PerformancesReviewSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +29,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            PositionSeeder::class,
+            DepartmentSeeder::class,
+            EmployeeSeeder::class,
+            LeavePolicySeeder::class,
+            LeaveSeeder::class,
+            ProgramSeeder::class,
+            EnrollmentSeeder::class,
+            ReviewCycleSeeder::class,
+            PerformancesReviewSeeder::class,
+            GoalSeeder::class,
+            GoalProgressSeeder::class,
+            candidatesSeeder::class,
+            EmployeeOnboardingSeeder::class,
+            OnboardingTaskSeeder::class,
+            ProjectSeeder::class,
+            ReportSeeder::class,
+            TaskSeeder::class,
+            FeedbackSeeder::class,
+            candidatesSeeder::class,
+            EmployeeOnboardingSeeder::class,
+            OnboardingTaskSeeder::class,
+            ReportSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }

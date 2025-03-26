@@ -1,18 +1,25 @@
 <?php
-
 namespace App\Models;
+    
+use App\Models\Task;
 
+use App\Models\LeavePolicy;
+
+
+use App\Models\OnboardingTask;
+use App\Models\EmployeeOnboarding;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employee extends Model
+class Employee extends Authenticatable implements JWTSubject
 {
-    use HasFactory, SoftDeletes;
-
-    protected $table = 'employees'; // Explicitly define the table name
-
-    // Mass assignable attributes
+    use HasFactory, Notifiable;
+    use SoftDeletes;
+    
     protected $fillable = [
         'department_id',
         'position_id',
@@ -25,39 +32,167 @@ class Employee extends Model
         'phone_number',
         'gender',
         'role',
-        'salary',
+        'salary'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::created(function ($employee) {
+            LeavePolicy::create([
+                'employee_id' => $employee->id,
+                'leave_type' => 'Sick',
+                'balance' => 10
+            ]);
+    
+            LeavePolicy::create([
+                'employee_id' => $employee->id,
+                'leave_type' => 'Other',
+                'balance' => 0
+            ]);
+    
+            // gender-based leave policies
+            if ($employee->gender === 'female') {
+                LeavePolicy::create([
+                    'employee_id' => $employee->id,
+                    'leave_type' => 'Maternity',
+                    'balance' => 60
+                ]);
+            } elseif ($employee->gender === 'male') {
+                LeavePolicy::create([
+                    'employee_id' => $employee->id,
+                    'leave_type' => 'Paternity',
+                    'balance' => 15
+                ]);
+            }
+        });
+    }
+    
     protected $hidden = [
         'password',
+        'remember_token',
     ];
+    
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'date_of_birth' => 'datetime',
+            'salary' => 'decimal:2',
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+    
+    public function salaries()
+    {
+        return $this->hasMany(Salary::class);
+    }
+    public function deductions()
+    {
+        return $this->hasMany(Deduction::class);
+    }
+    public function payrolls()
+    {
+        return $this->hasMany(Payroll::class);
+    }
+    public function overtimes()
+    {
+        return $this->hasMany(Overtime::class);
+    }
+    public function leavePolicies()
+    {
+        return $this->hasMany(LeavePolicy::class);
+    }
 
-    protected $casts = [
-        'date_of_birth' => 'datetime',
-        'salary' => 'decimal:2',
-    ];
-
-    // // Relationship: Employee belongs to a Department
-    // public function department()
-    // {
-    //     return $this->belongsTo(Department::class);
-    // }
-
-    // // Relationship: Employee belongs to a Position
-    // public function position()
-    // {
-    //     return $this->belongsTo(Position::class);
-    // }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 
     // Relationship: Employee has many Documents
     public function documents()
     {
         return $this->hasMany(DocumentManagement::class, 'employee_id');
     }
-
     // Relationship: Employee has many Clocked Workers
     public function clockedWorkers()
     {
         return $this->hasMany(ClockedWorker::class, 'employee_id');
+    }
+
+    public function leaves() {
+        return $this->hasMany(Leave::class);
+    }
+
+    public function enrollments() {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function certifications() {
+        return $this->hasMany(Certification::class);
+    }
+
+    public function leavePolicy() {
+        return $this->hasMany(LeavePolicy::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function onboardings()
+    {
+        return $this->hasMany(EmployeeOnboarding::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'emp_id');
+    }
+
+    public function onboardingTasks()
+    {
+        return OnboardingTask::whereHas('employeeOnboardings', function($query) {
+            $query->where('employee_id', $this->id);
+        });
+    }
+
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+
+public function performanceReviews()
+{
+    return $this->hasMany(PerformancesReview::class);
+}
+public function feedbacks()
+{
+    return $this->hasMany(Feedback::class);
+}
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
