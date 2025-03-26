@@ -568,7 +568,14 @@ a:hover {
     color: white;
     margin-top: 5px;
 }
+  
+.main-content {
+    flex-grow: 1; 
+    margin-left: 125px;
+    padding: 20px;
+    overflow-y: auto; 
 
+  }
 
 
 
