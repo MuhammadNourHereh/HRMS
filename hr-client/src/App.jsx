@@ -2,7 +2,7 @@ import "./App.css";
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/SideBar';
 import Content from './components/Content';
 import GeolocationLogger from './components/GeolocationLogger';
 import DocumentManagement from './components/DocumentManagement'; // Import DocumentManagement component

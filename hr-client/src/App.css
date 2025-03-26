@@ -8,6 +8,62 @@
 }
 
 /* ========== CONTAINERS ========== */
+.ai-response {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Center the box */
+    background-color: black;
+    /* CMD-like dark background */
+    color: white;
+    /* White text for good contrast */
+    padding: 20px;
+    border-radius: 5px;
+    /* Slightly rounded corners */
+    max-width: 500px;
+    width: 80%;
+    /* Ensure the box doesn't overflow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    /* Subtle shadow for a CMD feel */
+    z-index: 1000;
+    font-family: 'Courier New', Courier, monospace;
+    /* Monospace font for CMD feel */
+    font-size: 16px;
+    /* Standard font size for readability */
+    line-height: 1.5;
+    /* Increased line spacing */
+}
+
+.ai-response button.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+.ai-response button.close-btn:hover {
+    background-color: darkred;
+}
+
+.loading-message {
+    text-align: center;
+    color: #fff;
+    background-color: black;
+    /* Darker background for loading message */
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    /* Monospace font for consistency */
+}
+
 
 .margin-left{
     margin-left: 8rem !important;
