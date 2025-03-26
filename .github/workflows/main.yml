@@ -5,6 +5,7 @@ on:
     branches:
       - staging
       - release
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: "14"
 
       # Install dependencies for React app
       - name: Install dependencies
@@ -38,6 +39,7 @@ jobs:
         run: |
           git fetch origin main
           git checkout main
+          cd hr-client
           npm run build
 
       # Deploy to Staging or Release Server based on the branch
@@ -51,18 +53,27 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+
+
           # Determine target server based on the branch
+          echo "GITHUB_REF is $GITHUB_REF"
           if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
-            TARGET_SERVER_IP=$STAGING_SERVER_IP
+            echo "Branch is staging, targeting staging server"
           elif [[ "${GITHUB_REF}" == "refs/heads/release" ]]; then
-            TARGET_SERVER_IP=$RELEASE_SERVER_IP
+            echo "Branch is release, targeting release server"
+          else
+            echo "Branch is neither staging nor release, no server selected"
           fi
-          
-          TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
-          # Deploy the build folder to the appropriate server
-          ssh $SERVER_USER@$TARGET_SERVER_IP "mkdir -p $TARGET_SERVER_PATH"
-          echo "Deploying to $TARGET_SERVER_IP:$TARGET_SERVER_PATH"
-          scp -v -r hr-client/dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
+
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "STAGING_SERVER_IP: $STAGING_SERVER_IP"
+          echo "RELEASE_SERVER_IP: $RELEASE_SERVER_IP"
+          echo "SERVER_USER: $SERVER_USER"
 
 
-          
+          # TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
+
+          # # Deploy the build folder to the appropriate server
+          # ssh $SERVER_USER@$TARGET_SERVER_IP "mkdir -p $TARGET_SERVER_PATH"
+          # echo "Deploying to $TARGET_SERVER_IP:$TARGET_SERVER_PATH"
+          # scp -v -r hr-client/dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH

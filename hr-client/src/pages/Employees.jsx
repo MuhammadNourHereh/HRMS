@@ -21,7 +21,7 @@ function Employees() {
     const fetchEmployees = async (page) => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/v0.1/getEmployees?page=${page}`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/v0.1/get-employees?page=${page}`);
         //sets employees
         setEmployees(response.data.data || []);
         //sets the pagination
