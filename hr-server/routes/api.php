@@ -5,11 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeaveController;
-use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ProgramController;
-use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
@@ -140,5 +137,5 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
 
     });
-});
+
 
