@@ -9,7 +9,8 @@ import DocumentManagement from './components/DocumentManagement'; // Import Docu
 import LeaveRequests from './pages/LeaveRequests';
 import LeaveDetails from './components/LeaveDetails';
 // import LeaveDisplay from './components/LeaveDisplay'; // Use PascalCase for consistency
-
+import ProfilePage from './pages/ProfileDemo';
+import Dashboard from './components/Dashboard';
 function App() {
   return (
     <Router>
@@ -23,6 +24,9 @@ function App() {
           <Route path="/LeaveRequests" element={<LeaveRequests />} /> {/* LeaveRequests route */}
           <Route path="/LeaveDetails" element={<LeaveDetails />} /> {/* LeaveDetails route */}
           {/* <Route path="/leaveDisplay" element={<LeaveDisplay />} /> leaveDisplay route */}
+          <Route path="/ProfilePage" element={<ProfilePage />} /> 
+          <Route path="/Dashboard" element={<Dashboard />} /> 
+
         </Routes>
       </div>
     </Router>

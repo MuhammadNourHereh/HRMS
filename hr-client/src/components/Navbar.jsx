@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import logo from './logo.png';
+// import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link for routing
 
 function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,9 +82,9 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="logo">
-        <a href="#">
-          <img src={logo} alt="Company Logo" />
-        </a>
+        <Link to="/Dashboard"><img src={logo} alt="Company Logo" /></Link>
+          
+       
       </div>
       <div className="nav-center">
         <div className="search-container">
@@ -97,7 +99,7 @@ function Navbar() {
       </div>
       <div className="nav-right">
         <a href="#" title="Settings"><i className="fa-solid fa-gear"></i></a>
-        <a href="#" title="Profile"><i className="fa-solid fa-user"></i></a>
+        <Link to="/ProfilePage"><i className="fa-solid fa-user"></i></Link>
       </div>
 
       {loading ? (
