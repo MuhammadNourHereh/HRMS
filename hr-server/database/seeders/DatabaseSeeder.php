@@ -45,14 +45,11 @@ class DatabaseSeeder extends Seeder
             EmployeeOnboardingSeeder::class,
             OnboardingTaskSeeder::class,
             ProjectSeeder::class,
-            ReportSeeder::class,
             TaskSeeder::class,
             FeedbackSeeder::class,
-            candidatesSeeder::class,
-            EmployeeOnboardingSeeder::class,
-            OnboardingTaskSeeder::class,
             ReportSeeder::class,
-            TaskSeeder::class,
+            
+            
         ]);
     }
 }
