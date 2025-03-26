@@ -1,0 +1,90 @@
+.leave-container {
+    padding: 20px;
+    background: #f5f7fa;
+    border-radius: 10px;
+  }
+  
+  .leave-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .leave-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .leave-info {
+    flex-grow: 1;
+  }
+  
+  .leave-info h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .leave-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .leave-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .approve-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .reject-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .open-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .pagination button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
