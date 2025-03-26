@@ -16,7 +16,7 @@ class EmployeeController extends Controller
 {
     public function getEmployees(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 5);
         
         $employees = Employee::with(['department', 'position'])
             ->orderBy('last_name')

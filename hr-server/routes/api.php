@@ -13,7 +13,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DeductionController;
-use App\Http\Controllers\EmployeeController; 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LeavePolicyController;
 use App\Http\Controllers\ReviewCycleController;
@@ -29,6 +29,8 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\ClockedChartsController; // Import your new controller
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PositionController;
 
 // Document Routes (Upload, Get, Update, Delete)
 Route::prefix('documents')->group(function () {
@@ -53,10 +55,14 @@ Route::post('/documents/upload/test', function () {
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);
-    
+
     // authorized apis
     Route::middleware('auth:employee')->group(function () {
+        // Departments
+        Route::get('/departments', [DepartmentController::class, 'getDepartments']);
 
+        // Positions
+        Route::get('/positions', [PositionController::class, 'getPositions']);
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);
             Route::post('/logout', [EmployeeController::class, "logout"]);
@@ -152,9 +158,9 @@ Route::group(["prefix" => "v0.1"], function () {
         });
 
         // Fetch Clocked Workers Data (New Route for ClockedChartsController)
-       Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); 
+        Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']);
 
-      
+
 
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);
@@ -207,6 +213,5 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::put('/{id}/assign', [TaskController::class, 'assignTaskToEmployee']);
             Route::get('/employee/{employeeId}', [TaskController::class, 'getEmployeeTasks']);
         });
-
     });
 });
