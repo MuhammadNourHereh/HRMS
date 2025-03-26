@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             TaskSeeder::class,
             FeedbackSeeder::class,
-            ReportSeeder::class,
+            //ReportSeeder::class,
             OvertimeSeeder::class,
             SalarySeeder::class,
             DeductionSeeder::class,
