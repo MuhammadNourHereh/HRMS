@@ -36,6 +36,7 @@ jobs:
         run: |
           git fetch origin main
           git checkout main
+          cd hr-client
           npm run build
 
       # Deploy to Staging or Release Server based on the branch
