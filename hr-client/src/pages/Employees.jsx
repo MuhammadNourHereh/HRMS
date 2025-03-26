@@ -3,6 +3,9 @@ import { AppContext } from '../contexts/AppContext';
 import Modal from '../components/Modal';
 import DataTable from '../components/DataTable';
 import DeleteEmployeeModal from '../components/DeleteEmployeeModal';
+import EditEmployeeModal from '../components/EditEmployeeModal';
+import ViewEmployeeContent from '../components/ViewEmployeeContent';
+import '../styles/Employees.css';
 
 const ViewIcon = () => <i className="fas fa-eye"></i>;
 const EditIcon = () => <i className="fas fa-edit"></i>;
@@ -13,18 +16,15 @@ function Employees() {
     employees,
     loading,
     pagination,
-    selectedEmployee,
-    modalOpen,
     fetchEmployees,
-    handlePageChange,
-    viewEmployeeDetails,
-    closeModal,
-    deleteEmployee,
-    navigate
+    handlePageChange
   } = useContext(AppContext);
 
+  // Component state for modals
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [employeeToDelete, setEmployeeToDelete] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   useEffect(() => {
     fetchEmployees(pagination.current_page);
@@ -34,15 +34,47 @@ function Employees() {
     return `${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase();
   };
 
-  const handleShowDeleteModal = (employee) => {
-    setEmployeeToDelete(employee);
+  // Modal handlers
+  const handleOpenViewModal = (employee) => {
+    setSelectedEmployee(employee);
+    setViewModalOpen(true);
+  };
+  
+  const handleCloseViewModal = () => {
+    setViewModalOpen(false);
+  };
+  
+  const handleOpenEditModal = (employee = null) => {
+    setSelectedEmployee(employee);
+    setEditModalOpen(true);
+  };
+  
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false);
+  };
+  
+  const handleOpenDeleteModal = (employee) => {
+    setSelectedEmployee(employee);
     setDeleteModalOpen(true);
   };
-
   
-
-  const handleEditEmployee = (employeeId) => {
-    navigate(`/employees/edit/${employeeId}`);
+  const handleCloseDeleteModal = () => {
+    setDeleteModalOpen(false);
+  };
+  
+  // Handle edit/delete success
+  const handleEditSuccess = () => {
+    fetchEmployees(pagination.current_page);
+  };
+  
+  const handleDeleteSuccess = () => {
+    fetchEmployees(pagination.current_page);
+  };
+  
+  // Handle transition from view to edit
+  const handleViewToEdit = () => {
+    setViewModalOpen(false);
+    setEditModalOpen(true);
   };
 
   const columns = [
@@ -95,22 +127,22 @@ function Employees() {
       renderCell: (row) => (
         <div className="actions-cell">
           <button 
-            className="action-button"
-            onClick={() => viewEmployeeDetails(row)}
-            title="View Details"
+            className="action-button view-button" 
+            onClick={() => handleOpenViewModal(row)}
+            title="View"
           >
             <ViewIcon />
           </button>
           <button 
             className="action-button edit-button" 
-            onClick={() => handleEditEmployee(row.id)}
+            onClick={() => handleOpenEditModal(row)}
             title="Edit"
           >
             <EditIcon />
           </button>
           <button 
-            className="action-button delete-button" 
-            onClick={() => handleShowDeleteModal(row)}
+            className="action-button" 
+            onClick={() => handleOpenDeleteModal(row)}
             title="Delete"
           >
             <DeleteIcon />
@@ -122,8 +154,14 @@ function Employees() {
 
   return (
     <div className="container margin-right">
-      <header>
+      <header className="page-header">
         <h1>Employee Directory</h1>
+        <button 
+          className="btn-btn"
+          onClick={() => handleOpenEditModal(null)}
+        >
+          Add Employee
+        </button>
       </header>
       
       <main>
@@ -141,86 +179,35 @@ function Employees() {
           />
         </div>
 
-        {/* Employee Details Modal */}
+        {/* View Employee Modal */}
         <Modal 
-          isOpen={modalOpen} 
-          onClose={closeModal}
-          title={selectedEmployee ? `${selectedEmployee.first_name} ${selectedEmployee.last_name} Details` : 'Employee Details'}
-          fullscreen={true}
+          isOpen={viewModalOpen}
+          onClose={handleCloseViewModal}
+          title="Employee Details"
+          fullscreen={false}
         >
           {selectedEmployee && (
-            <div className="employee-details">
-              <div className="detail-group">
-                <div className="detail-avatar">
-                  {getInitials(selectedEmployee.first_name, selectedEmployee.last_name)}
-                </div>
-                <h3>{`${selectedEmployee.first_name} ${selectedEmployee.last_name}`}</h3>
-                <span className={`status-badge status-${selectedEmployee.role.toLowerCase()}`}>
-                  {selectedEmployee.role}
-                </span>
-              </div>
-              
-              <div className="detail-row">
-                <div className="detail-label">Department</div>
-                <div className="detail-value">{selectedEmployee.department?.department_name || 'N/A'}</div>
-              </div>
-              
-              <div className="detail-row">
-                <div className="detail-label">Position</div>
-                <div className="detail-value">{selectedEmployee.position?.position_name || 'N/A'}</div>
-              </div>
-              
-              <div className="detail-row">
-                <div className="detail-label">Email</div>
-                <div className="detail-value">{selectedEmployee.email}</div>
-              </div>
-              
-              <div className="detail-row">
-                <div className="detail-label">Phone</div>
-                <div className="detail-value">{selectedEmployee.phone_number}</div>
-              </div>
-              
-              <div className="detail-row">
-                <div className="detail-label">Address</div>
-                <div className="detail-value">{selectedEmployee.address}</div>
-              </div>
-              
-              <div className="detail-row">
-                <div className="detail-label">Date of Birth</div>
-                <div className="detail-value">
-                  {new Date(selectedEmployee.date_of_birth).toLocaleDateString()}
-                </div>
-              </div>
-              
-              <div className="detail-row">
-                <div className="detail-label">Salary</div>
-                <div className="detail-value">${selectedEmployee.salary}</div>
-              </div>
-              
-              <div className="modal-actions">
-                <button 
-                  className="button button-secondary" 
-                  onClick={closeModal}
-                >
-                  Close
-                </button>
-                <button 
-                  className="button button-primary"
-                  onClick={() => handleEditEmployee(selectedEmployee.id)}
-                >
-                  Edit Employee
-                </button>
-              </div>
-            </div>
+            <ViewEmployeeContent 
+              employee={selectedEmployee} 
+              onEdit={handleViewToEdit}
+            />
           )}
         </Modal>
         
-        {/* Delete Confirmation Modal */}
+        {/* Edit Employee Modal */}
+        <EditEmployeeModal 
+          isOpen={editModalOpen}
+          onClose={handleCloseEditModal}
+          employee={selectedEmployee}
+          onSuccess={handleEditSuccess}
+        />
+        
+        {/* Delete Employee Modal */}
         <DeleteEmployeeModal
           isOpen={deleteModalOpen}
-          onClose={() => setDeleteModalOpen(false)}
-          onDelete={deleteEmployee}
-          employee={employeeToDelete}
+          onClose={handleCloseDeleteModal}
+          employee={selectedEmployee}
+          onDelete={handleDeleteSuccess}
         />
       </main>
     </div>
