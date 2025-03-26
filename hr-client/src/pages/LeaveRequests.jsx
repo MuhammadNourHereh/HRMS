@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { request } from "../utils/remote/axios"; 
 import "../styles/LeaveRequests.css";
-import LeaveDetails from "../components/LeaveDetails";
+// import LeaveDetails from "../components/LeaveDetails";
 
 const LeaveRequests = () => {
     const [leaves, setLeaves] = useState([]);
@@ -43,7 +43,7 @@ const LeaveRequests = () => {
     };
   
     return (
-<div className="leave-container">
+<div className="leave-container margin-left">
       <h2>Leave Requests</h2>
 
       <div className="leave-list">

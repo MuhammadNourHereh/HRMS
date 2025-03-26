@@ -4,7 +4,7 @@ import DocumentSearch from './DocumentSearch'; // Import DocumentSearch componen
 
 function DocumentManagement() {
   return (
-    <div className='container center'>
+    <div className='container center margin-left'>
       <h1>Employee Document Management</h1>
       <div className='box'>
       <DocumentUpload /> {/* Render DocumentUpload component */}

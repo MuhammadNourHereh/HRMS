@@ -17,7 +17,7 @@ function Content() {
         <p><strong>Status:</strong> Active</p>
       </section>
 
-      <section id="attendance-tracking">
+      <section className='' id="attendance-tracking">
         <h3>
           {/* Link to navigate to GeolocationLogger page */}
           <Link to="/geolocation">Attendance Tracking</Link>
@@ -27,7 +27,7 @@ function Content() {
       </section>
 
       <section id="leave-management">
-        <h3>Leave Management</h3>
+        <h3><Link to="/LeaveRequests">LeaveRequests </Link></h3>
         <p><strong>Leave Type:</strong> Annual Leave</p>
         <p><strong>Status:</strong> Pending Approval</p>
         <p><strong>Requested Dates:</strong> March 20-22, 2025</p>

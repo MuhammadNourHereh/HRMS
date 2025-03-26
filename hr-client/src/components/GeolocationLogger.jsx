@@ -69,7 +69,7 @@ const GeolocationLogger = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container margin-left">
       {/* Action selection */}
       {action === null && (
         <div className="action-buttons box-accent">
