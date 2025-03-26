@@ -23,6 +23,11 @@ Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);
     // authorised apis
+    Route::get('/leaves', [LeaveController::class, 'index']);
+    Route::get('/leaves/department/{departmentId}', [LeaveController::class, 'getByDepartment']);
+    Route::patch('/leave/{leave}/approve', [LeaveController::class, 'approve']);
+    Route::patch('/leave/{leave}/reject', [LeaveController::class, 'reject']);
+    
     Route::middleware('auth:employee')->group(function () {
         Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
             Route::prefix('users')->group(function () {
@@ -47,9 +52,7 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::post('/add-update-review-cycle/{id}', [ReviewCycleController::class, "addOrUpdateReviewCycle"]);
                 Route::post('/delete-review-cycle/{id}', [ReviewCycleController::class, "deleteReviewCycle"]);
             });
-            Route::get('/leaves', [LeaveController::class, 'index']);
-            Route::get('/leaves/department/{departmentId}', [LeaveController::class, 'getByDepartment']);
-        
+
             Route::prefix('salaries')->group(function () {
                 Route::get('/', [SalaryController::class, 'index']);
                 Route::get('{id}', [SalaryController::class, 'show']);
@@ -97,8 +100,7 @@ Route::group(["prefix" => "v0.1"], function () {
             });
 
 
-            Route::patch('/leave/{leave}/approve', [LeaveController::class, 'approve']);
-            Route::patch('/leave/{leave}/reject', [LeaveController::class, 'reject']);
+
         
             Route::prefix('leave-policies')->group(function () {
                 Route::get('/', [LeavePolicyController::class, 'index']); 
