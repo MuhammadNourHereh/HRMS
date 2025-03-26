@@ -3,25 +3,29 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\GoalController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\EmployeeController;
+
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DeductionController;
+use App\Http\Controllers\EmployeeController; 
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LeavePolicyController;
+
 use App\Http\Controllers\ReviewCycleController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\OnboardingTaskController;
 use App\Http\Controllers\PerformancesReviewController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
-use App\Http\Controllers\GoalController;
 
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
@@ -142,19 +146,12 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::post('/documents/upload/test', function () {
             return response()->json(['message' => 'API is working!']);
         });
-    });
+    
 
     // Employee Clocking Routes
     Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
     Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
-});
-        // Employee Clocking Routes
-        Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
-        Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
 
-        Route::post('/documents/upload/test', function () {
-            return response()->json(['message' => 'API is working!']);
-        });
 
         //Candidate Routes 
         Route::prefix('candidates')->group(function () {
@@ -181,9 +178,29 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post('/{id}', [OnboardingTaskController::class, 'addOrUpdateTask']);
             Route::delete('/{id}', [OnboardingTaskController::class, 'deleteTask']);
         });
-    
 
+        // Project Routes
+        Route::prefix('projects')->group(function () {
+            Route::get('/', [ProjectController::class, 'getProjects']);
+            Route::get('/stats', [ProjectController::class, 'getProjectsStats']);
+            Route::get('/{id}', [ProjectController::class, 'getProjectById']);
+            Route::post('/{id}', [ProjectController::class, 'addOrUpdateProject']);
+            Route::delete('/{id}', [ProjectController::class, 'deleteProject']);
+            Route::put('/{id}/status', [ProjectController::class, 'updateProjectStatus']);
+        });
 
-    
+        // Task Routes
+        Route::prefix('tasks')->group(function () {
+            Route::get('/', [TaskController::class, 'getTasks']);
+            Route::get('/board', [TaskController::class, 'getTaskBoard']);
+            Route::get('/stats', [TaskController::class, 'getTasksStats']);
+            Route::get('/{id}', [TaskController::class, 'getTaskById']);
+            Route::post('/{id}', [TaskController::class, 'addOrUpdateTask']);
+            Route::delete('/{id}', [TaskController::class, 'deleteTask']);
+            Route::put('/{id}/status', [TaskController::class, 'updateTaskStatus']);
+            Route::put('/{id}/assign', [TaskController::class, 'assignTaskToEmployee']);
+            Route::get('/employee/{employeeId}', [TaskController::class, 'getEmployeeTasks']);
+        });
 
-
+    });
+});
