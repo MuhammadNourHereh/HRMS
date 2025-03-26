@@ -55,7 +55,7 @@ Route::group(["prefix" => "v0.1"], function () {
     Route::post('/login', [EmployeeController::class, "login"]);
     
     // authorized apis
-    Route::middleware('auth:employee')->group(function () {
+    //Route::middleware('auth:employee')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);
@@ -169,6 +169,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::delete('/{id}', [CandidateController::class, 'deleteCandidate']);
             Route::put('/{id}/status', [CandidateController::class, 'updateCandidateStatus']);
             Route::get('/status/{status}', [CandidateController::class, 'getCandidatesByStatus']);
+            Route::get('/accepted-candidates', [CandidateController::class, 'getAcceptedCandidates']);
         });
 
         // Onboarding Task Routes
@@ -209,4 +210,4 @@ Route::group(["prefix" => "v0.1"], function () {
         });
 
     });
-});
+//});
