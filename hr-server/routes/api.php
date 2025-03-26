@@ -41,7 +41,12 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
         Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
     });    
-
+    Route::prefix('enrollments')->group(function () {
+        Route::get('/', [EnrollmentController::class, 'index']);
+        Route::post('/', [EnrollmentController::class, 'store']);
+        Route::get('{id}', [EnrollmentController::class, 'show']);
+        Route::put('{enrollment}', [EnrollmentController::class, 'update']);
+    });
     Route::middleware('auth:employee')->group(function () {
         // Employee Clocking Routes
         Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
@@ -124,12 +129,7 @@ Route::group(["prefix" => "v0.1"], function () {
             });
             
             //enrollments
-            Route::prefix('enrollments')->group(function () {
-                Route::get('/', [EnrollmentController::class, 'index']);
-                Route::post('/', [EnrollmentController::class, 'store']);
-                Route::get('{id}', [EnrollmentController::class, 'show']);
-                Route::put('{enrollment}', [EnrollmentController::class, 'update']);
-            });
+
                 
             //programs
             Route::get('/programs', [ProgramController::class, 'index']);
