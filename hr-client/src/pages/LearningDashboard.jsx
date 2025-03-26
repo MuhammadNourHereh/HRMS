@@ -45,13 +45,23 @@ const LearningDashboard = () => {
         <div className="course-list">
           {certifications.map((program) => (
             <div className="course-card" key={program.id}>
-              <img src={`${process.env.APP_URL}${program.picture_url}`} alt={program.title} className="course-img" />
+              <img
+                src={
+                  program.picture_url
+                    ? `${import.meta.env.VITE_API_BASE_URL}/storage/${program.picture_url.replace('/storage/', '')}`
+                    : '/default-course.png'
+                }
+                alt={program.name}
+                onError={(e) => (e.target.src = '/default-course.png')}
+                loading="lazy"
+              />            
+            <div className="course-data">                       
               <div className="course-info">
                 <h3>{program.name}</h3>
                 <p>{program.duration} hours</p>
-                <p> {program.description}</p>
-              </div>
+              </div> 
               <button className="assign-btn">Assign</button>
+            </div> 
             </div>
           ))}
         </div>
@@ -63,13 +73,23 @@ const LearningDashboard = () => {
         <div className="course-list">
           {courses.map((program) => (
             <div className="course-card" key={program.id}>
-              <img src={program.picture_url || "/default-course.png"} alt={program.title} className="course-img" />
+              <img
+                src={
+                  program.picture_url
+                    ? `${import.meta.env.VITE_API_BASE_URL}/storage/${program.picture_url.replace('/storage/', '')}`
+                    : '/default-course.png'
+                }
+                alt={program.name}
+                onError={(e) => (e.target.src = '/default-course.png')}
+                loading="lazy"
+              />                         
+             <div className="course-data">                       
               <div className="course-info">
                 <h3>{program.name}</h3>
                 <p>{program.duration} hours</p>
-                <p>{program.description}</p>
-              </div>
+              </div> 
               <button className="assign-btn">Assign</button>
+            </div> 
             </div>
           ))}
         </div>
@@ -78,13 +98,26 @@ const LearningDashboard = () => {
       {/* Assessment Skills */}
       <section>
         <h2>Assessment Skills</h2>
-        <div className="skill-list">
+        <div className="course-list">
           {skills.map((program) => (
-            <div className="skill-card" key={program.id}>
-              <img src={program.image || "/default-skill.png"} alt={program.name} className="skill-icon" />
-              <h3>{program.name}</h3>
+            <div className="course-card" key={program.id}>
+              <img
+                src={
+                  program.picture_url
+                    ? `${import.meta.env.VITE_API_BASE_URL}/storage/${program.picture_url.replace('/storage/', '')}`
+                    : '/default-course.png'
+                }
+                alt={program.name}
+                onError={(e) => (e.target.src = '/default-course.png')}
+                loading="lazy"
+              /> 
+              <div className="course-data">                       
+              <div className="course-info">
+                <h3>{program.name}</h3>
+                <p>{program.duration} hours</p>
+              </div> 
               <button className="assign-btn">Assign</button>
-            </div>
+            </div> </div>
           ))}
         </div>
       </section>
