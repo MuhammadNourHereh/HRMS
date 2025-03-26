@@ -21,6 +21,7 @@ use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\OnboardingTaskController;
 use App\Http\Controllers\PerformancesReviewController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\GoalProgressController;
 
@@ -76,7 +77,15 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post('/delete-progress/{id}', [GoalProgressController::class, 'deleteProgress']);
             Route::get('/get-latest-progress/{goalId}', [GoalProgressController::class, 'getLatestProgress']);
         });
-
+        // feedbacks
+        Route::prefix('feedbacks')->group(function () {
+            Route::get('/get-feedbacks', [FeedbackController::class, 'getFeedbacks']);
+            Route::get('/get-feedback-by-id/{id}', [FeedbackController::class, 'getFeedbackById']);
+            Route::post('/add-update-feedback/{id}', [FeedbackController::class, 'addOrUpdateFeedback']);
+            Route::post('/delete-feedback/{id}', [FeedbackController::class, 'deleteFeedback']);
+            Route::get('/get-employee-feedbacks/{employeeId}', [FeedbackController::class, 'getEmployeeFeedbacks']);
+            Route::get('/get-review-cycle-feedbacks/{reviewCycleId}', [FeedbackController::class, 'getReviewCycleFeedbacks']);
+        });
         Route::get('/leaves', [LeaveController::class, 'index']);
         Route::get('/leaves/department/{departmentId}', [LeaveController::class, 'getByDepartment']);
 

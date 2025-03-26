@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             PerformancesReviewSeeder::class,
             GoalSeeder::class,
             GoalProgressSeeder::class,
+            FeedbackSeeder::class,
             // candidatesSeeder::class,
             // EmployeeOnboardingSeeder::class,
             // OnboardingTaskSeeder::class,
