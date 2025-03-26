@@ -22,8 +22,12 @@ class DatabaseSeeder extends Seeder
             EnrollmentSeeder::class,
             ReviewCycleSeeder::class,
             PerformancesReviewSeeder::class,
-            GoalSeeder::class
-
+            GoalSeeder::class,
+            candidatesSeeder::class,
+            EmployeeOnboardingSeeder::class,
+            OnboardingTaskSeeder::class,
+            ReportSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }
