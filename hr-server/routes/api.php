@@ -128,7 +128,7 @@ Route::group(["prefix" => "v0.1"], function () {
         });
 
         // Fetch Clocked Workers Data (New Route for ClockedChartsController)
-        Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); 
+       z Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); 
 
         // Document Routes (Upload, Get, Update, Delete)
         Route::prefix('documents')->group(function () {

@@ -88,6 +88,24 @@
 
 // export default App;
 
+// import "./App.css";  
+// import React from 'react';
+// import FlowchartClockedWorker from './pages/FlowchartClockedWorker';
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <FlowchartClockedWorker />
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
 
 
 import "./App.css"; 
@@ -95,9 +113,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-//import Content from './components/Content';
-//import GeolocationLogger from './components/GeolocationLogger';
-//import DocumentManagement from './components/DocumentManagement'; // Import DocumentManagement component
+import Content from './components/Content';
+import GeolocationLogger from './components/GeolocationLogger';
+import DocumentManagement from './components/DocumentManagement'; // Import DocumentManagement component
 
 function App() {
   return (
