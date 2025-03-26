@@ -10,7 +10,6 @@ use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DocumentController;
-
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\CandidateController;
@@ -18,7 +17,6 @@ use App\Http\Controllers\DeductionController;
 use App\Http\Controllers\EmployeeController; 
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LeavePolicyController;
-
 use App\Http\Controllers\ReviewCycleController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\OnboardingTaskController;
@@ -31,7 +29,8 @@ use App\Http\Controllers\GoalProgressController;
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);
-    // authorised apis
+    
+    // authorized apis
     Route::middleware('auth:employee')->group(function () {
 
         Route::prefix('users')->group(function () {
@@ -62,6 +61,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get('/get-employee-performance-reviews/{employeeId}', [PerformancesReviewController::class, "getEmployeePerformanceReviews"]);
             Route::get('/get-review-cycle-performance-reviews/{reviewCycleId}', [PerformancesReviewController::class, "getReviewCyclePerformanceReviews"]);
         });
+
         // goals
         Route::prefix('goals')->group(function () {
             Route::get('/get-goals', [GoalController::class, 'getGoals']);
@@ -72,7 +72,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get('/get-review-cycle-goals/{reviewCycleId}', [GoalController::class, 'getReviewCycleGoals']);
         });
 
-        //goal progress
+        // goal progress
         Route::prefix('progress')->group(function () {
             Route::get('/get-goal-progresses/{goalId}', [GoalProgressController::class, 'getGoalProgresses']);
             Route::get('/get-progress-by-id/{id}', [GoalProgressController::class, 'getProgressById']);
@@ -80,6 +80,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post('/delete-progress/{id}', [GoalProgressController::class, 'deleteProgress']);
             Route::get('/get-latest-progress/{goalId}', [GoalProgressController::class, 'getLatestProgress']);
         });
+
         // feedbacks
         Route::prefix('feedbacks')->group(function () {
             Route::get('/get-feedbacks', [FeedbackController::class, 'getFeedbacks']);
@@ -89,12 +90,12 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get('/get-employee-feedbacks/{employeeId}', [FeedbackController::class, 'getEmployeeFeedbacks']);
             Route::get('/get-review-cycle-feedbacks/{reviewCycleId}', [FeedbackController::class, 'getReviewCycleFeedbacks']);
         });
+
         Route::get('/leaves', [LeaveController::class, 'index']);
         Route::get('/leaves/department/{departmentId}', [LeaveController::class, 'getByDepartment']);
 
         // payrolls apis
         Route::prefix('salaries')->group(function () {
-
             Route::get('/', [SalaryController::class, 'index']);
             Route::get('{id}', [SalaryController::class, 'show']);
             Route::post('/', [SalaryController::class, 'store']);
@@ -126,6 +127,9 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::delete('{id}', [OvertimeController::class, 'destroy']);
         });
 
+        // Fetch Clocked Workers Data (New Route for ClockedChartsController)
+        Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); 
+
         // Document Routes (Upload, Get, Update, Delete)
         Route::prefix('documents')->group(function () {
             Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
@@ -134,59 +138,24 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
         });
 
-
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);
             Route::post('/logout', [EmployeeController::class, "logout"]);
         });
 
-
-        Route::patch('/leave/{leave}/approve', [LeaveController::class, 'approve']);
-        Route::patch('/leave/{leave}/reject', [LeaveController::class, 'reject']);
-
-        Route::prefix('leave-policies')->group(function () {
-            Route::get('/', [LeavePolicyController::class, 'index']);
-            Route::get('/{employeeId}', [LeavePolicyController::class, 'show']);
+        // Candidate Routes 
+        Route::prefix('candidates')->group(function () {
+            Route::get('/', [CandidateController::class, 'getCandidates']);
+            Route::get('/{id}', [CandidateController::class, 'getCandidateById']);
+            Route::post('/{id}', [CandidateController::class, 'addOrUpdateCandidate']);
+            Route::delete('/{id}', [CandidateController::class, 'deleteCandidate']);
+            Route::put('/{id}/status', [CandidateController::class, 'updateCandidateStatus']);
+            Route::get('/status/{status}', [CandidateController::class, 'getCandidatesByStatus']);
         });
 
-        Route::prefix('enrollments')->group(function () {
-            Route::get('/', [EnrollmentController::class, 'index']);
-            Route::post('/', [EnrollmentController::class, 'store']);
-            Route::get('{id}', [EnrollmentController::class, 'show']);
-            Route::put('{enrollment}', [EnrollmentController::class, 'update']);
-        });
-
-        Route::get('/programs', [ProgramController::class, 'index']);
-        Route::get('/program/{program}', [ProgramController::class, 'show']);
-
-        Route::get('/certifications', [CertificationController::class, 'pending']);
-        Route::put('/certifications/{certification}', [CertificationController::class, 'approve']);
-
-        Route::post('/documents/upload/test', function () {
-            return response()->json(['message' => 'API is working!']);
-        });
-    
-
-    // Employee Clocking Routes
-    Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
-    Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
-
-
-//Candidate Routes 
-Route::prefix('candidates')->group(function () {
-    Route::get('/', [CandidateController::class, 'getCandidates']);
-    Route::get('/{id}', [CandidateController::class, 'getCandidateById']);
-    Route::post('/{id}', [CandidateController::class, 'addOrUpdateCandidate']);
-    Route::delete('/{id}', [CandidateController::class, 'deleteCandidate']);
-    Route::put('/{id}/status', [CandidateController::class, 'updateCandidateStatus']);
-    Route::get('/status/{status}', [CandidateController::class, 'getCandidatesByStatus']);
-});
-
-//onboarding Task Routes
-
-    Route::prefix('onboarding-tasks')->group(function () {
-            
-        Route::post('/assign', [OnboardingTaskController::class, 'assignTaskToEmployee']);
+        // Onboarding Task Routes
+        Route::prefix('onboarding-tasks')->group(function () {
+            Route::post('/assign', [OnboardingTaskController::class, 'assignTaskToEmployee']);
             Route::put('/status/{id}', [OnboardingTaskController::class, 'updateTaskStatus']);
             Route::get('/employee/{employeeId}', [OnboardingTaskController::class, 'getEmployeeOnboardingTasks']);
             Route::post('/template', [OnboardingTaskController::class, 'createTemplate']);
