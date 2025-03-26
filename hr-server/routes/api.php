@@ -3,6 +3,7 @@
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 use App\Http\Controllers\MainClockedWorkers;
+use App\Http\Controllers\ClockedChartsController; // Import your new controller
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,9 @@ Route::prefix('documents')->group(function () {
 // Employee Clocking Routes
 Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
 Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
+
+// Fetch Clocked Workers Data (New Route for ClockedChartsController)
+Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
 
 Route::post('/documents/upload/test', function () {
     return response()->json(['message' => 'API is working!']);

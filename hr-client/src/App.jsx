@@ -8,8 +8,8 @@
 //   return (
 //      <div className="App">
 //       <h1>Employee </h1>
-//       <SnippetForm /> 
-//        <SnippetList /> 
+//       <SnippetForm />
+//        <SnippetList />
 //      </div>
 //   );
 // }
@@ -63,7 +63,7 @@
 
 
 
-// import "./App.css"; 
+// import "./App.css";
 // import React from 'react';
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import Navbar from './components/Navbar';
@@ -88,6 +88,19 @@
 
 // export default App;
 
+// import "./App.css";  
+// import React from 'react';
+// import FlowchartClockedWorker from './pages/FlowchartClockedWorker';
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <FlowchartClockedWorker />
+//     </div>
+//   );
+// }
+
+// export default App;
 
 
 
@@ -141,43 +154,3 @@ export default App;
 
 
 
-
-
-// import "./App.css"; 
-// import React from 'react'; 
-// import DocumentUpload from './components/DocumentUpload';
-// //  import DocumentDetail from "./components/DocumentDisplay";
-// import DocumentSearch from './components/DocumentSearch';
-// import GeolocationLogger from './components/GeolocationLogger';
-
-// function App() {
-//     return (
-// //        <div className="container-white">  
-// //   <h1 className="h-tag">Code Snippet Manager</h1>
-      
-// //   <SnippetForm />
-// //   <SnippetList />
-        
-//         //         </div>
-//         <div>
-//       <h1>Employee Document Upload</h1>
-//         <DocumentUpload /> {/* Use the component here */}
-//         <div className="box-accent"></div>
-//         <div>
-//           <DocumentUpload />
-        
-
-//         </div>
-//         <div className="box-accent"></div>
-//         <div>
-//           <h1>Employee Clock-In/Out</h1>
-//           <GeolocationLogger />
-
-//         </div>
-//     </div>
-        
-
-//     );
-// }
-
-// export default App;
