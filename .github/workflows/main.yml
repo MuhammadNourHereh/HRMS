@@ -54,11 +54,15 @@ jobs:
           # Determine target server based on the branch
           if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
-            TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           elif [[ "${GITHUB_REF}" == "refs/heads/release" ]]; then
             TARGET_SERVER_IP=$RELEASE_SERVER_IP
-            TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           fi
+          
+          TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
           # Deploy the build folder to the appropriate server
+          ssh $SERVER_USER@$TARGET_SERVER_IP "mkdir -p $TARGET_SERVER_PATH"
           echo "Deploying to $TARGET_SERVER_IP:$TARGET_SERVER_PATH"
           scp -v -r hr-client/dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
+
+
+          
