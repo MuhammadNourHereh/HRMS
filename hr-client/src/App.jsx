@@ -9,6 +9,9 @@ import GeolocationLogger from './components/GeolocationLogger';
 import DocumentManagement from './components/DocumentManagement'; // Import DocumentManagement component
 import LeaveRequests from './pages/LeaveRequests';
 import LeaveDetails from './components/LeaveDetails';
+import Payrolls from "./pages/Payrolls";
+import PayrollsAprove from "./pages/PayrollsAprove";
+import PayrollsDone from "./pages/PayrollsDone";
 // import LeaveDisplay from './components/LeaveDisplay'; // Use PascalCase for consistency
 
 function App() {
@@ -24,6 +27,15 @@ function App() {
             <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
             <Route path="/LeaveRequests" element={<LeaveRequests />} /> {/* LeaveRequests route */}
             <Route path="/LeaveDetails" element={<LeaveDetails />} /> {/* LeaveDetails route */}
+            {/**
+             * these are payrolls pages   
+             * @auther muhammad nour hereh 
+             */}
+
+            <Route path="/Payrolls" element={<Payrolls />} />
+            <Route path="/PayrollsApprove" element={<PayrollsAprove />} />
+            <Route path="/PayrollsDone" element={<PayrollsDone />} />
+
             {/* <Route path="/leaveDisplay" element={<LeaveDisplay />} /> leaveDisplay route */}
           </Routes>
         </div>
