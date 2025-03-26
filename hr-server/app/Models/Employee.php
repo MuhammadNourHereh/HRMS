@@ -165,6 +165,11 @@ class Employee extends Authenticatable implements JWTSubject
         });
     }
 
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+
 public function performanceReviews()
 {
     return $this->hasMany(PerformancesReview::class);

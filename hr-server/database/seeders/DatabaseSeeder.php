@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ReviewCycle;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,10 @@ class DatabaseSeeder extends Seeder
             LeaveSeeder::class,
             ProgramSeeder::class,
             EnrollmentSeeder::class,
+            ReviewCycleSeeder::class,
+            PerformancesReviewSeeder::class,
+            GoalSeeder::class
+
         ]);
     }
 }

@@ -39,9 +39,9 @@ class ReviewCycle extends Model
     return $this->hasMany(Feedback::class);
 }
 
-
+*/
 public function goals()
 {
     return $this->hasMany(Goal::class);
-} */
+} 
 }
