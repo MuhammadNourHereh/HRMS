@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\OvertimeHour;
+use App\Models\Overtime;
 
 class OvertimeController extends Controller
 {
     // Get all overtime records
     public function index()
     {
-        return response()->json(OvertimeHour::all(), 200);
+        return response()->json(Overtime::all(), 200);
     }
 
     // Get a specific overtime record by ID
     public function show($id)
     {
-        $overtime = OvertimeHour::find($id);
+        $overtime = Overtime::find($id);
         if (!$overtime) {
             return response()->json(['message' => 'Overtime record not found'], 404);
         }
@@ -33,14 +33,14 @@ class OvertimeController extends Controller
             'payed_at' => 'nullable|date',
         ]);
 
-        $overtime = OvertimeHour::create($validated);
+        $overtime = Overtime::create($validated);
         return response()->json($overtime, 201);
     }
 
     // Update an existing overtime record
     public function update(Request $request, $id)
     {
-        $overtime = OvertimeHour::find($id);
+        $overtime = Overtime::find($id);
         if (!$overtime) {
             return response()->json(['message' => 'Overtime record not found'], 404);
         }
@@ -59,7 +59,7 @@ class OvertimeController extends Controller
     // Delete an overtime record (soft delete)
     public function destroy($id)
     {
-        $overtime = OvertimeHour::find($id);
+        $overtime = Overtime::find($id);
         if (!$overtime) {
             return response()->json(['message' => 'Overtime record not found'], 404);
         }

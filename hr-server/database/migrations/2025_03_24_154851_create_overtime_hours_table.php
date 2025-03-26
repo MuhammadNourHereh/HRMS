@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('overtime_hours', function (Blueprint $table) {
+        Schema::create('overtimes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('hours', 5, 2);
