@@ -50,7 +50,7 @@ class CertificationController extends Controller
             if (!isset($uploadData['file_url']) || $uploadData['file_url']===null) {
                 throw new \Exception('File upload failed');
             }
-            echo $uploadData['file_url'];
+
             $certification->update([
                 'document_url' => $uploadData['file_url'],
                 'issued_date' => $validated['issued_date'],
