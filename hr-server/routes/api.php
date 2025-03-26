@@ -9,8 +9,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\MainClockedWorkers;
+
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DeductionController;
@@ -21,10 +20,35 @@ use App\Http\Controllers\ReviewCycleController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\OnboardingTaskController;
 use App\Http\Controllers\PerformancesReviewController;
-use App\Http\Controllers\deleteUpdateDisplayDocumentController;
+
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\GoalProgressController;
+
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\deleteUpdateDisplayDocumentController;
+use App\Http\Controllers\MainClockedWorkers;
+use App\Http\Controllers\ClockedChartsController; // Import your new controller
+
+// Document Routes (Upload, Get, Update, Delete)
+Route::prefix('documents')->group(function () {
+    Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
+    Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
+    Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
+    Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
+});
+
+// Employee Clocking Routes
+Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
+Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
+
+// Fetch Clocked Workers Data (New Route for ClockedChartsController)
+Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
+
+Route::post('/documents/upload/test', function () {
+    return response()->json(['message' => 'API is working!']);
+});
+
 
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
@@ -128,15 +152,9 @@ Route::group(["prefix" => "v0.1"], function () {
         });
 
         // Fetch Clocked Workers Data (New Route for ClockedChartsController)
-        Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); 
+       Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); 
 
-        // Document Routes (Upload, Get, Update, Delete)
-        Route::prefix('documents')->group(function () {
-            Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
-            Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
-            Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
-            Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
-        });
+      
 
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);

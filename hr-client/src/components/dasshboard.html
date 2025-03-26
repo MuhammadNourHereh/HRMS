@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HR Dashboard Project</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e1e5f2;
+            color: #022b3a;
+        }
+
+        /* Top Navbar (Full Width) */
+        .navbar {
+            background-color: #122620;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 60px;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 100%;
+        }
+
+        .nav-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin: 0 20px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 40px 8px 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(26, 182, 156, 0.6);
+        }
+
+        .search-container .fa-magnifying-glass {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #122620;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-right a {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-right a:hover {
+            color: #1ABC9C;
+        }
+
+        /* Wrapper for Sidebar and Main Content */
+        .wrapper {
+            display: flex;
+            margin-top: 60px;
+            /* To account for the fixed navbar */
+        }
+
+        /* Sidebar with scrolling */
+        .sidebar {
+            background-color: #2E4053;
+            color: white;
+            width: 100px;
+            height: 100vh;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-y: auto;
+            /* Enables scrolling */
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #3498DB;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 100px;
+            padding: 20px;
+            width: calc(100% - 100px);
+        }
+
+        .content section {
+            margin-bottom: 30px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #bfdbf7;
+        }
+
+        .content section h2 {
+            margin-bottom: 15px;
+            color: #022b3a;
+        }
+
+        .content section h3 {
+            margin-top: 0;
+            color: #1ABC9C;
+        }
+
+        .content section p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navbar (Full Width) -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="#">
+                <img src="logo.png" alt="Company Logo">
+            </a>
+        </div>
+        <div class="nav-center">
+            <div class="search-container">
+                <input type="text" placeholder="Search...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="#" title="Settings"><i class="fa-solid fa-gear"></i></a>
+            <a href="#" title="Profile"><i class="fa-solid fa-user"></i></a>
+        </div>
+    </div>
+
+    <!-- Wrapper for Sidebar and Content -->
+    <div class="wrapper">
+        <!-- Sidebar with Icons -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="#employee-management" title="Employee Management"><i class="fa-solid fa-user-tie"></i></a>
+                </li>
+                <li><a href="#attendance-tracking" title="Attendance Tracking"><i class="fa-solid fa-clock"></i></a>
+                </li>
+                <li><a href="#leave-management" title="Leave Management"><i class="fa-solid fa-plane-departure"></i></a>
+                </li>
+                <li><a href="#payroll-integration" title="Payroll Integration"><i
+                            class="fa-solid fa-dollar-sign"></i></a></li>
+                <li><a href="#recruitment-onboarding" title="Recruitment &amp; Onboarding"><i
+                            class="fa-solid fa-user-plus"></i></a></li>
+                <li><a href="#performance-management" title="Performance Management"><i
+                            class="fa-solid fa-chart-line"></i></a></li>
+                <li><a href="#document-management" title="Document Management"><i class="fa-solid fa-folder"></i></a>
+                </li>
+                <li><a href="#training-development" title="Training &amp; Development"><i
+                            class="fa-solid fa-graduation-cap"></i></a></li>
+                <li><a href="#benefits-management" title="Benefits Management"><i class="fa-solid fa-heart"></i></a>
+                </li>
+                <li><a href="#compliance-reporting" title="Compliance &amp; Reporting"><i
+                            class="fa-solid fa-file-contract"></i></a></li>
+                <li><a href="#ai-agent-system" title="AI Agent System"><i class="fa-solid fa-robot"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+            <!-- Project Modules Section -->
+            <div id="modules">
+                <h2>Project Modules</h2>
+                <br>
+            </div>
+
+            <section id="employee-management">
+                <h3>Employee Management</h3>
+                <p><strong>Employee Name:</strong> John Doe</p>
+                <p><strong>Position:</strong> Software Engineer</p>
+                <p><strong>Email:</strong> johndoe@example.com</p>
+                <p><strong>Hire Date:</strong> January 15, 2020</p>
+                <p><strong>Status:</strong> Active</p>
+            </section>
+
+            <section id="attendance-tracking">
+                <h3>Attendance Tracking</h3>
+                <p><strong>Last Clock-In:</strong> 9:00 AM, March 18, 2025</p>
+                <p><strong>Status:</strong> On Time</p>
+            </section>
+
+            <section id="leave-management">
+                <h3>Leave Management</h3>
+                <p><strong>Leave Type:</strong> Annual Leave</p>
+                <p><strong>Status:</strong> Pending Approval</p>
+                <p><strong>Requested Dates:</strong> March 20-22, 2025</p>
+            </section>
+
+            <section id="payroll-integration">
+                <h3>Payroll Integration</h3>
+                <p><strong>Salary:</strong> $80,000/year</p>
+                <p><strong>Last Pay Date:</strong> March 15, 2025</p>
+                <p><strong>Next Pay Date:</strong> April 15, 2025</p>
+            </section>
+
+            <section id="recruitment-onboarding">
+                <h3>Recruitment &amp; Onboarding</h3>
+                <p><strong>Candidate Name:</strong> Sarah Lee</p>
+                <p><strong>Position:</strong> Junior Developer</p>
+                <p><strong>Status:</strong> Offer Extended</p>
+            </section>
+
+            <section id="performance-management">
+                <h3>Performance Management</h3>
+                <p><strong>Last Review:</strong> January 2025</p>
+                <p><strong>Performance Rating:</strong> Exceeds Expectations</p>
+            </section>
+
+            <section id="document-management">
+                <h3>Document Management</h3>
+                <p><strong>Last Document Uploaded:</strong> Employment Contract</p>
+                <p><strong>Status:</strong> Verified</p>
+            </section>
+
+            <section id="training-development">
+                <h3>Training &amp; Development</h3>
+                <p><strong>Current Course:</strong> JavaScript for Beginners</p>
+                <p><strong>Status:</strong> In Progress</p>
+            </section>
+
+            <section id="benefits-management">
+                <h3>Benefits Management</h3>
+                <p><strong>Health Plan:</strong> Gold Health Plan</p>
+                <p><strong>Retirement Option:</strong> 401(k) Matching</p>
+            </section>
+
+            <section id="compliance-reporting">
+                <h3>Compliance &amp; Reporting</h3>
+                <p><strong>Last Compliance Check:</strong> February 2025</p>
+                <p><strong>Status:</strong> Compliant</p>
+            </section>
+
+            <section id="ai-agent-system">
+                <h3>AI Agent System</h3>
+                <p><strong>Status:</strong> Active</p>
+                <p><strong>Last Query Answered:</strong> Leave Request Status</p>
+            </section>
+
+            <!-- Team Roles &amp; Responsibilities Section -->
+            <section id="team-roles">
+                <h2>Team Roles &amp; Responsibilities</h2>
+
+                <section id="communication-lead">
+                    <h3>Communication Lead (Member 1)</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, odit.</p>
+                </section>
+
+                <section id="uix-frontend-lead">
+                    <h3>UIX &amp; Frontend Lead (Member 2)</h3>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur, modi.</p>
+                </section>
+
+                <section id="backend-lead">
+                    <h3>Backend Lead (Member 3)</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, sequi?</p>
+                </section>
+
+                <section id="ops-lead">
+                    <h3>Ops Lead (Member 4)</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti, asperiores!</p>
+                </section>
+
+                <section id="product-owner">
+                    <h3>Product Owner (Member 5)</h3>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae, maxime..</p>
+                </section>
+
+                <section id="ai-agent-lead">
+                    <h3>AI Agent Lead (Member 6 or Member 4)</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, adipisci?.</p>
+                </section>
+            </section>
+        </div>
+    </div>
+
+</body>
+
+</html>
