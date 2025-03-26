@@ -1,16 +1,19 @@
 <?php
 namespace App\Models;
     
+use App\Models\Task;
+
 use App\Models\LeavePolicy;
 
+
+use App\Models\OnboardingTask;
+use App\Models\EmployeeOnboarding;
 use Illuminate\Database\Eloquent\Model;
-
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Employee extends Authenticatable implements JWTSubject
 {
@@ -165,6 +168,19 @@ class Employee extends Authenticatable implements JWTSubject
         });
     }
 
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+
+public function performanceReviews()
+{
+    return $this->hasMany(PerformancesReview::class);
+}
+public function feedbacks()
+{
+    return $this->hasMany(Feedback::class);
+}
     public function getJWTIdentifier()
     {
         return $this->getKey();
