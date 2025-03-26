@@ -33,20 +33,7 @@ use App\Http\Controllers\ClockedChartsController;
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
-    Route::get('/certifications', [CertificationController::class, 'pending']);
-    Route::post('/certifications/{certification}', [CertificationController::class, 'approve']);
-    Route::prefix('documents')->group(function () {
-        Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
-        Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
-        Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
-        Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
-    });    
-    Route::prefix('enrollments')->group(function () {
-        Route::get('/', [EnrollmentController::class, 'index']);
-        Route::post('/', [EnrollmentController::class, 'store']);
-        Route::get('{id}', [EnrollmentController::class, 'show']);
-        Route::put('{enrollment}', [EnrollmentController::class, 'update']);
-    });
+
     Route::middleware('auth:employee')->group(function () {
         // Employee Clocking Routes
         Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
@@ -55,7 +42,13 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
 
             // Document Routes (Upload, Get, Update, Delete)
-
+            Route::prefix('documents')->group(function () {
+                Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
+                Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
+                Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
+                Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
+            });    
+        
             // Fetch Clocked Workers Data (New Route for ClockedChartsController)
             Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
 
@@ -129,13 +122,20 @@ Route::group(["prefix" => "v0.1"], function () {
             });
             
             //enrollments
-
+            Route::prefix('enrollments')->group(function () {
+                Route::get('/', [EnrollmentController::class, 'index']);
+                Route::post('/', [EnrollmentController::class, 'store']);
+                Route::get('{id}', [EnrollmentController::class, 'show']);
+                Route::put('{enrollment}', [EnrollmentController::class, 'update']);
+            });
                 
             //programs
             Route::get('/programs', [ProgramController::class, 'index']);
             Route::get('/program/{program}', [ProgramController::class, 'show']);
                 
             //certifications
+            Route::get('/certifications', [CertificationController::class, 'pending']);
+            Route::post('/certifications/{certification}', [CertificationController::class, 'approve']);
 
             // payrolls apis
             Route::prefix('salaries')->group(function () {

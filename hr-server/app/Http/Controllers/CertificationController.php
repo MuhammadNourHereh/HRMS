@@ -24,8 +24,8 @@ class CertificationController extends Controller
         $validated = $request->validate([
             'issued_date' => 'required|date',
             'expiry_date' => 'required|date|after:issued_date',
-            'file_base64' => 'required|string', // Base64 encoded file
-            'file_description' => 'required|string',   // Original file name
+            'file_base64' => 'required|string', 
+            'file_description' => 'required|string',   
             'file_type' => 'required|string|in:pdf,jpg,jpeg,png',
         ]);
 
@@ -37,15 +37,13 @@ class CertificationController extends Controller
             $uploadRequest = new Request([
                 'employee_id' => $certification->employee_id,
                 'file_type' => $validated['file_type'],
-                'file' => $validated['file_base64'], // Base64 encoded file
+                'file' => $validated['file_base64'], 
                 'file_description' => $validated['file_description'],
             ]);
     
-            // Call the existing uploadDocument method from DocumentController
             $documentController = new DocumentController();
             $uploadResponse = $documentController->uploadDocument($uploadRequest);
     
-            // Extract response data (assuming it's JSON)
             $uploadData = json_decode($uploadResponse->getContent(), true);
             if (!isset($uploadData['file_url']) || $uploadData['file_url']===null) {
                 throw new \Exception('File upload failed');
