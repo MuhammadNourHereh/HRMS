@@ -11,7 +11,8 @@ class PerformancesReviewSeeder extends Seeder
  
     public function run(): void
     {
-      
+        // Reset the auto-increment to start from 5
+        DB::statement('ALTER TABLE performances_reviews AUTO_INCREMENT = 5');
         
         $performanceReviews = [
             // Q1 2025 Performance Reviews (Review Cycle ID 5)

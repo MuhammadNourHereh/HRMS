@@ -22,6 +22,7 @@ use App\Http\Controllers\OnboardingTaskController;
 use App\Http\Controllers\PerformancesReviewController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\GoalProgressController;
 
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
@@ -66,6 +67,16 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get('/get-employee-goals/{employeeId}', [GoalController::class, 'getEmployeeGoals']);
             Route::get('/get-review-cycle-goals/{reviewCycleId}', [GoalController::class, 'getReviewCycleGoals']);
         });
+
+        //goal progress
+        Route::prefix('progress')->group(function () {
+            Route::get('/get-goal-progresses/{goalId}', [GoalProgressController::class, 'getGoalProgresses']);
+            Route::get('/get-progress-by-id/{id}', [GoalProgressController::class, 'getProgressById']);
+            Route::post('/add-update-progress/{id}', [GoalProgressController::class, 'addOrUpdateProgress']);
+            Route::post('/delete-progress/{id}', [GoalProgressController::class, 'deleteProgress']);
+            Route::get('/get-latest-progress/{goalId}', [GoalProgressController::class, 'getLatestProgress']);
+        });
+
         Route::get('/leaves', [LeaveController::class, 'index']);
         Route::get('/leaves/department/{departmentId}', [LeaveController::class, 'getByDepartment']);
 
@@ -148,42 +159,36 @@ Route::group(["prefix" => "v0.1"], function () {
     Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
     Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
 });
-        // Employee Clocking Routes
-        Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
-        Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
+// Employee Clocking Routes
+Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
+Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
 
-        Route::post('/documents/upload/test', function () {
-            return response()->json(['message' => 'API is working!']);
-        });
+Route::post('/documents/upload/test', function () {
+    return response()->json(['message' => 'API is working!']);
+});
 
-        //Candidate Routes 
-        Route::prefix('candidates')->group(function () {
-            Route::get('/', [CandidateController::class, 'getCandidates']);
-            Route::get('/{id}', [CandidateController::class, 'getCandidateById']);
-            Route::post('/{id}', [CandidateController::class, 'addOrUpdateCandidate']);
-            Route::delete('/{id}', [CandidateController::class, 'deleteCandidate']);
-            Route::put('/{id}/status', [CandidateController::class, 'updateCandidateStatus']);
-            Route::get('/status/{status}', [CandidateController::class, 'getCandidatesByStatus']);
-        });
+//Candidate Routes 
+Route::prefix('candidates')->group(function () {
+    Route::get('/', [CandidateController::class, 'getCandidates']);
+    Route::get('/{id}', [CandidateController::class, 'getCandidateById']);
+    Route::post('/{id}', [CandidateController::class, 'addOrUpdateCandidate']);
+    Route::delete('/{id}', [CandidateController::class, 'deleteCandidate']);
+    Route::put('/{id}/status', [CandidateController::class, 'updateCandidateStatus']);
+    Route::get('/status/{status}', [CandidateController::class, 'getCandidatesByStatus']);
+});
 
-        //onboarding Task Routes
+//onboarding Task Routes
 
-        Route::prefix('onboarding-tasks')->group(function () {
-            
-            Route::post('/assign', [OnboardingTaskController::class, 'assignTaskToEmployee']);
-            Route::put('/status/{id}', [OnboardingTaskController::class, 'updateTaskStatus']);
-            Route::get('/employee/{employeeId}', [OnboardingTaskController::class, 'getEmployeeOnboardingTasks']);
-            Route::post('/template', [OnboardingTaskController::class, 'createTemplate']);
-            Route::post('/template/apply', [OnboardingTaskController::class, 'applyTemplateToEmployee']);
-            Route::get('/progress/{employeeId}', [OnboardingTaskController::class, 'getEmployeeProgress']);
-            Route::get('/', [OnboardingTaskController::class, 'getTasks']);
-            Route::get('/{id}', [OnboardingTaskController::class, 'getTaskById']);
-            Route::post('/{id}', [OnboardingTaskController::class, 'addOrUpdateTask']);
-            Route::delete('/{id}', [OnboardingTaskController::class, 'deleteTask']);
-        });
-    
+Route::prefix('onboarding-tasks')->group(function () {
 
-
-    
-
-
+    Route::post('/assign', [OnboardingTaskController::class, 'assignTaskToEmployee']);
+    Route::put('/status/{id}', [OnboardingTaskController::class, 'updateTaskStatus']);
+    Route::get('/employee/{employeeId}', [OnboardingTaskController::class, 'getEmployeeOnboardingTasks']);
+    Route::post('/template', [OnboardingTaskController::class, 'createTemplate']);
+    Route::post('/template/apply', [OnboardingTaskController::class, 'applyTemplateToEmployee']);
+    Route::get('/progress/{employeeId}', [OnboardingTaskController::class, 'getEmployeeProgress']);
+    Route::get('/', [OnboardingTaskController::class, 'getTasks']);
+    Route::get('/{id}', [OnboardingTaskController::class, 'getTaskById']);
+    Route::post('/{id}', [OnboardingTaskController::class, 'addOrUpdateTask']);
+    Route::delete('/{id}', [OnboardingTaskController::class, 'deleteTask']);
+});

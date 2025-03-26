@@ -15,11 +15,13 @@ class Goal extends Model
         'review_cycle_id',
         'title',
         'description',
-        'priority'
+        'priority',
+        'status'
     ];
     
     protected $casts = [
         'priority' => 'string',
+        'status' => 'string',
     ];
     
 
@@ -33,8 +35,8 @@ class Goal extends Model
         return $this->belongsTo(ReviewCycle::class);
     }
    
-    // public function progresses()
-    // {
-    //     return $this->hasMany(GoalProgress::class);
-    // }
+    public function progresses()
+    {
+        return $this->hasMany(GoalProgress::class);
+    }
 }
