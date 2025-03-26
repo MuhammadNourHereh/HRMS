@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
@@ -41,16 +42,28 @@ Route::group(["prefix" => "v0.1"], function () {
 
         Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
 
-            // Document Routes (Upload, Get, Update, Delete)
-            Route::prefix('documents')->group(function () {
-                Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
-                Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
-                Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
-                Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
-            });    
-        
-            // Fetch Clocked Workers Data (New Route for ClockedChartsController)
-            Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
+
+// use App\Http\Controllers\LocationUpdateController;
+
+// Route::post('/location-update', [LocationUpdateController::class, 'store']);
+
+
+
+
+Route::prefix('documents')->group(function () {
+    Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload
+    Route::get('/{id}', [DocumentController::class, 'getDocumentById']); // Get Document by ID
+    Route::get('/employee/{employee_id}', [DocumentController::class, 'getDocumentsByEmployeeId']); // Get Documents by Employee ID
+    Route::put('/{id}/update', [DocumentController::class, 'manageDocument']); // Update Document
+    Route::delete('/{id}/delete', [DocumentController::class, 'deleteDocument']); // Delete Document
+});
+
+// Employee Clocking Routes
+Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
+Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
+
+// Fetch Clocked Workers Data (New Route for ClockedChartsController)
+Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
 
             Route::post('/documents/upload/test', function () {
                 return response()->json(['message' => 'API is working!']);
