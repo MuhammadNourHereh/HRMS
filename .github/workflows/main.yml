@@ -21,9 +21,15 @@ jobs:
         with:
           node-version: '14'
 
-      # Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd hr-client
+          npm install
+
+      - name: Build React app
+        run: |
+          cd hr-client
+          npm run build
 
       # Build the project from the main branch
       - name: Build Project
@@ -40,7 +46,6 @@ jobs:
           RELEASE_SERVER_IP: ${{ secrets.RELEASE_SERVER_IP }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
-          # Ensure the SSH private key is available for the server connection
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
