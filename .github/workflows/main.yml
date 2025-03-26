@@ -51,6 +51,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+
+          # Add SSH host to known_hosts to prevent "Host key verification failed"
+          ssh-keyscan -H $STAGING_SERVER_IP >> ~/.ssh/known_hosts
+          ssh-keyscan -H $RELEASE_SERVER_IP >> ~/.ssh/known_hosts
+
           # Determine target server based on the branch
           if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
@@ -59,10 +64,8 @@ jobs:
           fi
           
           TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
+
           # Deploy the build folder to the appropriate server
           ssh $SERVER_USER@$TARGET_SERVER_IP "mkdir -p $TARGET_SERVER_PATH"
           echo "Deploying to $TARGET_SERVER_IP:$TARGET_SERVER_PATH"
           scp -v -r hr-client/dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
-
-
-          
