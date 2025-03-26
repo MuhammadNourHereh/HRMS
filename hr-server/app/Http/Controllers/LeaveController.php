@@ -14,25 +14,39 @@ use Illuminate\Validation\ValidationException;
 
 class LeaveController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $leaves = Leave::with('employee')->get();
+        $perPage = $request->input('per_page', 10); 
+        $leaves = Leave::with('employee')->paginate($perPage);
 
         return response()->json([
             'status' => 'success',
-            'data' => $leaves
+            'data' => $leaves->items(),
+            'meta' => [
+                'current_page' => $leaves->currentPage(),
+                'per_page' => $leaves->perPage(),
+                'total' => $leaves->total(),
+                'last_page' => $leaves->lastPage()
+            ]
         ]);
     }
 
-    public function getByDepartment($departmentId)
+    public function getByDepartment(Request $request,$departmentId)
     {
+        $perPage = $request->input('per_page', 10);
         $leaves = Leave::whereHas('employee.department', function ($query) use ($departmentId) {
             $query->where('id', $departmentId);
-        })->with('employee')->get();
+        })->with('employee')->paginate($perPage);;
     
         return response()->json([
             'status' => 'success',
-            'data' => $leaves  
+            'data' => $leaves->items() ,
+            'meta' => [
+                'current_page' => $leaves->currentPage(),
+                'per_page' => $leaves->perPage(),
+                'total' => $leaves->total(),
+                'last_page' => $leaves->lastPage()
+            ]
         ]);
     }
 
