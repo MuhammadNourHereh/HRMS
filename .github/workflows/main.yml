@@ -38,6 +38,7 @@ jobs:
         run: |
           git fetch origin main
           git checkout main
+          cd hr-client
           npm run build
 
       # Deploy to Staging or Release Server based on the branch
@@ -51,11 +52,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
+          
           # Add SSH host to known_hosts to prevent "Host key verification failed"
           ssh-keyscan -H $STAGING_SERVER_IP >> ~/.ssh/known_hosts
           ssh-keyscan -H $RELEASE_SERVER_IP >> ~/.ssh/known_hosts
-
+          
           # Determine target server based on the branch
           if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
