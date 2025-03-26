@@ -13,19 +13,16 @@ function App() {
   return (
     <Router>
 
-      <AppProvider>
-        <Navbar /> {/* Navbar will be at the top */}
-        <div className="wrapper">
-          <Sidebar /> {/* Sidebar on the left */}
-          <Routes>
-            <Route path="/" element={<Content />} /> {/* Default route for Content */}
-            <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
-            <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
-            <Route path="/LeaveRequests" element={<LeaveRequests />} /> {/* LeaveRequests route */}
-            {/* <Route path="/leaveDisplay" element={<LeaveDisplay />} /> leaveDisplay route */}
-          </Routes>
-        </div>
-      </AppProvider>
+      <Navbar /> {/* Navbar will be at the top */}
+      <div className="wrapper">
+        <Sidebar /> {/* Sidebar on the left */}
+        <Routes>
+          <Route path="/" element={<Content />} /> {/* Default route for Content */}
+          <Route path="/leaves" element={<LeaveRequests />} /> {/* Geolocation page route */}
+          <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
+          <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
+        </Routes>
+      </div>
     </Router>
   );
 }
