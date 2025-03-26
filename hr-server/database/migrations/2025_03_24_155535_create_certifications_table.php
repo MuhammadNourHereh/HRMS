@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
-            $table->foreignId('document_id')->nullable()->constrained('documents')->nullOnDelete();
+            $table->string('document_id')->nullable()->constrained('documents')->nullOnDelete();
             $table->string('certificate_name');
             $table->date('issued_date');
             $table->date('expiry_date')->nullable();

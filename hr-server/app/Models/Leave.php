@@ -24,7 +24,7 @@ class Leave extends Model {
     }
 
     public function leavePolicy() {
-        return $this->hasMany(LeavePolicies::class);
+        return $this->hasMany(LeavePolicy::class);
     }
 }
 

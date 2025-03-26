@@ -11,6 +11,7 @@ class DocumentManagement extends Model
     use HasFactory, SoftDeletes;
 
     // Explicitly set the correct table name
+
     protected $table = 'documents';
 
     // Mass assignable attributes
@@ -27,13 +28,14 @@ class DocumentManagement extends Model
         return $this->belongsTo(Employee::class, 'employee_id');
     }
 
-    public function reports()
-{
-    return $this->hasMany(Report::class);
-}
 
-public function candidates()
-{
-    return $this->hasMany(Candidate::class);
-}
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class);
+    }
 }
