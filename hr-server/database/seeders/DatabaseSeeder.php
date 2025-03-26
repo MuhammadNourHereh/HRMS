@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\GoalProgress;
 use App\Models\ReviewCycle;
 use Illuminate\Database\Seeder;
 use Database\Seeders\GoalSeeder;
@@ -32,13 +33,14 @@ class DatabaseSeeder extends Seeder
             PositionSeeder::class,
             DepartmentSeeder::class,
             EmployeeSeeder::class,
-            LeavePolicySeeder::class,
-            LeaveSeeder::class,
-            ProgramSeeder::class,
-            EnrollmentSeeder::class,
+            // LeavePolicySeeder::class,
+            // LeaveSeeder::class,
+            // ProgramSeeder::class,
+            // EnrollmentSeeder::class,
             ReviewCycleSeeder::class,
             PerformancesReviewSeeder::class,
             GoalSeeder::class,
+            GoalProgressSeeder::class,
             candidatesSeeder::class,
             EmployeeOnboardingSeeder::class,
             OnboardingTaskSeeder::class,

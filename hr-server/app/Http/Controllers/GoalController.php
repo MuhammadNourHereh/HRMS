@@ -46,6 +46,7 @@ class GoalController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'priority' => 'required|in:Low,Medium,High',
+            'status' => 'sometimes|in:Not Started,In Progress,Completed',
         ]);
 
         if ($validator->fails()) {
@@ -57,6 +58,10 @@ class GoalController extends Controller
         }
 
         $validatedData = $validator->validated();
+
+        if (!isset($validatedData['status'])) {
+            $validatedData['status'] = 'Not Started';
+        }
 
         if ($id === 'add') {
             $goal = Goal::create($validatedData);
@@ -73,7 +78,6 @@ class GoalController extends Controller
             'data' => $goal
         ]);
     }
-
     public function deleteGoal($id)
     {
         $goal = Goal::findOrFail($id);

@@ -13,7 +13,8 @@ class ReviewCycleSeeder extends Seeder
      */
     public function run(): void
     {
-       
+        // Reset the auto-increment to start from 5
+        DB::statement('ALTER TABLE review_cycles AUTO_INCREMENT = 5');
         
         $reviewCycles = [
             [
