@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\Employee;
 use App\Models\Candidate;
 use Illuminate\Http\Request;
+use App\Models\OnboardingTask;
 use App\Models\DocumentManagement;
+use App\Models\EmployeeOnboarding;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -152,28 +156,93 @@ class CandidateController extends Controller
     }
 
     public function updateCandidateStatus(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'status' => 'required|in:applied,interview,accepted,rejected',
+{
+    $validator = Validator::make($request->all(), [
+        'status' => 'required|in:applied,interview,accepted,rejected',
+        // when candidate accepted add these fields
+        'department_id' => 'required_if:status,accepted|exists:departments,id',
+        'position_id' => 'required_if:status,accepted|exists:positions,id',
+        'date_of_birth' => 'required_if:status,accepted|date',
+        'address' => 'required_if:status,accepted|string',
+        'phone_number' => 'required_if:status,accepted|string',
+        'gender' => 'required_if:status,accepted|in:male,female',
+        'salary' => 'required_if:status,accepted|numeric|min:0',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    $candidate = Candidate::findOrFail($id);
+    $oldStatus = $candidate->status;
+    $candidate->status = $request->status;
+    $candidate->save();
+
+    // If candidate is accepted, create an employee record(akh ya nabiha)
+    if ($request->status === 'accepted' && $oldStatus !== 'accepted') {
+        // temp pass for new employee
+        $tempPassword = Hash::make('password123');
+        
+        // Extract first and last name from full name
+        $nameParts = explode(' ', $candidate->name, 2);
+        $firstName = $nameParts[0];
+        $lastName = isset($nameParts[1]) ? $nameParts[1] : '';
+        
+        // Create employee record
+        $employee = Employee::create([
+            'department_id' => $request->department_id,
+            'position_id' => $request->position_id,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $candidate->email,
+            'password' => $tempPassword,
+            'date_of_birth' => $request->date_of_birth,
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+            'gender' => $request->gender,
+            'role' => 'employee',
+            'salary' => $request->salary,
         ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
+        
+        // If candidate has a document, associate it with the employee
+        if ($candidate->document_id) {
+            $document = DocumentManagement::find($candidate->document_id);
+            if ($document) {
+                $document->employee_id = $employee->id;
+                $document->save();
+            }
         }
-
-        $candidate = Candidate::findOrFail($id);
-        $candidate->status = $request->status;
-        $candidate->save();
-
+        
+        // Apply default onboarding tasks 
+        
+        $defaultTasks = OnboardingTask::all();
+        foreach ($defaultTasks as $task) {
+            EmployeeOnboarding::create([
+                'employee_id' => $employee->id,
+                'onboarding_task_id' => $task->id,
+                'status' => 'pending'
+            ]);
+        }
+        
         return response()->json([
             'status' => 'success',
-            'message' => 'Candidate status updated successfully',
-            'data' => $candidate
+            'message' => 'Candidate accepted and employee record created',
+            'data' => [
+                'candidate' => $candidate,
+                'employee' => $employee
+            ]
         ]);
     }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Candidate status updated successfully',
+        'data' => $candidate
+    ]);
+}
 
 
     // get candididates filtered by status
