@@ -12,6 +12,7 @@ import LeaveDetails from './components/LeaveDetails';
 import Payrolls from "./pages/Payrolls";
 import PayrollsAprove from "./pages/PayrollsAprove";
 import PayrollsDone from "./pages/PayrollsDone";
+import Employees from "./pages/Employees";
 // import LeaveDisplay from './components/LeaveDisplay'; // Use PascalCase for consistency
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
           <Sidebar /> {/* Sidebar on the left */}
           <Routes>
             <Route path="/" element={<Content />} /> {/* Default route for Content */}
+            <Route path="/employees" element={<Employees />} /> {/* employees page route */}
+
             <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
             <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
             <Route path="/LeaveRequests" element={<LeaveRequests />} /> {/* LeaveRequests route */}

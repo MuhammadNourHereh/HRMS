@@ -143,7 +143,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::delete('{id}', [PayrollController::class, 'destroy']);
         });
 
-        Route::prefix('overtime-hours')->group(function () {
+        Route::prefix('overtimes')->group(function () {
             Route::get('/', [OvertimeController::class, 'index']);
             Route::get('{id}', [OvertimeController::class, 'show']);
             Route::post('/', [OvertimeController::class, 'store']);

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { BASE_URL } from "../../../env";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api/v0.1"; 
+axios.defaults.baseURL = BASE_URL; 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
