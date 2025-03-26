@@ -1,17 +1,19 @@
 <?php
 
 
-use App\Http\Controllers\DeductionController;
-use App\Http\Controllers\deleteUpdateDisplayDocumentController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\OvertimeController;
-use App\Http\Controllers\PayrollController;
-use App\Http\Controllers\SalaryController;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\DeductionController;
 use App\Http\Controllers\ReviewCycleController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OnboardingTaskController;
+use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 
 // version v0.1
 Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
@@ -19,6 +21,7 @@ Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
     Route::post('/login', [EmployeeController::class, "login"]);
     // authorised apis
     Route::middleware('auth:employee')->group(function () {
+
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);
             Route::post('/logout', [EmployeeController::class, "logout"]);
@@ -86,6 +89,35 @@ Route::group(["prefix" => "v0.1", 'middleware' => 'api'], function () {
         Route::post('/documents/upload/test', function () {
             return response()->json(['message' => 'API is working!']);
         });
+
+        //Candidate Routes 
+        Route::prefix('candidates')->group(function () {
+            Route::get('/', [CandidateController::class, 'getCandidates']);
+            Route::get('/{id}', [CandidateController::class, 'getCandidateById']);
+            Route::post('/{id}', [CandidateController::class, 'addOrUpdateCandidate']);
+            Route::delete('/{id}', [CandidateController::class, 'deleteCandidate']);
+            Route::put('/{id}/status', [CandidateController::class, 'updateCandidateStatus']);
+            Route::get('/status/{status}', [CandidateController::class, 'getCandidatesByStatus']);
+        });
+
+        //onboarding Task Routes
+
+        Route::prefix('onboarding-tasks')->group(function () {
+            
+            Route::post('/assign', [OnboardingTaskController::class, 'assignTaskToEmployee']);
+            Route::put('/status/{id}', [OnboardingTaskController::class, 'updateTaskStatus']);
+            Route::get('/employee/{employeeId}', [OnboardingTaskController::class, 'getEmployeeOnboardingTasks']);
+            Route::post('/template', [OnboardingTaskController::class, 'createTemplate']);
+            Route::post('/template/apply', [OnboardingTaskController::class, 'applyTemplateToEmployee']);
+            Route::get('/progress/{employeeId}', [OnboardingTaskController::class, 'getEmployeeProgress']);
+            Route::get('/', [OnboardingTaskController::class, 'getTasks']);
+            Route::get('/{id}', [OnboardingTaskController::class, 'getTaskById']);
+            Route::post('/{id}', [OnboardingTaskController::class, 'addOrUpdateTask']);
+            Route::delete('/{id}', [OnboardingTaskController::class, 'deleteTask']);
+        });
     });
+
+
+    
 });
 

@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
             PositionSeeder::class,
             DepartmentSeeder::class,
             EmployeeSeeder::class,
+            candidatesSeeder::class,
+            EmployeeOnboardingSeeder::class,
+            OnboardingTaskSeeder::class,
+            ReportSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }
