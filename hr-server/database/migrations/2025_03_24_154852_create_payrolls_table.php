@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('amount', 10, 2);
             $table->json('payroll_details');
-            $table->dateTime('payed_at');
+            $table->dateTime('payed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

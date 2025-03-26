@@ -203,5 +203,22 @@ class CandidateController extends Controller
     }
 
 
+    // get accepted candidates for sleiman
+    public function getAcceptedCandidates(Request $request)
+{
+    $perPage = $request->input('per_page', 10);
+    
+    $candidates = Candidate::where('status', 'accepted')
+        ->with('document')
+        ->orderBy('created_at', 'desc')
+        ->paginate($perPage);
+
+    return response()->json([
+        'status' => 'success',
+        'data' => $candidates
+    ]);
+}
+
+
     
 }

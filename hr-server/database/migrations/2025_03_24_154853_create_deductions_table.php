@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->string('reason');
             $table->decimal('amount', 10, 2);
-            $table->unsignedTinyInteger('percentage');
             $table->timestamp('payed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
