@@ -34,12 +34,12 @@ class ReviewCycle extends Model
         return $this->hasMany(PerformancesReview::class);
     }
 
-/*     public function feedbacks()
+    public function feedbacks()
 {
     return $this->hasMany(Feedback::class);
 }
 
-*/
+
 public function goals()
 {
     return $this->hasMany(Goal::class);

@@ -177,7 +177,10 @@ public function performanceReviews()
 {
     return $this->hasMany(PerformancesReview::class);
 }
-
+public function feedbacks()
+{
+    return $this->hasMany(Feedback::class);
+}
     public function getJWTIdentifier()
     {
         return $this->getKey();
