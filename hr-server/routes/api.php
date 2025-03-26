@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
@@ -30,12 +31,20 @@ use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\ClockedChartsController; // Import your new controller
 
-// Document Routes (Upload, Get, Update, Delete)
+
+// use App\Http\Controllers\LocationUpdateController;
+
+// Route::post('/location-update', [LocationUpdateController::class, 'store']);
+
+
+
+
 Route::prefix('documents')->group(function () {
-    Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
-    Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
-    Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
-    Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
+    Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload
+    Route::get('/{id}', [DocumentController::class, 'getDocumentById']); // Get Document by ID
+    Route::get('/employee/{employee_id}', [DocumentController::class, 'getDocumentsByEmployeeId']); // Get Documents by Employee ID
+    Route::put('/{id}/update', [DocumentController::class, 'manageDocument']); // Update Document
+    Route::delete('/{id}/delete', [DocumentController::class, 'deleteDocument']); // Delete Document
 });
 
 // Employee Clocking Routes
