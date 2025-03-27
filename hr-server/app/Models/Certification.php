@@ -13,7 +13,7 @@ class Certification extends Model
     protected $fillable = [
         'employee_id', 
         'program_id',
-        'document_id', 
+        'document_url', 
         'certificate_name', 
         'issued_date', 
         'expiry_date',

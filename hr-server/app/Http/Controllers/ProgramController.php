@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 class ProgramController extends Controller
 {
     public function index(){
@@ -29,9 +32,24 @@ class ProgramController extends Controller
             'difficulty' => 'required|in:Beginner,Intermediate,Advanced',
             'duration' => 'required|integer|min:1',
             'passing_score' => 'nullable|numeric|min:0|max:100',
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);        
+        $path = $request->file('picture')->store('program_pictures', 'public');
+        $program->update([
+            
         ]);
 
-        return response()->json(Program::create($validated),201);
+        $program=Program::create([
+            'name' =>  $validated['name'],
+            'description' => $validated['description'],
+            'type' => $validated['type'],
+            'difficulty' => $validated['difficulty'],
+            'duration' => $validated['duration'],
+            'passing_score' => $validated['passing_score'],
+            'picture_url' => Storage::url($path)
+        ]);
+
+        return response()->json([$program],201);
     }
 
     public function update(Request $request, $id) {
@@ -43,11 +61,14 @@ class ProgramController extends Controller
             'difficulty' => 'sometimes|in:Beginner,Intermediate,Advanced',
             'duration' => 'sometimes|integer|min:1',
             'passing_score' => 'nullable|numeric|min:0|max:100',
+            'picture' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $program->update($validated);
         return response()->json($program);
     }
+
+    
 
     public function destroy($id) {
         $program = Program::findOrFail($id);

@@ -1,13 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar() {
+  const navigate = useNavigate()
   return (
     <div className="sidebar">
       <ul>
         <li>
-          <a href="#employee-management" title="Employee Management">
+          <a href="/employees" title="Employee Management">
             <i className="fa-solid fa-user-tie"></i>
             <span className="sidebar-title">Employee Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="/review-cycles" title="Attendance Tracking">
+            <i className="fa-solid fa-calendar"></i>
+            <span className="sidebar-title">Performance Reviews</span>
           </a>
         </li>
         <li>
@@ -22,8 +30,8 @@ function Sidebar() {
             <span className="sidebar-title">Leave Management</span>
           </a>
         </li>
-        <li>
-          <a href="#payroll-integration" title="Payroll Integration">
+        <li onClick={() => navigate('/payrolls')}>
+          <a title="Payroll Integration">
             <i className="fa-solid fa-dollar-sign"></i>
             <span className="sidebar-title">Payroll Integration</span>
           </a>

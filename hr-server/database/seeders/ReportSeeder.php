@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Report;
 use App\Models\Employee;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ReportSeeder extends Seeder
 {

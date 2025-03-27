@@ -25,16 +25,27 @@ class EnrollmentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'employee_id' => 'required|exists:employees,id',
+            'employee_ids' => 'required|array', 
+            'employee_ids.*' => 'exists:employees,id',
             'program_id' => 'required|exists:programs,id'
         ]);
-    
-        $enrollment = Enrollment::create([
-            'employee_id' => $request->employee_id,
-            'program_id' => $request->program_id,
-            'status' => 'InProgress' 
-        ]);
-        return response()->json($enrollment, 201);
+        
+        $programId = $request->input('program_id');
+        $employeeIds = $request->input('employee_ids');
+
+        $enrollments = [];
+
+        foreach ($employeeIds as $employeeId) {
+            $enrollments[] = Enrollment::create([
+                'program_id' => $programId,
+                'employee_id' => $employeeId,
+                'status' => 'InProgress' 
+            ]);
+        }
+        return response()->json([
+            'message' => 'Employees enrolled successfully!',
+            'enrollments' => $enrollments
+        ], 201);    
     }
 
     public function show($id)
@@ -49,26 +60,20 @@ class EnrollmentController extends Controller
 
     public function update(Request $request, Enrollment $enrollment)
     {
-        
         $validated = $request->validate([
             'score' => 'sometimes|nullable|numeric|min:0|max:100',
             'progress' => 'sometimes|nullable|numeric|min:0|max:100',
-            'completion_date'=>'sometimes|nullable',
+            'completion_date' => 'sometimes|nullable|date',
         ]);
-
-        if ($request->has('score')) {
-            $enrollment->score = $validated['score'];
-        }
-        
-        if ($request->has('progress')) {
-            $enrollment->progress = $validated['progress'];
-        }
-        if ($request->has('completion_date')) {
-            $enrollment->completion_date = $validated['completion_date'];
-        }
-        $enrollment->save();
     
-        return response()->json($enrollment);
+        $fillableFields = ['score', 'progress', 'completion_date'];
+        $updateData = array_intersect_key($validated, array_flip($fillableFields));
+        
+        if (!empty($updateData)) {
+            $enrollment->update($updateData);
+        }
+    
+        return response()->json($enrollment->fresh());
     }
 
     public function destroy(Enrollment $enrollment)

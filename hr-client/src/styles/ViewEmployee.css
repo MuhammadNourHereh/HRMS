@@ -1,0 +1,134 @@
+.employee-profile {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .employee-avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #1F7A8C;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+  }
+  
+  .employee-name-title {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .employee-name-title h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .employee-position {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Horizontal layout for detail sections */
+  .detail-sections {
+    display: flex;
+    flex-direction: row;  /* Changed from column to row */
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .detail-section {
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex: 1; /* Make sections equally sized */
+  }
+  
+  .detail-section-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  /* Adjust the grid to be more compact for the horizontal layout */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;  /* Changed to single column for each section */
+    gap: 1rem;
+  }
+  
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .detail-item.full-width {
+    grid-column: span 1;
+  }
+  
+  .detail-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+  }
+  
+  .detail-value {
+    font-size: 1rem;
+    color: #111827;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+  
+  .button {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+  }
+  
+  .button-primary {
+    background-color: #053b50;
+    color: white;
+  }
+  
+  .button-primary:hover {
+    background-color: #032a3a;
+  }
+  
+  /* Status badges styling */
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    align-self: flex-start;
+  }
+  
+
+  
