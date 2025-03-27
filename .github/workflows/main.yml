@@ -35,35 +35,44 @@ jobs:
           npm run build
 
       # Deploy to Staging or Release Server based on the branch
-      - name: Deploy to Server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          STAGING_SERVER_IP: ${{ secrets.STAGING_SERVER_IP }}
-          RELEASE_SERVER_IP: ${{ secrets.RELEASE_SERVER_IP }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      # - name: Deploy to Server
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     STAGING_SERVER_IP: ${{ secrets.STAGING_SERVER_IP }}
+      #     RELEASE_SERVER_IP: ${{ secrets.RELEASE_SERVER_IP }}
+      #     SERVER_USER: ${{ secrets.SERVER_USER }}
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
           
-          # Determine target server
-          if [[ "$GITHUB_REF" == "refs/heads/staging" ]]; then
-            TARGET_SERVER_IP=$STAGING_SERVER_IP
-            echo "Targeting staging server ($TARGET_SERVER_IP)"
-          elif [[ "$GITHUB_REF" == "refs/heads/release" ]]; then
-            TARGET_SERVER_IP=$RELEASE_SERVER_IP
-            echo "Targeting release server ($TARGET_SERVER_IP)"
-          else
-            exit 0
-          fi
+      #     # Determine target server
+      #     if [[ "$GITHUB_REF" == "refs/heads/staging" ]]; then
+      #       TARGET_SERVER_IP=$STAGING_SERVER_IP
+      #       echo "Targeting staging server ($TARGET_SERVER_IP)"
+      #     elif [[ "$GITHUB_REF" == "refs/heads/release" ]]; then
+      #       TARGET_SERVER_IP=$RELEASE_SERVER_IP
+      #       echo "Targeting release server ($TARGET_SERVER_IP)"
+      #     else
+      #       exit 0
+      #     fi
       
-          # Verify source files for debuging
-          echo "Source files in hr-client/dist:"
-          ls -la hr-client/dist/
+      #     # Verify source files for debuging
+      #     echo "Source files in hr-client/dist:"
+      #     ls -la hr-client/dist/
       
-          # Absolute path for scp command
-          TARGET_PATH="/var/www/html/HRMS/hr-client"
+      #     # Absolute path for scp command
+      #     TARGET_PATH="/var/www/html/HRMS/hr-client"
 
-          scp -i $SSH_PRIVATE_KEY hr-client/dist/ ubuntu@13.38.12.19:/var/www/html/HRMS/hr-client
-
-          
+      #     scp -i $SSH_PRIVATE_KEY hr-client/dist/ ubuntu@13.38.12.19:/var/www/html/HRMS/hr-client
+      
+      - uses: actions/checkout@v4
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.STAGING_SERVER_IP }}
+          username: ${{ 'ubuntu' }}
+          password: ${{ '' }}
+          port: ${{ 22 }}
+          source: "hr-client/dist/"
+          target: /var/www/html/HRMS/hr-client

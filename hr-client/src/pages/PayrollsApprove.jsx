@@ -10,11 +10,10 @@ const PayrollsApprove = () => {
         navigateHome,
         navigateDone
     } = usePayrollsApprove();
-
-
     return (
-        <div className='column container2 spread'>
-            <div className="container margin-left">
+        <div className='container center-warpper' >
+
+            <div className="container2 margin-left">
                 <table className='table'>
                     <thead>
                         <tr>
@@ -60,7 +59,8 @@ const PayrollsApprove = () => {
                     <button className='btn-btn' onClick={navigateDone}>Approve Payrolls</button>
                 </div>
             </div>
-        </div>
+            </div>
+            
     )
 }
 
