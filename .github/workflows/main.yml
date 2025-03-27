@@ -75,3 +75,5 @@ jobs:
           username: ${{ secrets.SERVER_USER }} # User of the server you want to ssh into
           source: "hr-client/dist/"
           target: /var/www/html/HRMS/hr-client
+          run: |
+            ls -laR hr-client/
