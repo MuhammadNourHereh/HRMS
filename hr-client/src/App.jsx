@@ -9,7 +9,6 @@ import GeolocationLogger from './components/GeolocationLogger';
 import DocumentManagement from './components/DocumentManagement'; // Import DocumentManagement component
 import LearningDashboard from "./pages/LearningDashboard";
 import Login from "./pages/Login";
-import LeaveRequests from './pages/LeaveRequests';
 import LeaveDetails from './components/LeaveDetails';
 import Payrolls from "./pages/Payrolls";
 import PayrollsApprove from "./pages/PayrollsApprove"
