@@ -67,10 +67,10 @@ jobs:
           fi
 
           TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client"
-          SOURCE_DIR="hr-client/build"
+          SOURCE_DIR="hr-client/dist"  # Changed from build to dist
 
           # Verify source files exist
-          echo "Checking source files..."
+          echo "Checking source files in $SOURCE_DIR..."
           ls -la $SOURCE_DIR/
 
           # Verify directory exists and is writable
@@ -78,7 +78,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
             "ls -ld $TARGET_SERVER_PATH && touch $TARGET_SERVER_PATH/testfile && rm $TARGET_SERVER_PATH/testfile"
 
-          # Deploy the build folder
+          # Deploy the dist folder
           echo "Deploying from $SOURCE_DIR to $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH"
           scp -o StrictHostKeyChecking=no -r $SOURCE_DIR/. $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH/
 
