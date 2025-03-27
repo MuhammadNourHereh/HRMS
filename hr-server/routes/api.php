@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DeductionController;
-use App\Http\Controllers\EmployeeController; 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LeavePolicyController;
 use App\Http\Controllers\ReviewCycleController;
@@ -28,48 +29,51 @@ use App\Http\Controllers\GoalProgressController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 use App\Http\Controllers\MainClockedWorkers;
-use App\Http\Controllers\ClockedChartsController; 
+use App\Http\Controllers\ClockedChartsController;
 
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
 
-    Route::middleware('auth:employee')->group(function () {
+   // Route::middleware('auth:employee')->group(function () {
         // Employee Clocking Routes
         Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
         Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
 
-        Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
-
-            // Document Routes (Upload, Get, Update, Delete)
-            Route::prefix('documents')->group(function () {
-                Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload Document
-                Route::get('/{id}', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Get Document by ID
-                Route::put('/{id}/update', [deleteUpdateDisplayDocumentController::class, 'deleteUpdateDisplayDocument']); // Update Document
-                Route::delete('/{id}/delete', [deleteUpdateDisplayDocumentController::class, 'deleteDocument']); // Separate method for DELETE Document
-            });    
         
+
+
+            // use App\Http\Controllers\LocationUpdateController;
+
+            // Route::post('/location-update', [LocationUpdateController::class, 'store']);
+
+        //Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
+
+
+
+            Route::prefix('documents')->group(function () {
+                Route::post('/upload', [DocumentController::class, 'uploadDocument']); // Upload
+                Route::get('/{id}', [DocumentController::class, 'getDocumentById']); // Get Document by ID
+                Route::get('/employee/{employee_id}', [DocumentController::class, 'getDocumentsByEmployeeId']); // Get Documents by Employee ID
+                Route::put('/{id}/update', [DocumentController::class, 'manageDocument']); // Update Document
+                Route::delete('/{id}/delete', [DocumentController::class, 'deleteDocument']); // Delete Document
+            });
+
+            // Employee Clocking Routes
+            Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
+            Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
+
             // Fetch Clocked Workers Data (New Route for ClockedChartsController)
             Route::get('/clocked-workers', [ClockedChartsController::class, 'getClockedWorkersData']); // Add this route
 
             Route::post('/documents/upload/test', function () {
                 return response()->json(['message' => 'API is working!']);
             });
+       
 
 
-            Route::prefix('employees')->group(function () {
-                Route::get('/get-employees', [EmployeeController::class, "getEmployees"]);
-                Route::get('/get-employee-by-id/{id}', [EmployeeController::class, "getEmployeeById"]);
-                Route::post('/add-update-employee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
-                Route::post('/delete-employee/{id}', [EmployeeController::class, "deleteEmployee"]);
-            });
 
-            Route::prefix('review-cycles')->group(function () {
-                Route::get('/get-review-cycles', [ReviewCycleController::class, "getReviewCycles"]);
-                Route::get('/get-review-cycle-by-id/{id}', [ReviewCycleController::class, "getReviewCycleById"]);
-                Route::post('/add-update-review-cycle/{id}', [ReviewCycleController::class, "addOrUpdateReviewCycle"]);
-                Route::post('/delete-review-cycle/{id}', [ReviewCycleController::class, "deleteReviewCycle"]);
-            });
+        // authorized apis
 
             // performance reviews
             Route::prefix('performance-reviews')->group(function () {
@@ -160,11 +164,6 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::delete('{id}', [OvertimeController::class, 'destroy']);
             });
 
-            Route::prefix('users')->group(function () {
-                Route::get('/me', [EmployeeController::class, "me"]);
-                Route::post('/logout', [EmployeeController::class, "logout"]);
-            });
-
             // Candidate Routes 
             Route::prefix('candidates')->group(function () {
                 Route::get('/', [CandidateController::class, 'getCandidates']);
@@ -211,6 +210,38 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::put('/{id}/assign', [TaskController::class, 'assignTaskToEmployee']);
                 Route::get('/employee/{employeeId}', [TaskController::class, 'getEmployeeTasks']);
             });
+        Route::prefix('users')->group(function () {
+            Route::get('/me', [EmployeeController::class, "me"]);
+            Route::post('/logout', [EmployeeController::class, "logout"]);
         });
-    });
+
+        Route::prefix('employees')->group(function () {
+            Route::get('/get-employees', [EmployeeController::class, "getEmployees"]);
+            Route::get('/get-employee-by-id/{id}', [EmployeeController::class, "getEmployeeById"]);
+            Route::post('/add-update-employee/{id}', [EmployeeController::class, "addOrUpdateEmployee"]);
+            Route::post('/delete-employee/{id}', [EmployeeController::class, "deleteEmployee"]);
+        });
+
+        Route::prefix('review-cycles')->group(function () {
+            Route::get('/get-review-cycles', [ReviewCycleController::class, "getReviewCycles"]);
+            Route::get('/get-review-cycle-by-id/{id}', [ReviewCycleController::class, "getReviewCycleById"]);
+            Route::post('/add-update-review-cycle/{id}', [ReviewCycleController::class, "addOrUpdateReviewCycle"]);
+            Route::post('/delete-review-cycle/{id}', [ReviewCycleController::class, "deleteReviewCycle"]);
+        });
+
+
+        //enrollments
+        Route::prefix('enrollments')->group(function () {
+            Route::get('/', [EnrollmentController::class, 'index']);
+            Route::post('/', [EnrollmentController::class, 'store']);
+            Route::get('{id}', [EnrollmentController::class, 'show']);
+            Route::put('{enrollment}', [EnrollmentController::class, 'update']);
+        });
+
+        //programs
+        Route::get('/programs', [ProgramController::class, 'index']);
+        Route::get('/program/{program}', [ProgramController::class, 'show']);
+
 });
+   // });
+//});

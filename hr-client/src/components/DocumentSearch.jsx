@@ -15,7 +15,12 @@ function DocumentSearch() {
   const handleSearch = () => {
     setError(null); // Reset any previous errors
     setSuccessMessage(null); // Reset success message
-    axios.get(`http://127.0.0.1:8000/api/documents/${searchId}`)
+    axios.get(`http://127.0.0.1:8000/api/documents/${searchId}`,{
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: false // Ensure credentials are not sent
+  } )
       .then((res) => {
         setDocument(res.data);
         setFileType(res.data.file_type || '');
@@ -23,7 +28,7 @@ function DocumentSearch() {
         setFileDescription(res.data.file_description || '');
       })
       .catch((error) => {
-        setError('Document not found. Please check the document ID.');
+        setError('Document not found. Please check the document ID.',error);
         setDocument(null);
       });
   };
@@ -32,14 +37,20 @@ function DocumentSearch() {
 const handleDelete = () => {
   if (window.confirm('Are you sure you want to delete this document?')) {
     // Send DELETE request using Axios to the correct URL
-    axios.delete(`http://127.0.0.1:8000/api/documents/${document.id}/delete`)
+   axios.delete(`http://127.0.0.1:8000/api/documents/${document.id}/delete`, {
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json", // Ensure response is JSON
+  },
+  withCredentials: false, // Ensure credentials are not sent
+})
       .then(() => {
         setDocument(null); // Clear document state
         setSearchId(''); // Reset search ID
         setSuccessMessage('Document deleted successfully.'); // Success message
       })
       .catch((error) => {
-        setError('Error deleting document. Please try again.'); // Error message
+        setError('Error deleting document. Please try again.',error); // Error message
       });
   }
 };
@@ -58,14 +69,24 @@ const handleDelete = () => {
 
     // Directly using Axios to send a PUT request
     console.log("Sending data for update:", updatedData);
-    console.log("Sending PUT request to:", `http://127.0.0.1:8000/api/documents/${document.id}/update`);
+    console.log("Sending PUT request to:", `http://127.0.0.1:8000/api/documents/${document.id}/update`,{
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: false // Ensure credentials are not sent
+  });
 
-    axios.put(`http://127.0.0.1:8000/api/documents/${document.id}/update`, updatedData, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    })
+    axios.put(
+  `http://127.0.0.1:8000/api/documents/${document.id}/update`, 
+  updatedData, 
+  {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    withCredentials: false, // Ensure this is placed outside the headers object
+  }
+)
     .then((res) => {
       console.log("Update response:", res.data); // Debugging
       setDocument(res.data.document);

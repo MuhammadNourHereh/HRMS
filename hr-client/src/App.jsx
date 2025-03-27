@@ -2,7 +2,6 @@ import "./App.css";
 import React from 'react';
 import { AppProvider } from './contexts/AppContext';
 import { BrowserRouter as Router, Route, Routes,useLocation } from 'react-router-dom';
-//import Navbar from './components/Navbar';
 import Sidebar from './components/SideBar';
 import LeaveRequests from "./pages/LeaveRequests";
 import Content from './components/Content';
@@ -11,6 +10,8 @@ import DocumentManagement from './components/DocumentManagement'; // Import Docu
 import LearningDashboard from "./pages/LearningDashboard";
 import Login from "./pages/Login";
 import Employees from "./pages/Employees";
+import Navbar from "./components/Navbar";
+import ReviewCycles from "./pages/ReviewCycles";
 // import LeaveDisplay from './components/LeaveDisplay'; // Use PascalCase for consistency
 
 function App() {
@@ -18,22 +19,31 @@ function App() {
   
   return (
     <>
-      {/*<Navbar /> {/* Navbar will be at the top */}
+
+
+<AppProvider>
+      <Navbar /> 
       <div className="wrapper">
       {pathname !== "/login" && <Sidebar /> }{/* Sidebar on the left */}
+
         <div className="main-content">
         <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/employees" element={<Employees />} />
+        <Route path="/review-cycles" element={<ReviewCycles />} />
+
           <Route path="/" element={<Content />} /> {/* Default route for Content */}
           <Route path="/leaves" element={<LeaveRequests />} /> 
+          <Route path="/employees" element={<Employees />} /> 
+          <Route path="/review-cycles" element={<ReviewCycles />} /> 
+
           <Route path="/programs" element={<LearningDashboard />} /> 
           <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
           <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
-            <Route path="/employees" element={<Employees />} /> {/* employees page route */}
-
-          </Routes>
+        </Routes>
         </div>
       </div>
+      </AppProvider>
     </>
   );
 }

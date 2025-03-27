@@ -24,7 +24,7 @@ class ReviewCycleController extends Controller
 
     public function getReviewCycleById($id)
     {
-        $reviewCycle = ReviewCycle::with(['goals', 'performanceReviews', 'feedbacks'])
+        $reviewCycle = ReviewCycle::with(['performanceReviews','goals' , 'feedbacks'])
             ->findOrFail($id);
         
         return response()->json([

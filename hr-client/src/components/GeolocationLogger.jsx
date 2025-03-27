@@ -37,6 +37,12 @@ const GeolocationLogger = () => {
           employee_id: employeeId,
           longitude: location.longitude,
           latitude: location.latitude,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: false, // Ensure credentials are not sent to avoid CORS issues
         });
         console.log(response.data);
         setClockedIn(true); // Mark user as clocked in
@@ -55,6 +61,12 @@ const GeolocationLogger = () => {
       try {
         const response = await axios.post("http://127.0.0.1:8000/api/clock-out", {
           employee_id: employeeId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: false, // Ensure credentials are not sent to avoid CORS issues
         });
         console.log(response.data);
         setClockedIn(false); // Mark user as clocked out

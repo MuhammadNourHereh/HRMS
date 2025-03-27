@@ -5,9 +5,15 @@ function Sidebar() {
     <div className="sidebar">
       <ul>
         <li>
-          <a href="#employee-management" title="Employee Management">
+          <a href="/employees" title="Employee Management">
             <i className="fa-solid fa-user-tie"></i>
             <span className="sidebar-title">Employee Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="/review-cycles" title="Attendance Tracking">
+            <i className="fa-solid fa-calendar"></i>
+            <span className="sidebar-title">Performance Reviews</span>
           </a>
         </li>
         <li>
