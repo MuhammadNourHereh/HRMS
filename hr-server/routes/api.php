@@ -35,7 +35,8 @@ Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
 
-    Route::middleware('auth:employee')->group(function () {
+
+   Route::middleware('auth:employee')->group(function () {
         // Employee Clocking Routes
         Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
         Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
@@ -243,5 +244,6 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::get('/program/{program}', [ProgramController::class, 'show']);
 
 });
- });
+
+   });
 });

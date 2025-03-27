@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Employees from "./pages/Employees";
 import Navbar from "./components/Navbar";
 import ReviewCycles from "./pages/ReviewCycles";
+import PerformanceReviews from "./pages/PerformanceReviews";
 // import LeaveDisplay from './components/LeaveDisplay'; // Use PascalCase for consistency
 
 function App() {
@@ -19,8 +20,6 @@ function App() {
   
   return (
     <>
-
-
 <AppProvider>
       {pathname !== "/login" &&<Navbar /> }
       <div className="wrapper">
@@ -31,11 +30,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/review-cycles" element={<ReviewCycles />} />
+        <Route path="/performance-reviews" element={<PerformanceReviews />} />
 
           <Route path="/" element={<Content />} /> {/* Default route for Content */}
           <Route path="/leaves" element={<LeaveRequests />} /> 
-          <Route path="/employees" element={<Employees />} /> 
-          <Route path="/review-cycles" element={<ReviewCycles />} /> 
 
           <Route path="/programs" element={<LearningDashboard />} /> 
           <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
