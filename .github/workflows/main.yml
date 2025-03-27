@@ -31,8 +31,6 @@ jobs:
       # Build the project from the main branch
       - name: Build Project from main branch
         run: |
-          git fetch origin main
-          git checkout main
           cd hr-client
           npm run build
 
