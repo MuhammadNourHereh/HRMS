@@ -65,7 +65,12 @@ jobs:
       #     TARGET_PATH="/var/www/html/HRMS/hr-client"
 
       #     scp -i $SSH_PRIVATE_KEY hr-client/dist/ ubuntu@13.38.12.19:/var/www/html/HRMS/hr-client
-      
+      - name: print
+        run: |
+          pwd
+          ls
+          ls -lar hr-client/
+
       - uses: actions/checkout@v4
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.7
