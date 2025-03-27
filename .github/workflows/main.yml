@@ -45,36 +45,36 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
-          # Determine target server based on the branch
+      
+          # Determine target server
           if [[ "$GITHUB_REF" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
-            echo "Branch is staging, targeting staging server ($TARGET_SERVER_IP)"
+            echo "Targeting staging server ($TARGET_SERVER_IP)"
           elif [[ "$GITHUB_REF" == "refs/heads/release" ]]; then
             TARGET_SERVER_IP=$RELEASE_SERVER_IP
-            echo "Branch is release, targeting release server ($TARGET_SERVER_IP)"
+            echo "Targeting release server ($TARGET_SERVER_IP)"
           else
-            echo "Branch is neither staging nor release, no server selected"
             exit 0
           fi
-
-          TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client"
-          SOURCE_DIR="hr-client/dist"
-
-          # Verify source files exist
-          echo "Checking source files in $SOURCE_DIR..."
-          ls -la $SOURCE_DIR/
-
-          # Verify directory exists and is writable
-          echo "Verifying target directory..."
+      
+          # Define paths
+          SOURCE_PATH="hr-client/dist"
+          TARGET_PATH="/var/www/html/HRMS/hr-client"
+      
+          # Verify source files
+          echo "Source files:"
+          ls -la $SOURCE_PATH
+      
+          # Verify and prepare target directory
+          echo "Preparing target directory..."
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
-            "ls -ld $TARGET_SERVER_PATH && touch $TARGET_SERVER_PATH/testfile && rm $TARGET_SERVER_PATH/testfile"
-
-          # Deploy the dist folder
-          echo "Deploying from $SOURCE_DIR to $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH"
-          scp -o StrictHostKeyChecking=no -r $SOURCE_DIR/. $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH/
-
+            "mkdir -p $TARGET_PATH && chmod -R 755 $TARGET_PATH"
+      
+          # Deploy files (using proper path syntax)
+          echo "Deploying files..."
+          scp -o StrictHostKeyChecking=no -r $SOURCE_PATH/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_PATH/
+      
           # Verify deployment
-          echo "Verifying deployed files..."
+          echo "Verifying deployment..."
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
-            "ls -la $TARGET_SERVER_PATH"
+            "ls -la $TARGET_PATH"
