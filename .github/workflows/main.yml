@@ -47,6 +47,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           pwd
           ls
+          cd hr-client
+          ls
           # Determine target server based on the branch
           if [[ "$GITHUB_REF" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
