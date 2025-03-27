@@ -64,5 +64,5 @@ jobs:
           # Absolute path for scp command
           TARGET_PATH="/var/www/html/HRMS/hr-client"
 
-          scp -i $SSH_PRIVATE_KEY hr-client/dist/ $SERVER_USER@$TARGET_SERVER_IP$TARGET_PATH
+          scp -i $SSH_PRIVATE_KEY hr-client/dist/ $SERVER_USER@$TARGET_SERVER_IP:.
           
