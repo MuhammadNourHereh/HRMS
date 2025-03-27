@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar() {
+  const navigate = useNavigate()
   return (
     <div className="sidebar">
       <ul>
@@ -28,8 +30,8 @@ function Sidebar() {
             <span className="sidebar-title">Leave Management</span>
           </a>
         </li>
-        <li>
-          <a href="#payroll-integration" title="Payroll Integration">
+        <li onClick={() => navigate('/payrolls')}>
+          <a title="Payroll Integration">
             <i className="fa-solid fa-dollar-sign"></i>
             <span className="sidebar-title">Payroll Integration</span>
           </a>
