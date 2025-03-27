@@ -54,26 +54,24 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-
           # Determine target server based on the branch
-          echo "GITHUB_REF is $GITHUB_REF"
-          if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
-            echo "Branch is staging, targeting staging server"
-          elif [[ "${GITHUB_REF}" == "refs/heads/release" ]]; then
-            echo "Branch is release, targeting release server"
+          if [[ "$GITHUB_REF" == "refs/heads/staging" ]]; then
+            TARGET_SERVER_IP=$STAGING_SERVER_IP
+            echo "Branch is staging, targeting staging server ($TARGET_SERVER_IP)"
+          elif [[ "$GITHUB_REF" == "refs/heads/release" ]]; then
+            TARGET_SERVER_IP=$RELEASE_SERVER_IP
+            echo "Branch is release, targeting release server ($TARGET_SERVER_IP)"
           else
             echo "Branch is neither staging nor release, no server selected"
+            exit 0
           fi
-
-          echo "GITHUB_REF: $GITHUB_REF"
-          echo "STAGING_SERVER_IP: $STAGING_SERVER_IP"
-          echo "RELEASE_SERVER_IP: $RELEASE_SERVER_IP"
-          echo "SERVER_USER: $SERVER_USER"
-
 
           TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
 
+          # Test SSH connection
+          echo "Testing SSH connection to $SERVER_USER@$TARGET_SERVER_IP"
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP "echo 'SSH connection successful'"
+
           # Deploy the build folder to the appropriate server
-          ssh $SERVER_USER@$TARGET_SERVER_IP "mkdir -p $TARGET_SERVER_PATH"
-          echo "Deploying to $TARGET_SERVER_IP:$TARGET_SERVER_PATH"
-          scp -v -r hr-client/dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
+          echo "Deploying to $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH"
+          scp -o StrictHostKeyChecking=no -r hr-client/build/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
