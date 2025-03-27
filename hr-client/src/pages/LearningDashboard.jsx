@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { FaArrowRight } from "react-icons/fa"; 
-import "../styles/LearningDashboard.css"
+import "../styles/LearningDashboard.css";
 import { request } from "../utils/remote/axios"; 
+import AssignEmployee from "../components/AssignEmployee"; 
 
 const LearningDashboard = () => {
   const [certifications, setCertifications] = useState([]);
   const [meta, setMeta] = useState({ current_page: 1, last_page: 1 });
   const [courses, setCourses] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [employees, setEmployees] = useState([]); 
+  const [selectedProgram, setSelectedProgram] = useState(null); 
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
 
   useEffect(() => {
     getPrograms(meta.current_page);
@@ -37,6 +40,66 @@ const LearningDashboard = () => {
       }
   };
 
+  const getEmployees = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("User ID not found.");
+      return;
+    }
+    const response = await request({
+      method: "GET",
+      route: "/employees/get-employees", 
+      token,
+    });
+    console.log("Employees API Response:", response);
+    if (response.status === 'success' && Array.isArray(response.data?.data)) {
+      setEmployees(response.data.data); // Access the nested array
+      console.log("Employees data set:", response.data.data);    
+    } else {
+      console.error(response.message);
+    }
+  };
+
+  const openPopup = async (program) => {
+    setSelectedProgram(program);
+    try {
+      await getEmployees(); 
+      setIsPopupOpen(true); 
+    } catch (error) {
+      console.error("Failed to fetch employees:", error);
+    }
+  };
+
+  const handleEnroll = async (selectedEmployees) => {
+    if (!selectedProgram || !selectedEmployees.length) {
+      alert("Please select at least one employee");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      const response = await request({
+        method: "POST",
+        route: "/enrollments",
+        body: {
+          program_id: selectedProgram.id,
+          employee_ids: selectedEmployees.map(e => e.id)
+        },
+        token,
+      });
+  
+      if (!response.error) {
+        alert("Enrollment successful!");
+        setIsPopupOpen(false);
+      } else {
+        throw new Error(response.message || "Enrollment failed");
+      }
+    } catch (error) {
+      console.error("Enrollment error:", error);
+      alert(error.message);
+    }
+  };
+
+  
   return (
     <div className="dashboard-container">
       {/* Certification Programs */}
@@ -60,7 +123,7 @@ const LearningDashboard = () => {
                 <h3>{program.name}</h3>
                 <p>{program.duration} hours</p>
               </div> 
-              <button className="assign-btn">Assign</button>
+              <button className="assign-btn" onClick={() => openPopup(program)}>Assign</button>
             </div> 
             </div>
           ))}
@@ -88,7 +151,7 @@ const LearningDashboard = () => {
                 <h3>{program.name}</h3>
                 <p>{program.duration} hours</p>
               </div> 
-              <button className="assign-btn">Assign</button>
+              <button className="assign-btn" onClick={() => openPopup(program)}>Assign</button>
             </div> 
             </div>
           ))}
@@ -116,11 +179,20 @@ const LearningDashboard = () => {
                 <h3>{program.name}</h3>
                 <p>{program.duration} hours</p>
               </div> 
-              <button className="assign-btn">Assign</button>
+              <button className="assign-btn" onClick={() => openPopup(program)}>Assign</button>
             </div> </div>
           ))}
         </div>
       </section>
+      {isPopupOpen && selectedProgram && (
+        <AssignEmployee 
+          isOpen={isPopupOpen} 
+          employees={employees} 
+          program={selectedProgram}
+          onClose={() => setIsPopupOpen(false)}
+          onEnroll={handleEnroll}
+        />
+      )}
     </div>
   );
 };

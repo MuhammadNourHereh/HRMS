@@ -122,17 +122,7 @@ Route::group(["prefix" => "v0.1"], function () {
             });
             
             //enrollments
-            Route::prefix('enrollments')->group(function () {
-                Route::get('/', [EnrollmentController::class, 'index']);
-                Route::post('/', [EnrollmentController::class, 'store']);
-                Route::get('{id}', [EnrollmentController::class, 'show']);
-                Route::put('{enrollment}', [EnrollmentController::class, 'update']);
-            });
-                
-            //programs
-            Route::get('/programs', [ProgramController::class, 'index']);
-            Route::get('/program/{program}', [ProgramController::class, 'show']);
-                
+
             //certifications
             Route::get('/certifications', [CertificationController::class, 'pending']);
             Route::post('/certifications/{certification}', [CertificationController::class, 'approve']);

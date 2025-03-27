@@ -25,16 +25,27 @@ class EnrollmentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'employee_id' => 'required|exists:employees,id',
+            'employee_ids' => 'required|array', 
+            'employee_ids.*' => 'exists:employees,id',
             'program_id' => 'required|exists:programs,id'
         ]);
-    
-        $enrollment = Enrollment::create([
-            'employee_id' => $request->employee_id,
-            'program_id' => $request->program_id,
-            'status' => 'InProgress' 
-        ]);
-        return response()->json($enrollment, 201);
+        
+        $programId = $request->input('program_id');
+        $employeeIds = $request->input('employee_ids');
+
+        $enrollments = [];
+
+        foreach ($employeeIds as $employeeId) {
+            $enrollments[] = Enrollment::create([
+                'program_id' => $programId,
+                'employee_id' => $employeeId,
+                'status' => 'InProgress' 
+            ]);
+        }
+        return response()->json([
+            'message' => 'Employees enrolled successfully!',
+            'enrollments' => $enrollments
+        ], 201);    
     }
 
     public function show($id)
