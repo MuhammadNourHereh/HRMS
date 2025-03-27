@@ -64,7 +64,7 @@ function Candidates() {
             total: response.data.total || 0,
             per_page: response.data.per_page || 10
           });
-          return; // Exit early since we handled everything
+          return; // Exit early 
         } 
         // Status 
         else if (response.status === 'success' && response.data) {
