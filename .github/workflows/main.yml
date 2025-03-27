@@ -45,7 +45,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
+          
           # Determine target server
           if [[ "$GITHUB_REF" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
@@ -56,30 +56,24 @@ jobs:
           else
             exit 0
           fi
-
-          # Define paths
-          SOURCE_PATH="hr-client/dist"
-          TARGET_PATH="/var/www/html/HRMS/hr-client"
-
+      
           # Verify source files
-          echo "Source files:"
-          ls -la $SOURCE_PATH
-
-          # Create target directory with sudo
-          echo "Creating target directory with sudo..."
+          echo "Source files in hr-client/dist:"
+          ls -la hr-client/dist/
+      
+          # Absolute path for scp command
+          TARGET_PATH="/var/www/html/HRMS/hr-client"
+      
+          # Debug: Verify target directory exists and is writable
+          echo "Verifying target directory permissions..."
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
-            "sudo mkdir -p $TARGET_PATH && sudo chown -R $SERVER_USER:$SERVER_USER $TARGET_PATH && sudo chmod -R 755 $TARGET_PATH"
-
-          # Deploy files
+            "ls -ld $TARGET_PATH && touch $TARGET_PATH/testfile && rm $TARGET_PATH/testfile"
+          
+          # Deploy using absolute paths and proper escaping
           echo "Deploying files..."
-          scp -o StrictHostKeyChecking=no -r $SOURCE_PATH/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_PATH/
-
-          # Final permissions (adjust www-data if using different web server user)
-          echo "Setting final permissions..."
-          ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
-            "sudo chown -R www-data:www-data $TARGET_PATH && sudo chmod -R 755 $TARGET_PATH"
-
+          scp -o StrictHostKeyChecking=no -rp hr-client/dist/* "$SERVER_USER@$TARGET_SERVER_IP:$TARGET_PATH/"
+      
           # Verify deployment
-          echo "Verifying deployment..."
+          echo "Verifying deployed files..."
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
             "ls -la $TARGET_PATH"
