@@ -78,7 +78,7 @@ jobs:
           host: ${{secrets.RELEASE_SERVER_IP }} # IP address of the server you wish to ssh into
           key: ${{secrets.SSH_PRIVATE_KEY}} # Private or public key of the server
           username: ${{ secrets.SERVER_USER }} # User of the server you want to ssh into
-          source: "hr-client/dist/"
+          source: "./hr-client/dist/*"
           target: /var/www/html/HRMS/hr-client
           run: |
             ls -laR hr-client/
