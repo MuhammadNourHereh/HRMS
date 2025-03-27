@@ -17,7 +17,6 @@ class EmployeeController extends Controller
     public function getEmployees(Request $request)
     {
         $perPage = $request->input('per_page', 5);
-        
         $employees = Employee::with(['department', 'position'])
             ->orderBy('last_name')
             ->orderBy('first_name')
@@ -132,6 +131,7 @@ class EmployeeController extends Controller
         ]);
 
         if ($validator->fails()) {
+
             return response()->json([
                 "msg" => "missing attr",
                 "errors" => $validator->errors()
@@ -144,6 +144,7 @@ class EmployeeController extends Controller
         ];
 
         if (!$token = Auth::guard('employee')->attempt($credentials)) {
+
             return response()->json([
                 "success" => false,
                 "error" => "Unauthorized"
@@ -155,7 +156,11 @@ class EmployeeController extends Controller
 
         return response()->json([
             "success" => true,
-            "employee" => $employee
+            "employee" => $employee,
+            "authorization" => [
+                "token" => $employee->token,
+                "type" => "bearer"
+            ]
         ]);
     }
     
