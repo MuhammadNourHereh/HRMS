@@ -72,6 +72,10 @@ jobs:
           echo "Testing SSH connection to $SERVER_USER@$TARGET_SERVER_IP"
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP "echo 'SSH connection successful'"
 
+          # Create directory structure if it doesn't exist
+          echo "Creating directory structure on server..."
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
+            "sudo mkdir -p $TARGET_SERVER_PATH && sudo chown -R $SERVER_USER:$SERVER_USER /var/www/html/HRMS"
           # Deploy the build folder to the appropriate server
           echo "Deploying to $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH"
-          scp -o StrictHostKeyChecking=no -r hr-client/build/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
+          scp -o StrictHostKeyChecking=no -r hr-client/dist/* $SERVER_USER@$TARGET_SERVER_IP:$TARGET_SERVER_PATH
