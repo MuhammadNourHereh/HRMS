@@ -7,6 +7,62 @@
     --color-bg: #e1e5f2;
 }
 
+/* Centering Wrapper */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Makes the centering take the full viewport height */
+    width: 100%;
+    position: relative;
+}
+/* Elegant List Styles */
+.elegant-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.elegant-list li {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    border-radius: 8px;
+    background-color: #2E4053;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.elegant-list li:hover {
+    background-color: #1ABC9C;
+    transform: translateX(10px);
+    /* Slide effect */
+}
+
+.elegant-list li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.elegant-list li a i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.elegant-list li a:hover {
+    color: white;
+    /* Maintain text color on hover */
+}
+
+
 /* ========== CONTAINERS ========== */
 .ai-response {
     position: fixed;
@@ -568,7 +624,14 @@ a:hover {
     color: white;
     margin-top: 5px;
 }
+  
+.main-content {
+    flex-grow: 1; 
+    margin-left: 125px;
+    padding: 20px;
+    overflow-y: auto; 
 
+  }
 
 
 

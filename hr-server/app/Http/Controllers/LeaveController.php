@@ -17,7 +17,7 @@ class LeaveController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10); 
-        $leaves = Leave::with('employee')->paginate($perPage);
+        $leaves = Leave::with(['employee', 'leavePolicy']) ->where('status', 'Pending')->paginate($perPage);
 
         return response()->json([
             'status' => 'success',
@@ -30,7 +30,11 @@ class LeaveController extends Controller
             ]
         ]);
     }
-
+    public function show($id)
+    {
+        $leave = Leave::with('leavePolicy')->findOrFail($id);
+        return response()->json($leave);
+    }
     public function getByDepartment(Request $request,$departmentId)
     {
         $perPage = $request->input('per_page', 10);

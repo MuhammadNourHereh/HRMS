@@ -12,6 +12,7 @@ class Program extends Model {
     protected $fillable = [
         'name', 
         'description',
+        'picture_url',
         'type',
         'difficulty',
         'duration',

@@ -1,0 +1,58 @@
+.popup-input{
+  width:80px;
+}
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background: white;
+    padding: 8px 20px;
+    border-radius: 10px;
+    width: 50%;
+  }
+
+  .employee-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .employee-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+.profile-img{
+  width:4%;
+  height:3%;
+}
+
+
+button {
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+
+}
+.close-assign {
+  background: rgb(213, 1, 1);
+  margin-right: 5px;
+}
+.submit {
+  background: #1F7A8C;
+}

@@ -53,16 +53,18 @@ const DocumentUpload = () => {
         console.log("Sending data:", requestData);
 
         // Send POST request to the backend
-        const response = await axios.post(
-          'http://127.0.0.1:8000/api/documents/upload',
-          requestData,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-          }
-        );
+       const response = await axios.post(
+  'http://127.0.0.1:8000/api/documents/upload',
+  requestData,
+  {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    withCredentials: false, // Ensure this is placed outside the headers object
+  }
+);
+
 
         // Log the response from the backend
         console.log("Response from server:", response.data);

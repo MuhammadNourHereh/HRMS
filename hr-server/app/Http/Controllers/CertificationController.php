@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Document;
+use App\Models\DocumentManagement;
 use App\Models\Certification;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class CertificationController extends Controller
 {
@@ -20,32 +23,49 @@ class CertificationController extends Controller
     {
         $validated = $request->validate([
             'issued_date' => 'required|date',
-            'expiry_date' => 'nullable|date|after:issued_date',
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png',
+            'expiry_date' => 'required|date|after:issued_date',
+            'file_base64' => 'required|string', 
+            'file_description' => 'required|string',   
+            'file_type' => 'required|string|in:pdf,jpg,jpeg,png',
         ]);
 
         if ($certification->status != 'pending') {
-            return response()->json(['error' => 'Certification cannot be issued as it is not in pending status.'], 400);
+            return response()->json(['error' => 'Certification must be pending'], 400);
         }
 
-        $documentId = null;
-        if ($request->hasFile('file')) {
-           $document = Document::uploadDocument($request->file('file'));
-           $documentId = $document->id;
+        try {
+            $uploadRequest = new Request([
+                'employee_id' => $certification->employee_id,
+                'file_type' => $validated['file_type'],
+                'file' => $validated['file_base64'], 
+                'file_description' => $validated['file_description'],
+            ]);
+    
+            $documentController = new DocumentController();
+            $uploadResponse = $documentController->uploadDocument($uploadRequest);
+    
+            $uploadData = json_decode($uploadResponse->getContent(), true);
+            if (!isset($uploadData['file_url']) || $uploadData['file_url']===null) {
+                throw new \Exception('File upload failed');
+            }
+
+            $certification->update([
+                'document_url' => $uploadData['file_url'],
+                'issued_date' => $validated['issued_date'],
+                'expiry_date' => $validated['expiry_date'],
+                'status' => 'approved',
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'document_url' => $uploadData['file_url'],
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'File processing failed',
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $certification = Certification::create([
-            'employee_id' => $enrollment->employee_id,
-            'program_id' => $enrollment->program_id,
-            'document_id' => $documentId, 
-            'certificate_name' => $request->certificate_name,
-            'issued_date' => $request->issued_date,
-            'expiry_date' => $request->expiry_date,
-        ]);
-
-        return response()->json([
-            'success' => 'Certification issued successfully',
-            'certification' => $certification,
-        ]);
     }
 }

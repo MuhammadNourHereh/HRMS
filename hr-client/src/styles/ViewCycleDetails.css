@@ -1,0 +1,169 @@
+/* Cycle Details Header Styling */
+.cycle-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .cycle-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #e1f0fb;
+    color: #1F7A8C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-right: 1.25rem;
+    flex-shrink: 0;
+  }
+  
+  .cycle-details {
+    flex-grow: 1;
+  }
+  
+  .cycle-period {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.375rem;
+  }
+  
+  .cycle-manager {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  /* Statistics Cards */
+  .cycle-stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-card {
+    flex: 1;
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1F7A8C;
+    margin-bottom: 0.375rem;
+  }
+  
+  .stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  /* Section Title with Search/Filter */
+  .section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  
+  .section-title h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .search-filter {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .search-input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    width: 240px;
+  }
+  
+  .filter-button {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background-color: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .filter-button:hover {
+    background-color: #f3f4f6;
+  }
+  
+  /* Rating cell styling */
+  .rating-cell {
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .rating-value {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #111827;
+  }
+  
+  .rating-max {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-left: 0.125rem;
+  }
+  
+  /* Status badges */
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .status-complete {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+  
+  .status-in-progress {
+    background-color: #e0f2fe;
+    color: #0369a1;
+  }
+  
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 2.5rem 0;
+    color: #6b7280;
+  }
+  
+  .empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #d1d5db;
+  }
+  
+  .empty-state h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+  
+  .empty-state p {
+    font-size: 0.9375rem;
+  }
