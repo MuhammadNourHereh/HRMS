@@ -45,7 +45,8 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
+          pwd
+          ls
           # Determine target server based on the branch
           if [[ "$GITHUB_REF" == "refs/heads/staging" ]]; then
             TARGET_SERVER_IP=$STAGING_SERVER_IP
@@ -59,7 +60,7 @@ jobs:
           fi
 
           TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client"
-          SOURCE_DIR="hr-client/dist"  # Changed from build to dist
+          SOURCE_DIR="hr-client/dist"
 
           # Verify source files exist
           echo "Checking source files in $SOURCE_DIR..."
