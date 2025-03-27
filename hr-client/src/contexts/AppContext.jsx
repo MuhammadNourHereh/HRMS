@@ -25,7 +25,76 @@ export function AppProvider({ children }) {
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
-    const [payroll, setPayroll] = useState({})
+    // Payroll state
+    const [payrolls, setPayrolls] = useState([]);
+    const [payrollsLoading, setPayrollsLoading] = useState(false);
+    const [payrollsError, setPayrollsError] = useState(null);
+    const [payrollsPagination, setPayrollsPagination] = useState({
+        currentPage: 1,
+        lastPage: 1,
+        total: 0,
+        perPage: 10
+    });
+
+    // Dummy data generator for payrolls
+    const getDummyPayrolls = () => {
+        return [
+            {
+                id: 1,
+                employee_id: 1,
+                employee: { name: 'John Doe', department: 'HR' },
+                amount: 2500.00,
+                payed_at: null,
+                created_at: new Date().toISOString()
+            },
+            {
+                id: 2,
+                employee_id: 2,
+                employee: { name: 'Jane Smith', department: 'Finance' },
+                amount: 3200.50,
+                payed_at: new Date().toISOString(),
+                created_at: new Date().toISOString()
+            }
+        ];
+    };
+
+    // Payroll functions
+    const fetchPayrolls = async (page = 1, perPage = 10) => {
+        setPayrollsLoading(true);
+        setPayrollsError(null);
+        try {
+            const response = await remote.getPayrolls(page, perPage);
+            setPayrolls(response.data || []);
+            setPayrollsPagination({
+                currentPage: response.current_page || 1,
+                lastPage: response.last_page || 1,
+                total: response.total || 0,
+                perPage: response.per_page || perPage
+            });
+        } catch (err) {
+            setPayrollsError(err.message);
+            // Fallback to dummy data if server fails
+            setPayrolls(getDummyPayrolls());
+            setPayrollsPagination(prev => ({
+                ...prev,
+                total: getDummyPayrolls().length,
+                lastPage: Math.ceil(getDummyPayrolls().length / perPage)
+            }));
+        } finally {
+            setPayrollsLoading(false);
+        }
+    };
+
+    const markAsPaid = async (payrollId) => {
+        try {
+            await remote.markAsPaid(payrollId);
+            setPayrolls(prev => prev.map(p =>
+                p.id === payrollId ? { ...p, payed_at: new Date().toISOString() } : p
+            ));
+        } catch (err) {
+            setPayrollsError(err.message);
+        }
+    };
 
     // Check auth status on mount
     useEffect(() => {
@@ -169,8 +238,16 @@ export function AppProvider({ children }) {
             closeModal,
             deleteEmployee,
 
-            // payrolls states
-            payroll, setPayroll
+            // Payroll state
+            payrolls,
+            payrollsLoading,
+            payrollsError,
+            payrollsPagination,
+
+            // Payroll functions
+            fetchPayrolls,
+            markAsPaid,
+            setPayrollsPagination
         }}>
             {children}
         </AppContext.Provider>
