@@ -55,6 +55,38 @@ const remote = {
   deleteReviewCycle: (id) => 
     request("POST", `review-cycles/delete-review-cycle/${id}`),
   
+   // Performance Reviews
+   getPerformanceReviews: (page = 1) =>
+    request("GET", `performance-reviews/get-performance-reviews?page=${page}`),
+    
+  getPerformanceReviewById: (id) =>
+    request("GET", `performance-reviews/get-performance-review-by-id/${id}`),
+    
+  addOrUpdatePerformanceReview: (id, data) =>
+    request("POST", `performance-reviews/add-update-performance-review/${id}`, data),
+    
+  deletePerformanceReview: (id) =>
+    request("POST", `performance-reviews/delete-performance-review/${id}`),
+    
+  getEmployeePerformanceReviews: (employeeId) =>
+    request("GET", `performance-reviews/get-employee-performance-reviews/${employeeId}`),
+  
+ // Performance Reviews
+ getPerformanceReviews: (page = 1) =>
+    request("GET", `performance-reviews/get-performance-reviews?page=${page}`),
+    
+  getPerformanceReviewById: (id) =>
+    request("GET", `performance-reviews/get-performance-review-by-id/${id}`),
+    
+  addOrUpdatePerformanceReview: (id, data) =>
+    request("POST", `performance-reviews/add-update-performance-review/${id}`, data),
+    
+  deletePerformanceReview: (id) =>
+    request("POST", `performance-reviews/delete-performance-review/${id}`),
+    
+  getEmployeePerformanceReviews: (employeeId) =>
+    request("GET", `performance-reviews/get-employee-performance-reviews/${employeeId}`),
+
 };
 
 export default remote;

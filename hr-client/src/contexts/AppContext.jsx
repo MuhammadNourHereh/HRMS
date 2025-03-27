@@ -32,7 +32,7 @@ export function AppProvider({ children }) {
     });
     
     // Review Cycle Details state
-    const [performanceReviews, setPerformanceReviews] = useState([]);
+    const [cyclePerformanceReviews, setCyclePerformanceReviews] = useState([]);
     const [cycleDetailsLoading, setCycleDetailsLoading] = useState(false);
     const [performanceReviewsPagination, setPerformanceReviewsPagination] = useState({
         current_page: 1,
@@ -41,8 +41,19 @@ export function AppProvider({ children }) {
         per_page: 10
     });
     
-    // Review Cycle Form Loading State
+    // All Performance Reviews state
+    const [allPerformanceReviews, setAllPerformanceReviews] = useState([]);
+    const [performanceReviewsLoading, setPerformanceReviewsLoading] = useState(false);
+    const [allPerformanceReviewsPagination, setAllPerformanceReviewsPagination] = useState({
+        current_page: 1,
+        last_page: 1,
+        total: 0,
+        per_page: 10
+    });
+    
+    // Form Loading States
     const [reviewCycleFormLoading, setReviewCycleFormLoading] = useState(false);
+    const [performanceReviewFormLoading, setPerformanceReviewFormLoading] = useState(false);
     
     // Modal state
     const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -207,7 +218,7 @@ export function AppProvider({ children }) {
             if (response.status === 'success' && response.data) {
                 // Extract performance reviews only
                 const reviews = response.data.performance_reviews || [];
-                setPerformanceReviews(reviews);
+                setCyclePerformanceReviews(reviews);
                 
                 // Set pagination based on results
                 const totalPages = Math.ceil(reviews.length / 10);
@@ -221,7 +232,7 @@ export function AppProvider({ children }) {
             }
         } catch (error) {
             console.error('Error fetching cycle details:', error);
-            setPerformanceReviews([]);
+            setCyclePerformanceReviews([]);
         } finally {
             setCycleDetailsLoading(false);
         }
@@ -236,7 +247,7 @@ export function AppProvider({ children }) {
 
     // Clear cycle details
     const clearCycleDetails = () => {
-        setPerformanceReviews([]);
+        setCyclePerformanceReviews([]);
     };
     
     // Add or Update Review Cycle
@@ -284,6 +295,83 @@ export function AppProvider({ children }) {
         }
     };
 
+    // Fetch all performance reviews
+    const fetchAllPerformanceReviews = async (page = 1) => {
+        setPerformanceReviewsLoading(true);
+        try {
+            const response = await remote.getPerformanceReviews(page);
+            
+            // Set performance reviews data
+            setAllPerformanceReviews(response.data.data || []);
+            
+            // Set pagination
+            setAllPerformanceReviewsPagination({
+                current_page: response.data.current_page,
+                last_page: response.data.last_page,
+                total: response.data.total,
+                per_page: response.data.per_page
+            });
+        } catch (error) {
+            console.error('Error fetching performance reviews:', error);
+            setAllPerformanceReviews([]);
+        } finally {
+            setPerformanceReviewsLoading(false);
+        }
+    };
+
+    // Handle all performance reviews page change
+    const handleAllPerformanceReviewsPageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= allPerformanceReviewsPagination.last_page) {
+            setAllPerformanceReviewsPagination(prev => ({ ...prev, current_page: newPage }));
+            fetchAllPerformanceReviews(newPage);
+        }
+    };
+
+    // Add or Update Performance Review
+    const addOrUpdatePerformanceReview = async (id, data) => {
+        setPerformanceReviewFormLoading(true);
+        try {
+            const response = await remote.addOrUpdatePerformanceReview(id, data);
+            
+            // Refresh performance reviews list
+            await fetchAllPerformanceReviews(allPerformanceReviewsPagination.current_page);
+            
+            return { 
+                success: true, 
+                message: id === 'add' ? 'Performance review created successfully' : 'Performance review updated successfully',
+                data: response.data
+            };
+        } catch (error) {
+            console.error('Error saving performance review:', error);
+            
+            const errorMessage = error.response?.data?.errors
+                ? Object.values(error.response.data.errors).flat().join(', ')
+                : error.response?.data?.message || "Failed to save performance review";
+                
+            return { 
+                success: false, 
+                message: errorMessage
+            };
+        } finally {
+            setPerformanceReviewFormLoading(false);
+        }
+    };
+    
+    // Delete Performance Review
+    const deletePerformanceReview = async (id) => {
+        try {
+            await remote.deletePerformanceReview(id);
+            await fetchAllPerformanceReviews(allPerformanceReviewsPagination.current_page);
+            return { success: true, message: 'Performance review deleted successfully' };
+        } catch (error) {
+            console.error('Error deleting performance review:', error);
+            return { 
+                success: false, 
+                message: error.response?.data?.message || "Failed to delete performance review"
+            };
+        }
+    };
+
     return (
         <AppContext.Provider value={{
             // Navigation
@@ -322,12 +410,24 @@ export function AppProvider({ children }) {
             deleteReviewCycle,
             
             // Review Cycle Details state and functions
-            performanceReviews,
+            cyclePerformanceReviews,
             cycleDetailsLoading,
             performanceReviewsPagination,
             fetchCycleDetails,
             handlePerformanceReviewsPageChange,
-            clearCycleDetails
+            clearCycleDetails,
+            
+            // Performance Reviews state and functions
+            allPerformanceReviews,
+            performanceReviewsLoading,
+            allPerformanceReviewsPagination,
+            fetchAllPerformanceReviews,
+            handleAllPerformanceReviewsPageChange,
+            
+            // Performance Review 
+            performanceReviewFormLoading,
+            addOrUpdatePerformanceReview,
+            deletePerformanceReview
         }}>
             {children}
         </AppContext.Provider>
