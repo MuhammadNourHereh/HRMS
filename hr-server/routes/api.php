@@ -35,7 +35,7 @@ Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
 
-  
+   // Route::middleware('auth:employee')->group(function () {
         // Employee Clocking Routes
         Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
         Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
@@ -47,6 +47,7 @@ Route::group(["prefix" => "v0.1"], function () {
 
             // Route::post('/location-update', [LocationUpdateController::class, 'store']);
 
+        //Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
 
 
 
@@ -246,3 +247,5 @@ Route::group(["prefix" => "v0.1"], function () {
         });
     
 });
+   // });
+//});
