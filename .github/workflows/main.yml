@@ -65,7 +65,7 @@ jobs:
             echo "Branch is neither staging nor release, no server selected"
             exit 0
           fi
-
+ 
           TARGET_SERVER_PATH="/var/www/html/HRMS/hr-client/"
 
           # Test SSH connection
