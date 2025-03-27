@@ -13,20 +13,6 @@
     margin: 0;
   }
   
-  .btn-btn {
-    padding: 0.625rem 1rem;
-    background-color: #1F7A8C;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .btn-btn:hover {
-    background-color: #166678;
-  }
   
   /* Tab Navigation */
   .tab-navigation {

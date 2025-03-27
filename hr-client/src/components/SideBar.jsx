@@ -11,6 +11,12 @@ function Sidebar() {
           </a>
         </li>
         <li>
+          <a href="/review-cycles" title="Attendance Tracking">
+            <i className="fa-solid fa-calendar"></i>
+            <span className="sidebar-title">Performance Reviews</span>
+          </a>
+        </li>
+        <li>
           <a href="#attendance-tracking" title="Attendance Tracking">
             <i className="fa-solid fa-clock"></i>
             <span className="sidebar-title">Attendance Tracking</span>
