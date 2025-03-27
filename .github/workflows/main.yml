@@ -63,17 +63,4 @@ jobs:
       
           # Absolute path for scp command
           TARGET_PATH="/var/www/html/HRMS/hr-client"
-      
-          # Debug: Verify target directory exists and is writable
-          echo "Verifying target directory permissions..."
-          ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
-            "ls -ld $TARGET_PATH && touch $TARGET_PATH/testfile && rm $TARGET_PATH/testfile"
           
-          # Deploy using absolute paths and proper escaping
-          echo "Deploying files..."
-          scp -o StrictHostKeyChecking=no -rp hr-client/dist/* "$SERVER_USER@$TARGET_SERVER_IP:$TARGET_PATH/"
-      
-          # Verify deployment
-          echo "Verifying deployed files..."
-          ssh -o StrictHostKeyChecking=no $SERVER_USER@$TARGET_SERVER_IP \
-            "ls -la $TARGET_PATH"
