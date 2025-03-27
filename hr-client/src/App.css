@@ -17,6 +17,7 @@
     width: 100%;
     position: relative;
 }
+
 /* Elegant List Styles */
 .elegant-list {
     list-style-type: none;
@@ -121,9 +122,10 @@
 }
 
 
-.margin-left{
+.margin-left {
     margin-left: 8rem !important;
 }
+
 /* Main container for layout */
 .container {
     width: 90%;
@@ -322,6 +324,7 @@ p {
     color: var(--color-secondary);
     line-height: 1.6;
 }
+
 /* ========== TEXT STYLES ========== */
 
 /* Small text */
@@ -444,10 +447,10 @@ a:hover {
 }
 
 .logo img {
-    height:50px;
+    height: 50px;
     width: auto;
     max-width: 100%;
-    
+
 }
 
 /* Center search bar */
@@ -565,7 +568,7 @@ a:hover {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border: 1px solid #bfdbf7;
-    
+
 }
 
 .content section h2 {
@@ -624,21 +627,85 @@ a:hover {
     color: white;
     margin-top: 5px;
 }
-  
+
 .main-content {
-    flex-grow: 1; 
+    flex-grow: 1;
     margin-left: 125px;
     padding: 20px;
-    overflow-y: auto; 
+    overflow-y: auto;
 
-  }
+}
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.column {
+    flex-direction: column;
+}
 
+.circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    background-color: var(--color-accent);
+}
 
+.fill-image {
+    margin-top: 10px;
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+}
 
+.table-container {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
 
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
+.th,
+.td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.row-label {
+    color: #666;
+    font-weight: normal;
+}
+
+.row-value {
+    text-align: right;
+    font-weight: bold;
+}
+
+.total-direct-deposit {
+    color: red;
+}
+
+.total-debit {
+    font-weight: bold;
+}
+
+.spread {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container2 {
+    height: 91vh;
+    width: 100%;
+}
 
 /* For screens between 900px and 600px */
 @media screen and (max-width: 900px) {

@@ -6,11 +6,11 @@ export const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
     const navigate = useNavigate();
-    
+
     // Auth state
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
-    
+
     // Employee state
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -44,9 +44,81 @@ export function AppProvider({ children }) {
     // Review Cycle Form Loading State
     const [reviewCycleFormLoading, setReviewCycleFormLoading] = useState(false);
     
+
     // Modal state
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+
+    // Payroll state
+    const [payrolls, setPayrolls] = useState([]);
+    const [payrollsLoading, setPayrollsLoading] = useState(false);
+    const [payrollsError, setPayrollsError] = useState(null);
+    const [payrollsPagination, setPayrollsPagination] = useState({
+        currentPage: 1,
+        lastPage: 1,
+        total: 0,
+        perPage: 10
+    });
+
+    // Dummy data generator for payrolls
+    const getDummyPayrolls = () => {
+        return [
+            {
+                id: 1,
+                employee_id: 1,
+                employee: { name: 'John Doe', department: 'HR' },
+                amount: 2500.00,
+                payed_at: null,
+                created_at: new Date().toISOString()
+            },
+            {
+                id: 2,
+                employee_id: 2,
+                employee: { name: 'Jane Smith', department: 'Finance' },
+                amount: 3200.50,
+                payed_at: new Date().toISOString(),
+                created_at: new Date().toISOString()
+            }
+        ];
+    };
+
+    // Payroll functions
+    const fetchPayrolls = async (page = 1, perPage = 10) => {
+        setPayrollsLoading(true);
+        setPayrollsError(null);
+        try {
+            const response = await remote.getPayrolls(page, perPage);
+            setPayrolls(response.data || []);
+            setPayrollsPagination({
+                currentPage: response.current_page || 1,
+                lastPage: response.last_page || 1,
+                total: response.total || 0,
+                perPage: response.per_page || perPage
+            });
+        } catch (err) {
+            setPayrollsError(err.message);
+            // Fallback to dummy data if server fails
+            setPayrolls(getDummyPayrolls());
+            setPayrollsPagination(prev => ({
+                ...prev,
+                total: getDummyPayrolls().length,
+                lastPage: Math.ceil(getDummyPayrolls().length / perPage)
+            }));
+        } finally {
+            setPayrollsLoading(false);
+        }
+    };
+
+    const markAsPaid = async (payrollId) => {
+        try {
+            await remote.markAsPaid(payrollId);
+            setPayrolls(prev => prev.map(p =>
+                p.id === payrollId ? { ...p, payed_at: new Date().toISOString() } : p
+            ));
+        } catch (err) {
+            setPayrollsError(err.message);
+        }
+    };
 
     // Check auth status on mount
     useEffect(() => {
@@ -55,7 +127,7 @@ export function AppProvider({ children }) {
             checkAuthStatus();
         }
     }, []);
-    
+
     // Check if user is authenticated
     const checkAuthStatus = async () => {
         try {
@@ -74,7 +146,7 @@ export function AppProvider({ children }) {
     const login = async (email, password) => {
         try {
             const response = await remote.login(email, password);
-            
+
             if (response.success && response.employee.token) {
                 localStorage.setItem('token', response.employee.token);
                 setUser(response.employee);
@@ -86,13 +158,13 @@ export function AppProvider({ children }) {
             }
         } catch (error) {
             console.error("Login error:", error);
-            return { 
-                success: false, 
-                message: error.response?.data?.error || "Login failed" 
+            return {
+                success: false,
+                message: error.response?.data?.error || "Login failed"
             };
         }
     };
-    
+
     // Logout function
     const logout = async () => {
         try {
@@ -112,10 +184,10 @@ export function AppProvider({ children }) {
         setLoading(true);
         try {
             const response = await remote.getEmployees(page);
-            
+
             // Set employees data
             setEmployees(response.data.data || []);
-            
+
             // Set pagination
             setPagination({
                 current_page: response.data.current_page,
@@ -152,6 +224,7 @@ export function AppProvider({ children }) {
 
     // Delete employee
     const deleteEmployee = async (employeeId) => {
+
         try {
             await remote.deleteEmployee(employeeId);
             fetchEmployees(pagination.current_page);
@@ -282,26 +355,27 @@ export function AppProvider({ children }) {
                 message: error.response?.data?.message || "Failed to delete review cycle"
             };
         }
+
     };
 
     return (
         <AppContext.Provider value={{
             // Navigation
             navigate,
-            
+
             // Auth state and functions
             isAuthenticated,
             user,
             login,
             logout,
-            
+
             // Employee state
             employees,
             loading,
             pagination,
             selectedEmployee,
             modalOpen,
-            
+
             // Employee functions
             fetchEmployees,
             handlePageChange,
@@ -327,7 +401,18 @@ export function AppProvider({ children }) {
             performanceReviewsPagination,
             fetchCycleDetails,
             handlePerformanceReviewsPageChange,
-            clearCycleDetails
+            clearCycleDetails,
+
+            // Payroll state
+            payrolls,
+            payrollsLoading,
+            payrollsError,
+            payrollsPagination,
+
+            // Payroll functions
+            fetchPayrolls,
+            markAsPaid,
+            setPayrollsPagination
         }}>
             {children}
         </AppContext.Provider>
