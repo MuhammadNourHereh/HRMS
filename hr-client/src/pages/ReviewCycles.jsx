@@ -6,6 +6,7 @@ import EditReviewFormModal from '../components/EditReviewFormModal';
 import DeleteReviewModal from '../components/DeleteReviewModal';
 import '../styles/DataTable.css';
 import '../styles/ReviewCycles.css';
+import { Link } from 'react-router-dom';
 
 // Icons
 const ViewIcon = () => <i className="fas fa-eye"></i>;
@@ -174,7 +175,7 @@ function ReviewCycles() {
       <main>
         {/* Tab Navigation */}
         <div className="tab-navigation">
-          <button className="tab-button">Performance Reviews</button>
+        <Link to="/performance-reviews"> <button className="tab-button">Performance Reviews</button></Link>
           <button className="tab-button active">Review Cycles</button>
           <button className="tab-button">Goals</button>
           <button className="tab-button">Feedback</button>

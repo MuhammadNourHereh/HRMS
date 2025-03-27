@@ -55,28 +55,7 @@ const remote = {
     deleteReviewCycle: (id) =>
         request("POST", `review-cycles/delete-review-cycle/${id}`),
 
-    // Auth related
-    login: (email, password) =>
-        request("POST", "login", { email, password }),
-
-    logout: () =>
-        request("POST", "users/logout"),
-
-    getProfile: () =>
-        request("GET", "users/me"),
-
-    // Employees only
-    getEmployees: (page = 1) =>
-        request("GET", `employees/get-employees?page=${page}`),
-
-    getEmployeeById: (id) =>
-        request("GET", `employees/get-employee-by-id/${id}`),
-
-    addOrUpdateEmployee: (id, data) =>
-        request("POST", `employees/add-update-employee/${id}`, data),
-
-    deleteEmployee: (id) =>
-        request("POST", `employees/delete-employee/${id}`),
+    
     getPayrolls: (page = 1, perPage = 10) =>
         request("GET", `payrolls?page=${page}&per_page=${perPage}`),
 
@@ -90,7 +69,24 @@ const remote = {
         request("PUT", `payrolls/${id}`, data),
 
     deletePayroll: (id) =>
-        request("DELETE", `payrolls/${id}`)
+        request("DELETE", `payrolls/${id}`),
+   
+ // Performance Reviews
+ getPerformanceReviews: (page = 1) =>
+    request("GET", `performance-reviews/get-performance-reviews?page=${page}`),
+    
+  getPerformanceReviewById: (id) =>
+    request("GET", `performance-reviews/get-performance-review-by-id/${id}`),
+    
+  addOrUpdatePerformanceReview: (id, data) =>
+    request("POST", `performance-reviews/add-update-performance-review/${id}`, data),
+    
+  deletePerformanceReview: (id) =>
+    request("POST", `performance-reviews/delete-performance-review/${id}`),
+    
+  getEmployeePerformanceReviews: (employeeId) =>
+    request("GET", `performance-reviews/get-employee-performance-reviews/${employeeId}`),
+
 };
 
 export default remote;
