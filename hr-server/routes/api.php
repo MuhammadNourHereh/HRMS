@@ -34,12 +34,12 @@ Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
     Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
 
-    Route::middleware('auth:employee')->group(function () {
+    Route::middleware('auth:employee')->group(function () {//
         // Employee Clocking Routes
         Route::post('/clock-in', [MainClockedWorkers::class, 'clockIn']);
         Route::post('/clock-out', [MainClockedWorkers::class, 'clockOut']);
 
-        Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
+        //Route::group(["prefix" => "hr", "middleware" => "isHr"], function(){
 
             // Document Routes (Upload, Get, Update, Delete)
             Route::prefix('documents')->group(function () {
@@ -55,12 +55,12 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post('/documents/upload/test', function () {
                 return response()->json(['message' => 'API is working!']);
             });
-        });
+        //});
 
 
     
     // authorized apis
-    Route::middleware('auth:employee')->group(function () {
+    Route::middleware('auth:employee')->group(function () {//
 
         Route::prefix('users')->group(function () {
             Route::get('/me', [EmployeeController::class, "me"]);
