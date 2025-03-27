@@ -10,7 +10,7 @@ import DocumentManagement from './components/DocumentManagement'; // Import Docu
 import LeaveRequests from './pages/LeaveRequests';
 import LeaveDetails from './components/LeaveDetails';
 import Payrolls from "./pages/Payrolls";
-import PayrollsAprove from "./pages/PayrollsAprove";
+import PayrollsApprove from "./pages/PayrollsApprove"
 import PayrollsDone from "./pages/PayrollsDone";
 import Employees from "./pages/Employees";
 // import LeaveDisplay from './components/LeaveDisplay'; // Use PascalCase for consistency
@@ -36,7 +36,7 @@ function App() {
              */}
 
             <Route path="/Payrolls" element={<Payrolls />} />
-            <Route path="/PayrollsApprove" element={<PayrollsAprove />} />
+            <Route path="/PayrollsApprove" element={<PayrollsApprove />} />
             <Route path="/PayrollsDone" element={<PayrollsDone />} />
 
             {/* <Route path="/leaveDisplay" element={<LeaveDisplay />} /> leaveDisplay route */}

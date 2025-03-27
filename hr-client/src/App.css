@@ -594,9 +594,43 @@ a:hover {
     height: 70%;
     object-fit: cover;
 }
-
-
-
+.table-container {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 500px;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.th, .td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+.row-label {
+    color: #666;
+    font-weight: normal;
+}
+.row-value {
+    text-align: right;
+    font-weight: bold;
+}
+.total-direct-deposit {
+    color: red;
+}
+.total-debit {
+    font-weight: bold;
+}
+.spread {
+    display: flex;
+    justify-content: space-between;
+}
+.container2 {
+    height: 91vh;
+    width: 100%;
+}
 /* For screens between 900px and 600px */
 @media screen and (max-width: 900px) {
     .nav-center {

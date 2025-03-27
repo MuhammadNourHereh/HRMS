@@ -6,11 +6,11 @@ export const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
     const navigate = useNavigate();
-    
+
     // Auth state
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
-    
+
     // Employee state
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -20,10 +20,12 @@ export function AppProvider({ children }) {
         total: 0,
         per_page: 10
     });
-    
+
     // Modal state
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+
+    const [payroll, setPayroll] = useState({})
 
     // Check auth status on mount
     useEffect(() => {
@@ -32,7 +34,7 @@ export function AppProvider({ children }) {
             checkAuthStatus();
         }
     }, []);
-    
+
     // Check if user is authenticated
     const checkAuthStatus = async () => {
         try {
@@ -51,7 +53,7 @@ export function AppProvider({ children }) {
     const login = async (email, password) => {
         try {
             const response = await remote.login(email, password);
-            
+
             if (response.success && response.employee.token) {
                 localStorage.setItem('token', response.employee.token);
                 setUser(response.employee);
@@ -63,13 +65,13 @@ export function AppProvider({ children }) {
             }
         } catch (error) {
             console.error("Login error:", error);
-            return { 
-                success: false, 
-                message: error.response?.data?.error || "Login failed" 
+            return {
+                success: false,
+                message: error.response?.data?.error || "Login failed"
             };
         }
     };
-    
+
     // Logout function
     const logout = async () => {
         try {
@@ -89,10 +91,10 @@ export function AppProvider({ children }) {
         setLoading(true);
         try {
             const response = await remote.getEmployees(page);
-            
+
             // Set employees data
             setEmployees(response.data.data || []);
-            
+
             // Set pagination
             setPagination({
                 current_page: response.data.current_page,
@@ -129,43 +131,46 @@ export function AppProvider({ children }) {
 
     // Delete employee
     const deleteEmployee = async (employeeId) => {
-        
-            try {
-                await remote.deleteEmployee(employeeId);
-                fetchEmployees(pagination.current_page);
-                return { success: true };
-            } catch (error) {
-                console.error('Error deleting employee:', error);
-                alert("Failed to delete employee");
-                return { success: false, message: error.message };
-            }
-        
+
+        try {
+            await remote.deleteEmployee(employeeId);
+            fetchEmployees(pagination.current_page);
+            return { success: true };
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+            alert("Failed to delete employee");
+            return { success: false, message: error.message };
+        }
+
     };
 
     return (
         <AppContext.Provider value={{
             // Navigation
             navigate,
-            
+
             // Auth state and functions
             isAuthenticated,
             user,
             login,
             logout,
-            
+
             // Employee state
             employees,
             loading,
             pagination,
             selectedEmployee,
             modalOpen,
-            
+
             // Employee functions
             fetchEmployees,
             handlePageChange,
             viewEmployeeDetails,
             closeModal,
-            deleteEmployee
+            deleteEmployee,
+
+            // payrolls states
+            payroll, setPayroll
         }}>
             {children}
         </AppContext.Provider>
