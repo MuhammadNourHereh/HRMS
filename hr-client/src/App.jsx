@@ -22,7 +22,7 @@ function App() {
 
 
 <AppProvider>
-      <Navbar /> 
+      {pathname !== "/login" &&<Navbar /> }
       <div className="wrapper">
       {pathname !== "/login" && <Sidebar /> }{/* Sidebar on the left */}
 

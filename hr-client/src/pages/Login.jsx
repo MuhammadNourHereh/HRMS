@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { requestMethods } from "../utils/enums/request.methods";
 import { request } from "../utils/remote/axios";
@@ -19,36 +18,41 @@ const Login = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const login = async () => {
+  const login = async (e) => {
+    e.preventDefault(); 
+    setErrorMessage("");
+
     if (!form.email || !form.password) {
       setErrorMessage("Email and password are required.");
       return;
     }
-    
+  
     try {
-    const response = await request({
-      method: requestMethods.POST,
-      route: "/login",
-      body: form,  
-    });
+      const response = await request({
+        method: requestMethods.POST,
+        route: "/login",
+        body: form,  
+      });
+  console.log(response);
+      if (response.success) {
+        localStorage.setItem("employee_id", response.employee.id);
+        localStorage.setItem("token", response.authorization.token);
+        navigate("/employees");
+      } else if (response.msg === "missing attr") {
 
-    if (response.success && response.authorization?.token) {
-      localStorage.setItem("employee_id", response.employee.id);
-      localStorage.setItem("token", response.authorization.token); 
-
-      console.log(response);
-      
-      navigate("/");
-
-    } else {
-      setErrorMessage(response.message || "Login failed. Please check your credentials.");
-    }
+        const firstError = Object.values(response.errors)[0][0];
+        setErrorMessage(firstError);
+      } else if (response.error === "Unauthorized") {
+        setErrorMessage("Invalid email or password.");
+      }else {
+        setErrorMessage(response.error || "Login failed. Please check your credentials.");
+      }
     } catch (err) {
       console.error("Login error:", err);
       setErrorMessage("An error occurred. Please try again.");
     }
-
   };
+  
 
   return (
     <div className="auth-container">
@@ -74,7 +78,6 @@ const Login = () => {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       
       <button onClick={login} className="auth-button">Login</button>
-      <p className="auth-link">Don't have an account? <Link to="/auth/signup">Sign Up</Link></p> 
       
 
     </div>
