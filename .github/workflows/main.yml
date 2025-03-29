@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - staging
-      - release
+      # - release
   workflow_dispatch:
 
 jobs:
@@ -22,17 +22,17 @@ jobs:
         with:
           node-version: "20"
 
-      # Install dependencies for React app
-      - name: Install dependencies
-        run: |
-          cd hr-client
-          npm install
+      # # Install dependencies for React app
+      # - name: Install dependencies
+      #   run: |
+      #     cd hr-client
+      #     npm install
 
-      # Build the project from the main branch
-      - name: Build Project from main branch
-        run: |
-          cd hr-client
-          npm run build
+      # # Build the project from the main branch
+      # - name: Build Project from main branch
+      #   run: |
+      #     cd hr-client
+      #     npm run build
 
       # Deploy to Staging or Release Server based on the branch
       # - name: Deploy to Server
@@ -65,20 +65,31 @@ jobs:
       #     TARGET_PATH="/var/www/html/HRMS/hr-client"
 
       #     scp -i $SSH_PRIVATE_KEY hr-client/dist/ ubuntu@13.38.12.19:/var/www/html/HRMS/hr-client
-      - name: print
-        run: |
-          pwd
-          ls
-          ls -lar hr-client/
+      # - name: print
+      #   run: |
+      #     pwd
+      #     ls
+      #     ls -lar hr-client/
 
-      - uses: actions/checkout@v4
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{secrets.RELEASE_SERVER_IP }} # IP address of the server you wish to ssh into
-          key: ${{secrets.SSH_PRIVATE_KEY}} # Private or public key of the server
-          username: ${{ secrets.SERVER_USER }} # User of the server you want to ssh into
-          source: "./hr-client/dist/*"
-          target: /var/www/html/HRMS/hr-client
-          run: |
-            ls -laR hr-client/
+      # - uses: actions/checkout@v4
+      # - name: copy file via ssh password
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{secrets.STAGING_SERVER_IP }} # IP address of the server you wish to ssh into
+      #     key: ${{secrets.SSH_PRIVATE_KEY}} # Private or public key of the server
+      #     username: ${{ secrets.SERVER_USER }} # User of the server you want to ssh into
+      #     source: "./hr-client/dist/*"
+      #     target: /var/www/html/HRMS/hr-client
+      #     run: |
+      #       ls -laR hr-client/
+      - name: SSH into the server
+        uses: appleboy/ssh-action@master
+        with: 
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.STAGING_SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          port: 22
+          script: |
+            cd /var/www/html/HRMS/
+            ssh -T git@github.com
+            git pull origin
