@@ -93,3 +93,4 @@ jobs:
             cd /var/www/html/HRMS/
             ssh -T git@github.com
             git pull origin
+            # test
