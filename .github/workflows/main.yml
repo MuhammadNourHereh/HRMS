@@ -92,5 +92,6 @@ jobs:
           script: |
             cd /var/www/html/HRMS/
             ssh -T git@github.com
+            git switch staging
             git pull origin
             # test
