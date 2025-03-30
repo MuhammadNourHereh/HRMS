@@ -1,0 +1,106 @@
+.delete-header {
+    background-color: #053b50;
+  }
+  
+  .delete-item-info {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .delete-item-icon {
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .delete-item-icon i {
+    font-size: 1.5rem;
+    color: #b91c1c;
+  }
+  
+  .employee-avatar-mini {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #1F7A8C;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+  
+  .delete-item-details {
+    flex-grow: 1;
+  }
+  
+  .delete-item-name {
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .delete-item-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .delete-message {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #374151;
+    margin-bottom: 1.5rem;
+  }
+  
+  .delete-confirmation {
+    margin-bottom: 1.5rem;
+  }
+  
+  .delete-confirmation-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .delete-confirmation-checkbox input {
+    margin-right: 0.75rem;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .checkbox-text {
+    font-size: 0.9375rem;
+    color: #4b5563;
+  }
+  
+  .delete-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .delete-button {
+    background-color: #ef4444;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .delete-button:hover:not(:disabled) {
+    background-color: #dc2626;
+  }
+  
+  .delete-button.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
