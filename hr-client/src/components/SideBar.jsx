@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate} from 'react-router-dom';
+
 
 function Sidebar() {
   const [expandedItem, setExpandedItem] = useState(null);
+  const navigate = useNavigate()
 
   const toggleExpand = (item) => {
     if (expandedItem === item) {
@@ -39,8 +41,8 @@ function Sidebar() {
             <span className="sidebar-title">Leave Management</span>
           </Link>
         </li>
-        <li>
-          <a href="#payroll-integration" title="Payroll Integration">
+        <li onClick={() => navigate('/payrolls')}>
+          <a title="Payroll Integration">
             <i className="fa-solid fa-dollar-sign"></i>
             <span className="sidebar-title">Payroll Integration</span>
           </a>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/LearningDashboard.css";
+
 import { request } from "../utils/remote/axios"; 
 import AssignEmployee from "../components/AssignEmployee"; 
 
@@ -17,16 +18,15 @@ const LearningDashboard = () => {
   }, [meta.current_page]);
     
   const getPrograms = async (page = 1) => {
-    const token =localStorage.getItem('token');
+    {/*const token =localStorage.getItem('token');
     if (!token) {
       console.error("User ID not found. User might not be logged in.");
       return;
-    }
+    }*/}
     const response = await request({
       method: "GET", 
       route: "/programs",
       params: { per_page: 10, page },
-      token,
     });
           
     if (!response.error) {
@@ -41,19 +41,18 @@ const LearningDashboard = () => {
   };
 
   const getEmployees = async () => {
-    const token = localStorage.getItem("token");
+    {/*const token = localStorage.getItem("token");
     if (!token) {
       console.error("User ID not found.");
       return;
-    }
+    }*/}
     const response = await request({
       method: "GET",
       route: "/employees/get-employees", 
-      token,
     });
     console.log("Employees API Response:", response);
     if (response.status === 'success' && Array.isArray(response.data?.data)) {
-      setEmployees(response.data.data); // Access the nested array
+      setEmployees(response.data.data); 
       console.log("Employees data set:", response.data.data);    
     } else {
       console.error(response.message);
@@ -76,7 +75,7 @@ const LearningDashboard = () => {
       return;
     }
     try {
-      const token = localStorage.getItem("token");
+      /*const token = localStorage.getItem("token");*/
       const response = await request({
         method: "POST",
         route: "/enrollments",
@@ -84,7 +83,6 @@ const LearningDashboard = () => {
           program_id: selectedProgram.id,
           employee_ids: selectedEmployees.map(e => e.id)
         },
-        token,
       });
   
       if (!response.error) {

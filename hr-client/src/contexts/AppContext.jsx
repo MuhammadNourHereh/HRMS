@@ -496,6 +496,8 @@ export function AppProvider({ children }) {
             allPerformanceReviewsPagination,
             fetchAllPerformanceReviews,
             handleAllPerformanceReviewsPageChange,
+            addOrUpdatePerformanceReview,
+            deletePerformanceReview,
             
 
             // Payroll state

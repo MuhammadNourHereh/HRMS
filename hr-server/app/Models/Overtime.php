@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class OverTime extends Model
+class Overtime extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, Notifiable;
     use SoftDeletes;
-
 
     protected $fillable = [
         'employee_id',
@@ -18,4 +18,13 @@ class OverTime extends Model
         'pay_rate',
         'payed_at',
     ];
+
+    protected $dates = [
+        'payed_at',
+    ];
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }
