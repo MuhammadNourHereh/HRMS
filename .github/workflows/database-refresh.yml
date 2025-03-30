@@ -1,0 +1,25 @@
+name: database refresh
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+
+      - name: SSH into the server
+        uses: appleboy/ssh-action@master
+        with: 
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.STAGING_SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          port: 22
+          script: |
+            cd /var/www/html/HRMS/hr-server/
+            php artisan migrate:fresh --seed
