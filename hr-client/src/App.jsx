@@ -1,7 +1,11 @@
 import "./App.css";
 import React from 'react';
 import { AppProvider } from './contexts/AppContext';
-import { BrowserRouter as Router, Route, Routes,useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import LeaveDetails from './components/LeaveDetails';
+import Payrolls from "./pages/Payrolls";
+import PayrollsApprove from "./pages/PayrollsApprove"
+import PayrollsDone from "./pages/PayrollsDone";
 import Sidebar from './components/SideBar';
 import LeaveRequests from "./pages/LeaveRequests";
 import Content from './components/Content';
@@ -16,31 +20,42 @@ import PerformanceReviews from "./pages/PerformanceReviews";
 // import LeaveDisplay from './components/LeaveDisplay'; // Use PascalCase for consistency
 
 function App() {
-    const { pathname } = useLocation();
-  
+  const { pathname } = useLocation();
+
   return (
     <>
-<AppProvider>
-      {pathname !== "/login" &&<Navbar /> }
-      <div className="wrapper">
-      {pathname !== "/login" && <Sidebar /> }{/* Sidebar on the left */}
+      <AppProvider>
+        {pathname !== "/login" && <Navbar />}
+        <div className="wrapper">
+          {pathname !== "/login" && <Sidebar />}{/* Sidebar on the left */}
 
-        <div className="main-content">
-        <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/employees" element={<Employees />} />
-        <Route path="/review-cycles" element={<ReviewCycles />} />
-        <Route path="/performance-reviews" element={<PerformanceReviews />} />
+          <div className="main-content">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/employees" element={<Employees />} />
+              <Route path="/review-cycles" element={<ReviewCycles />} />
+              <Route path="/performance-reviews" element={<PerformanceReviews />} />
 
-          <Route path="/" element={<Content />} /> {/* Default route for Content */}
-          <Route path="/leaves" element={<LeaveRequests />} /> 
+              <Route path="/" element={<Content />} /> {/* Default route for Content */}
+              <Route path="/leaves" element={<LeaveRequests />} />
 
-          <Route path="/programs" element={<LearningDashboard />} /> 
-          <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
-          <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
-        </Routes>
+              <Route path="/programs" element={<LearningDashboard />} />
+              <Route path="/geolocation" element={<GeolocationLogger />} /> {/* Geolocation page route */}
+              <Route path="/document-management" element={<DocumentManagement />} /> {/* Document Management route */}
+
+
+              <Route path="/LeaveDetails" element={<LeaveDetails />} /> {/* LeaveDetails route */}
+              {/**
+             * these are payrolls pages   
+             * @auther muhammad nour hereh 
+             */}
+
+              <Route path="/Payrolls" element={<Payrolls />} />
+              <Route path="/PayrollsApprove" element={<PayrollsApprove />} />
+              <Route path="/PayrollsDone" element={<PayrollsDone />} />
+            </Routes>
+          </div>
         </div>
-      </div>
       </AppProvider>
     </>
   );
