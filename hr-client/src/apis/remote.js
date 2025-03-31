@@ -119,6 +119,9 @@ const remote = {
   getEmployeePerformanceReviews: (employeeId) =>
     request("GET", `hr/performance-reviews/get-employee-performance-reviews/${employeeId}`),
 
+  getCyclePerformanceReviews: (cycleId , page = 1) =>
+    request("GET", `hr/performance-reviews/get-review-cycle-performance-reviews/${cycleId}?page=${page}`),
+
   // Candidates
   getCandidates: (page = 1) =>
     request("GET", `hr/candidates?page=${page}`),

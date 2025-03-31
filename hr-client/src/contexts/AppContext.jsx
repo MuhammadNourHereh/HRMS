@@ -286,21 +286,21 @@ export function AppProvider({ children }) {
         setCycleDetailsLoading(true);
         
         try {
-            const response = await remote.getReviewCycleById(reviewCycle.id);
-            
-            if (response.status === 'success' && response.data) {
+            const response = await remote.getCyclePerformanceReviews(reviewCycle.id,page);
+            console.log(reviewCycle.id,page)
+            if (response.status === 'success' && response.data.data) {
                 // Extract performance reviews only
-                const reviews = response.data.performance_reviews || [];
+                const reviews = response.data.data || [];
                 setCyclePerformanceReviews(reviews);
-                
+                console.log(response.data)
                 // Set pagination based on results
-                const totalPages = Math.ceil(reviews.length / 10);
                 setPerformanceReviewsPagination({
-                    current_page: page,
-                    last_page: totalPages > 0 ? totalPages : 1,
-                    total: reviews.length,
-                    per_page: 10
+                    current_page: response.data.current_page,
+                    last_page: response.data.last_page,
+                    total: response.data.total,
+                    per_page: response.data.per_page
                 });
+                console.log("current_page",response.data.current_page)
             }
         } catch (error) {
             console.error('Error fetching cycle details:', error);
@@ -376,7 +376,6 @@ export function AppProvider({ children }) {
             
             // Set performance reviews data
             setAllPerformanceReviews(response.data.data || []);
-            
             // Set pagination
             setAllPerformanceReviewsPagination({
                 current_page: response.data.current_page,
