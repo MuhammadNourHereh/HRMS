@@ -37,7 +37,7 @@ use Database\Seeders\PositionSeeder;
 
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
-    Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
+    Route::post('/hr/login', [EmployeeController::class, "login"]);    // authorised apis
 
     Route::middleware('auth:employee')->group(function () { //
         // Employee Clocking Routes
