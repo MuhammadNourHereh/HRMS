@@ -295,7 +295,6 @@ export function AppProvider({ children }) {
                 
                 // Set pagination based on results
                 const totalPages = Math.ceil(reviews.length / 10);
-                
                 setPerformanceReviewsPagination({
                     current_page: page,
                     last_page: totalPages > 0 ? totalPages : 1,

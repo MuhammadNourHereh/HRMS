@@ -95,7 +95,6 @@ const ReviewCycleFormModal = ({ isOpen, onClose, reviewCycle }) => {
     }
   };
   
-  const hrEmployees = employees.filter(emp => emp.role === 'hr');
   
   if (!isOpen) return null;
   
@@ -149,25 +148,7 @@ const ReviewCycleFormModal = ({ isOpen, onClose, reviewCycle }) => {
                 />
               </div>
             </div>
-            
-            <div className="form-group">
-              <label htmlFor="provided_hr_id">HR Manager</label>
-              <select
-                id="provided_hr_id"
-                name="provided_hr_id"
-                value={formData.provided_hr_id}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select HR Manager</option>
-                {hrEmployees.map(employee => (
-                  <option key={employee.id} value={employee.id}>
-                    {employee.first_name} {employee.last_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
+        
             {error && (
               <div className="alert alert-error">
                 {error}
