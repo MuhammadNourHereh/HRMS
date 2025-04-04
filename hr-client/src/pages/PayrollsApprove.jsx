@@ -14,7 +14,7 @@ const PayrollsApprove = () => {
 
     return (
         <div className='column container2 spread'>
-            <div className="container margin-left">
+            <div className="container">
                 <table className='table'>
                     <thead>
                         <tr>
@@ -54,7 +54,7 @@ const PayrollsApprove = () => {
                 </table>
 
             </div>
-            <div className="container margin-left ">
+            <div className="container">
                 <div className='spread'>
                     <button className='btn-btn' onClick={navigatePayrolls}>Back to payrolls</button>
                     <button className='btn-btn' onClick={navigateDone}>Approve Payrolls</button>
