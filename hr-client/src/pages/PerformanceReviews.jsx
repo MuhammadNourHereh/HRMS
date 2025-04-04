@@ -71,7 +71,18 @@ const PerformanceReviews = () => {
 
   // Table columns
   const columns = [
-    
+    { 
+      field: 'employee',
+      headerName: 'Employee', 
+      renderCell: (row) => (
+        <div className="employee-cell">
+          <div className="employee-avatar">
+            {getInitials(row.employee?.first_name, row.employee?.last_name)}
+          </div>
+          <div>{`${row.employee?.first_name || ''} ${row.employee?.last_name || ''}`}</div>
+        </div>
+      )
+    },
     { 
       field: 'position', 
       headerName: 'Position',
