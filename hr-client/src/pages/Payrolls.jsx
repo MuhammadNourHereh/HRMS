@@ -200,10 +200,17 @@ const Payrolls = () => {
           />
         </div>
       </div>
-      <div className="container margin-left">
-        <button 
-          className='btn-btn' 
-          onClick={() => navigate('/payrollsapprove')}
+      <div className="container margin-left spread">
+      <button
+          className='btn-btn'
+          onClick={() => navigate('/home')}
+          disabled={payrollsError}
+        >
+          Back to home
+        </button>
+        <button
+          className='btn-btn'
+          onClick={() => navigate('/payrolls-approve')}
           disabled={payrollsError}
         >
           Check payrolls

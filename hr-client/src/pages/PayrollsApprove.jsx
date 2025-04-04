@@ -7,7 +7,7 @@ const PayrollsApprove = () => {
         totalDirectDeposit,
         accountDebitDate,
         employeePayDate,
-        navigateHome,
+        navigatePayrolls,
         navigateDone
     } = usePayrollsApprove();
 
@@ -56,7 +56,7 @@ const PayrollsApprove = () => {
             </div>
             <div className="container margin-left ">
                 <div className='spread'>
-                    <button className='btn-btn' onClick={navigateHome}>back to home</button>
+                    <button className='btn-btn' onClick={navigatePayrolls}>Back to payrolls</button>
                     <button className='btn-btn' onClick={navigateDone}>Approve Payrolls</button>
                 </div>
             </div>
