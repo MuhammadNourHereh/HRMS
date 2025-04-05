@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 
 class PayrollController extends Controller
 {
-    // Get all payrolls
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 5);
@@ -17,7 +16,6 @@ class PayrollController extends Controller
         return response()->json($payrolls, 200);
     }
 
-    // Get a specific payroll by ID
     public function show($id)
     {
         $payroll = Payroll::find($id);
