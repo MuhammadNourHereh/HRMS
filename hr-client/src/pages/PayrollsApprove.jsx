@@ -1,3 +1,4 @@
+import DebitSummaryTable from '../components/DebitSummaryTable';
 import { usePayrollsApprove } from './usePayrollApprove';
 
 const PayrollsApprove = () => {
@@ -15,44 +16,13 @@ const PayrollsApprove = () => {
     return (
         <div className='column container2 spread'>
             <div className="container">
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th className='th' colSpan="2">
-                                Debit Summary
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="row-label td">Account Debit Date</td>
-                            <td className="row-value td">{accountDebitDate}</td>
-                        </tr>
-                        <tr>
-                            <td className="row-label td">Employee Pay Date</td>
-                            <td className="row-value td">{employeePayDate}</td>
-                        </tr>
-                        <tr>
-                            <td className="row-label td">Total Direct Deposit</td>
-                            <td className="row-value total-direct-deposit td">
-                                {totalDirectDeposit}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="row-label td">Total Employer Taxes</td>
-                            <td className="row-value td">
-                                {totalEmployeeTaxes}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="row-label total-debit td">Total Debit</td>
-                            <td className="row-value total-debit td">
-                                {totalDebit}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <DebitSummaryTable
+                    accountDebitDate={accountDebitDate}
+                    employeePayDate={employeePayDate}
+                    totalDirectDeposit={totalDirectDeposit}
+                    totalEmployeeTaxes={totalEmployeeTaxes}
+                    totalDebit={totalDebit}
+                />
             </div>
             <div className="container">
                 <div className='spread'>
