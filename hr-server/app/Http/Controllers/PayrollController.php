@@ -69,7 +69,6 @@ class PayrollController extends Controller
         return response()->json($payroll, 200);
     }
 
-
     public function destroy($id)
     {
         $payroll = Payroll::find($id);
