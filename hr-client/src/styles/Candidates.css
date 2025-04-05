@@ -1,0 +1,148 @@
+/* Candidates specific styling */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .page-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #202124;
+    margin: 0;
+  }
+  
+  .btn-btn {
+    background-color: #053b50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-btn:hover {
+    background-color: #032a3a;
+  }
+  
+  .secondary-btn {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #d1d5db;
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #202124;
+  }
+  
+  /* Status badge styling for candidates */
+  .status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .status-applied {
+    background-color: #e6f2ff;
+    color: #1a73e8;
+  }
+  
+  .status-interview {
+    background-color: #fff8e6;
+    color: #e6a700;
+  }
+  
+  .status-accepted {
+    background-color: #e6f5ec;
+    color: #34a853;
+  }
+  
+  .status-rejected {
+    background-color: #faeaea;
+    color: #ea4335;
+  }
+  
+  .status-required {
+    background-color: #e6f5ec;
+    color: #34a853;
+  }
+  
+  .status-optional {
+    background-color: #f1f3f4;
+    color: #5f6368;
+  }
+  
+  /* Document link styling */
+  .document-link {
+    color: #1a73e8;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .document-link:hover {
+    text-decoration: underline;
+  }
+  
+  .no-document {
+    color: #5f6368;
+    font-style: italic;
+  }
+  
+  /* Task selection styling for template modal */
+  .task-selection {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .task-checkbox {
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .task-checkbox:last-child {
+    border-bottom: none;
+  }
+  
+  .task-title {
+    margin-left: 8px;
+  }
+  
+  .required-badge {
+    margin-left: 8px;
+    font-size: 11px;
+    padding: 2px 6px;
+    background-color: #e6f5ec;
+    color: #34a853;
+    border-radius: 50px;
+  }

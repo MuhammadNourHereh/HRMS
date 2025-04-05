@@ -84,11 +84,6 @@ const PerformanceReviews = () => {
       )
     },
     { 
-      field: 'department', 
-      headerName: 'Department',
-      renderCell: (row) => <div>{row.employee?.department?.department_name || 'N/A'}</div>
-    },
-    { 
       field: 'position', 
       headerName: 'Position',
       renderCell: (row) => <div>{row.employee?.position?.position_name || 'N/A'}</div>

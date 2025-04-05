@@ -51,7 +51,7 @@ export const usePayrollsApprove = () => {
     totalDirectDeposit: formatCurrency(totalDirectDeposit),
     accountDebitDate: formatDate(accountDebitDate),
     employeePayDate: formatDate(employeePayDate),
-    navigateHome: () => navigate('/'),
-    navigateDone: () => navigate('/payrollsdone'),
+    navigatePayrolls: () => navigate('/payrolls'),
+    navigateDone: () => navigate('/payrolls-done'),
   };
 };

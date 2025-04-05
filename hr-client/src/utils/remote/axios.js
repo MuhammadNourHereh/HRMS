@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../../../env";
-
-axios.defaults.baseURL = BASE_URL; 
+import {getAuthToken} from "../../apis/remote";
+axios.defaults.baseURL = `${BASE_URL}hr`; 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -12,7 +12,7 @@ export const request = async ({ method, route, body, headers,token=null, params 
       ...headers,
       "Content-Type": "application/json"
     };
-
+    token = getAuthToken()
     if (token) {
       requestHeaders["Authorization"] = `Bearer ${token}`;
     }

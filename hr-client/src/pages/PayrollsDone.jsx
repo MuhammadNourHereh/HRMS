@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 const PayrollsDone = () => {
     const navigate = useNavigate()
     return (
-        <div className='margin-left center container'>
+        <div className='center container'>
             <div className="center column wrapper">
                 <div className='circle center'>
                     <img className='fill-image' src="/check.svg" alt="check" />
