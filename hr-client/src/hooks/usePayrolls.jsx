@@ -21,6 +21,9 @@ const usePayrolls = () => {
         perPage: 10
     });
 
+  useEffect(() => {
+    fetchPayrolls(1);
+  }, []);
     // Generate dummy payroll data
     const getDummyPayrolls = () => {
         return [
@@ -98,10 +101,10 @@ const usePayrolls = () => {
             renderCell: (row) => (
                 <div className="employee-cell">
                     <div className="employee-avatar">
-                        {row.employee?.name ? getInitials(row.employee.name) : 'NA'}
+                        {row.employee?.first_name ? getInitials(row.employee.first_name) : 'NA'}
                     </div>
                     <div>
-                        <div>{row.employee?.name || 'Unknown Employee'}</div>
+                        <div>{row.employee?.first_name || 'Unknown Employee'}</div>
                         <small className="text-muted">{row.employee?.department || ''}</small>
                     </div>
                 </div>
