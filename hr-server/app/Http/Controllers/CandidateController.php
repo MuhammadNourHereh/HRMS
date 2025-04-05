@@ -46,7 +46,7 @@ class CandidateController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'status' => 'nullable|in:applied,interview,accepted,rejected',
-            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'resume' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -58,23 +58,28 @@ class CandidateController extends Controller
 
         // Handle document upload if present
         $documentId = null;
-        if ($request->hasFile('resume')) {
-            $file = $request->file('resume');
-            $path = Storage::disk('public')->put('resumes', $file);
-            
-            // Create document record
-            $document = DocumentManagement::create([
-                'file_type' => $file->getClientOriginalExtension(),
-                'file_url' => $path,
-                'file_description' => 'Resume for ' . $request->name,
-                'employee_id' => null, // No employee associated yet
-            ]);
-            
-            $documentId = $document->id;
-        }
+    if ($request->has('resume') && !empty($request->resume)) {
+        $decodedFile = base64_decode($request->resume);
+        
+        $uploadFolder = 'resumes';
+        $fileName = 'resume_' . time() . '.pdf'; 
+        $filePath = $uploadFolder . '/' . $fileName;
+
+        Storage::disk('public')->put($filePath, $decodedFile);
+        
+        // Create document record
+        $document = DocumentManagement::create([
+            'file_type' => 'pdf',
+            'file_url' => $filePath,
+            'file_description' => 'Resume for ' . $request->name,
+            'employee_id' => null, // No employee associated yet
+        ]);
+        
+        $documentId = $document->id;
+    }
 
         if ($id === 'add') {
-            // For new candidates, check if email already exists
+            //  check if email already exists
             $existingCandidate = Candidate::where('email', $request->email)->first();
             if ($existingCandidate) {
                 return response()->json([
@@ -94,7 +99,7 @@ class CandidateController extends Controller
         } else {
             $candidate = Candidate::findOrFail($id);
             
-            // For existing candidates, check if the new email already exists for a different candidate
+            // for existing candidates, check if the new email already exists for a different candidate
             if ($request->email !== $candidate->email) {
                 $existingCandidate = Candidate::where('email', $request->email)
                     ->where('id', '!=', $id)
@@ -153,6 +158,7 @@ class CandidateController extends Controller
 
     public function updateCandidateStatus(Request $request, $id)
     {
+        // validate if stats is one of the values
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:applied,interview,accepted,rejected',
         ]);
@@ -176,7 +182,7 @@ class CandidateController extends Controller
     }
 
 
-    // get candididates filtered by status
+    // get candidates filtered by status
 
     public function getCandidatesByStatus(Request $request, $status)
     {
