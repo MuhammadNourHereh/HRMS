@@ -14,7 +14,7 @@ class OnboardingTaskController extends Controller
     {
         $perPage = $request->input('per_page', 5);
         
-        $tasks = OnboardingTask::orderBy('title')
+        $tasks = OnboardingTask::orderBy('created_at', 'desc')
             ->paginate($perPage);
         
         return response()->json([
@@ -91,7 +91,7 @@ class OnboardingTaskController extends Controller
     }
 
 
-    // assign onbaording task to employee
+    // assign onboarding task to employee
 
     public function assignTaskToEmployee(Request $request)
     {
@@ -120,7 +120,7 @@ class OnboardingTaskController extends Controller
             ], 422);
         }
 
-        // Create the assignment
+        // Create the assignment of the task
         $assignment = EmployeeOnboarding::create([
             'employee_id' => $request->employee_id,
             'onboarding_task_id' => $request->onboarding_task_id,
@@ -153,7 +153,7 @@ class OnboardingTaskController extends Controller
         
         $assignment->status = $request->status;
         
-        // Set completed_date if the status is completed
+        // Set completed date if the status is completed
         if ($request->status === 'completed' && !$assignment->completed_date) {
             $assignment->completed_date = now();
         }
@@ -182,113 +182,6 @@ class OnboardingTaskController extends Controller
             'data' => [
                 'employee' => $employee,
                 'tasks' => $assignments
-            ]
-        ]);
-    }
-
-    public function createTemplate(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'template_name' => 'required|string|max:255',
-            'department' => 'nullable|string|max:255',
-            'duration' => 'nullable|integer|min:1',
-            'task_ids' => 'required|array',
-            'task_ids.*' => 'exists:onboarding_tasks,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        
-        //  return a success message with the tasks
-        $tasks = OnboardingTask::whereIn('id', $request->task_ids)->get();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Onboarding template created successfully',
-            'data' => [
-                'template_name' => $request->template_name,
-                'department' => $request->department,
-                'duration' => $request->duration,
-                'tasks' => $tasks
-            ]
-        ]);
-    }
-
-
-    //apply onboarding to an employee
-    public function applyTemplateToEmployee(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'employee_id' => 'required|exists:employees,id',
-            'task_ids' => 'required|array',
-            'task_ids.*' => 'exists:onboarding_tasks,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $employee = Employee::findOrFail($request->employee_id);
-        $assignments = [];
-
-        foreach ($request->task_ids as $taskId) {
-            // Check if the assignment already exists
-            $existingAssignment = EmployeeOnboarding::where('employee_id', $request->employee_id)
-                ->where('onboarding_task_id', $taskId)
-                ->first();
-
-            if (!$existingAssignment) {
-                $assignment = EmployeeOnboarding::create([
-                    'employee_id' => $request->employee_id,
-                    'onboarding_task_id' => $taskId,
-                    'status' => 'pending',
-                ]);
-                
-                $assignments[] = $assignment;
-            }
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Onboarding template applied successfully',
-            'data' => [
-                'employee' => $employee,
-                'assignments' => $assignments
-            ]
-        ]);
-    }
-
-
-    // get onboarding stats for a employee
-
-    public function getEmployeeProgress($employeeId)
-    {
-        $employee = Employee::findOrFail($employeeId);
-        
-        $totalTasks = EmployeeOnboarding::where('employee_id', $employeeId)->count();
-        $completedTasks = EmployeeOnboarding::where('employee_id', $employeeId)
-            ->where('status', 'completed')
-            ->count();
-        
-        $progressPercentage = $totalTasks > 0 
-            ? round(($completedTasks / $totalTasks) * 100) 
-            : 0;
-        
-        return response()->json([
-            'status' => 'success',
-            'data' => [
-                'employee' => $employee->only(['id', 'first_name', 'last_name']),
-                'total_tasks' => $totalTasks,
-                'completed_tasks' => $completedTasks,
-                'progress_percentage' => $progressPercentage,
             ]
         ]);
     }

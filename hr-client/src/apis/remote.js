@@ -132,14 +132,14 @@ const remote = {
   getEmployeeOnboardingTasks: (employeeId) => 
     request("GET", `onboarding-tasks/employee/${employeeId}`),
     
-  createOnboardingTemplate: (data) => 
-    request("POST", `onboarding-tasks/template`, data),
+  // createOnboardingTemplate: (data) => 
+  //   request("POST", `onboarding-tasks/template`, data),
 
-  applyTemplateToEmployee: (data) => 
-    request("POST", `onboarding-tasks/template/apply`, data),
+  // applyTemplateToEmployee: (data) => 
+  //   request("POST", `onboarding-tasks/template/apply`, data),
 
-  getEmployeeOnboardingProgress: (employeeId) => 
-    request("GET", `onboarding-tasks/progress/${employeeId}`),
+  // getEmployeeOnboardingProgress: (employeeId) => 
+  //   request("GET", `onboarding-tasks/progress/${employeeId}`),
 
   // projects
   

@@ -195,7 +195,6 @@ Route::group(["prefix" => "v0.1"], function () {
                 // Project Routes
                 Route::prefix('projects')->group(function () {
                     Route::get('/', [ProjectController::class, 'getProjects']);
-                    Route::get('/stats', [ProjectController::class, 'getProjectsStats']);
                     Route::get('/{id}', [ProjectController::class, 'getProjectById']);
                     Route::post('/{id}', [ProjectController::class, 'addOrUpdateProject']);
                     Route::delete('/{id}', [ProjectController::class, 'deleteProject']);
@@ -246,6 +245,6 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::get('/programs', [ProgramController::class, 'index']);
                 Route::get('/program/{program}', [ProgramController::class, 'show']);
             });
-        });
-    });
+       });
+   });
 });
