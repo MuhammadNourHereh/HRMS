@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureIsHr
 {
@@ -15,7 +15,7 @@ class EnsureIsHr
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response{
-        $employee = $request->employee(); 
+        $employee = Auth::guard('employee')->user(); 
 
         if(!$employee || $employee->role != "hr"){
             return response()->json([

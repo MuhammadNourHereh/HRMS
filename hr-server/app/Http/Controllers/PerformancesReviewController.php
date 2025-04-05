@@ -121,21 +121,23 @@ class PerformancesReviewController extends Controller
     }
     
 
-    public function getReviewCyclePerformanceReviews($reviewCycleId)
-    {
-        $reviewCycle = ReviewCycle::findOrFail($reviewCycleId);
-        
-        $performanceReviews = PerformancesReview::with('employee')
-            ->where('review_cycle_id', $reviewCycleId)
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
-        return response()->json([
-            'status' => 'success',
-            'data' => [
-                'review_cycle' => $reviewCycle,
-                'performance_reviews' => $performanceReviews
-            ]
-        ]);
-    }
+    public function getReviewCyclePerformanceReviews($reviewCycleId, Request $request)
+{
+    
+    
+    $perPage = $request->input('per_page', 10);
+    
+    $reviewCycle = ReviewCycle::findOrFail($reviewCycleId);
+    
+    $performanceReviews = PerformancesReview::with('employee')
+        ->where('review_cycle_id', $reviewCycleId)
+        ->orderBy('created_at', 'desc')
+        ->paginate($perPage);
+    
+    return response()->json([
+        'status' => 'success',
+        'data' => $performanceReviews
+
+    ]);
+}
 }

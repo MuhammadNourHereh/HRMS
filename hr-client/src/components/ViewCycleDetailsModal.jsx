@@ -6,7 +6,7 @@ import DataTable from './DataTable';
 
 const ViewCycleDetailsModal = ({ isOpen, onClose, reviewCycle }) => {
   const {
-    performanceReviews,
+    cyclePerformanceReviews,
     cycleDetailsLoading,
     performanceReviewsPagination,
     fetchCycleDetails,
@@ -30,10 +30,25 @@ const ViewCycleDetailsModal = ({ isOpen, onClose, reviewCycle }) => {
   if (!isOpen || !reviewCycle) return null;
 
 
+  const getInitials = (firstName, lastName) => {
+    return `${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase();
+  };
   
   const columns = [
    
-   
+    { 
+      field: 'employee',
+      headerName: 'Employee', 
+      renderCell: (row) => (
+        <div className="employee-cell">
+          <div className="employee-avatar">
+            {getInitials(row.employee?.first_name, row.employee?.last_name)}
+          </div>
+          <div>{`${row.employee?.first_name || ''} ${row.employee?.last_name || ''}`}</div>
+        </div>
+      )
+    },
+  
     { 
       field: 'rating', 
       headerName: 'Rating',
@@ -71,7 +86,7 @@ const ViewCycleDetailsModal = ({ isOpen, onClose, reviewCycle }) => {
         <div className="modal-body">
           <DataTable 
             columns={columns}
-            data={performanceReviews}
+            data={cyclePerformanceReviews}
             loading={cycleDetailsLoading}
             currentPage={performanceReviewsPagination.current_page}
             totalPages={performanceReviewsPagination.last_page}

@@ -30,10 +30,14 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\deleteUpdateDisplayDocumentController;
 use App\Http\Controllers\MainClockedWorkers;
 use App\Http\Controllers\ClockedChartsController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PositionController;
+use App\Http\Middleware\EnsureIsHr;
+use Database\Seeders\PositionSeeder;
 
 Route::group(["prefix" => "v0.1"], function () {
     // Unauthorized APIs
-    Route::post('/login', [EmployeeController::class, "login"]);    // authorised apis
+    Route::post('/hr/login', [EmployeeController::class, "login"]);    // authorised apis
 
     Route::middleware('auth:employee')->group(function () { //
         // Employee Clocking Routes
@@ -71,13 +75,12 @@ Route::group(["prefix" => "v0.1"], function () {
                 return response()->json(['message' => 'API is working!']);
             });
             //});
+            Route::prefix('dep-pos')->group(function () {
+                Route::get('/get-departments', [DepartmentController::class, "getDepartments"]);
+                Route::get('/get-positions', [PositionController::class, "getPositions"]);
 
 
-
-            // authorized apis
-            Route::middleware('auth:employee')->group(function () { //
-
-                // authorized apis
+             });
 
                 // performance reviews
                 Route::prefix('performance-reviews')->group(function () {
@@ -244,7 +247,7 @@ Route::group(["prefix" => "v0.1"], function () {
                 //programs
                 Route::get('/programs', [ProgramController::class, 'index']);
                 Route::get('/program/{program}', [ProgramController::class, 'show']);
-            });
-       });
-   });
+            
+        });
+    });
 });
