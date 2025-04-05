@@ -12,33 +12,18 @@ class ProjectController extends Controller
     public function getProjects(Request $request)
     {
         $perPage = $request->input('per_page', 5);
-        $sortBy = $request->input('sort_by', 'created_at');
-        $sortDir = $request->input('sort_dir', 'desc');
-        $status = $request->input('status', null);
-
-        $query = Project::with('tasks');
-
-        // Filter by status if provided
-        if ($status) {
-            $query->where('status', $status);
-        }
-
-        // Sort the results
-        $query->orderBy($sortBy, $sortDir);
-
-        $projects = $query->paginate($perPage);
-
-        // Calculate progress for each project
-        $projects->getCollection()->transform(function ($project) {
-            $totalTasks = $project->tasks->count();
-            $completedTasks = $project->tasks->where('status', 'completed')->count();
-
-            $progress = $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0;
-
-            $project->progress = $progress;
-
-            return $project;
-        });
+    
+    $query = Project::with('tasks');
+    
+    // Filter by status if provided
+    if ($request->has('status')) {
+        $query->where('status', $request->status);
+    }
+    
+    // Set default ordering to newest first
+    $query->orderBy('created_at', 'desc');
+    
+    $projects = $query->paginate($perPage);
 
         return response()->json([
             'status' => 'success',
@@ -51,20 +36,11 @@ class ProjectController extends Controller
     {
         $project = Project::with('tasks.employee')->findOrFail($id);
 
-        // Calculate project progress
-        $totalTasks = $project->tasks->count();
-        $completedTasks = $project->tasks->where('status', 'completed')->count();
-
-        $progress = $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0;
-
-        $project->progress = $progress;
-
         return response()->json([
             'status' => 'success',
             'data' => $project
         ]);
     }
-
 
     public function addOrUpdateProject(Request $request, $id)
     {
@@ -135,7 +111,7 @@ class ProjectController extends Controller
         // Delete associated tasks
         $project->tasks()->delete();
 
-        // Delete the project
+       
         $project->delete();
 
         return response()->json([
@@ -169,39 +145,5 @@ class ProjectController extends Controller
         ]);
     }
 
-
-    // project stats
-
-    public function getProjectsStats()
-    {
-        $totalProjects = Project::count();
-        $pendingProjects = Project::where('status', 'pending')->count();
-        $inProgressProjects = Project::where('status', 'in_progress')->count();
-        $completedProjects = Project::where('status', 'completed')->count();
-
-        $projects = Project::with('tasks')->get();
-
-        $totalProgress = 0;
-
-        foreach ($projects as $project) {
-            $totalTasks = $project->tasks->count();
-            $completedTasks = $project->tasks->where('status', 'completed')->count();
-
-            $progress = $totalTasks > 0 ? ($completedTasks / $totalTasks) * 100 : 0;
-            $totalProgress += $progress;
-        }
-
-        $averageProgress = $totalProjects > 0 ? round($totalProgress / $totalProjects) : 0;
-
-        return response()->json([
-            'status' => 'success',
-            'data' => [
-                'total_projects' => $totalProjects,
-                'pending_projects' => $pendingProjects,
-                'in_progress_projects' => $inProgressProjects,
-                'completed_projects' => $completedProjects,
-                'average_progress' => $averageProgress
-            ]
-        ]);
-    }
+    
 }

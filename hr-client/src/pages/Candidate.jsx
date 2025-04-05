@@ -21,10 +21,9 @@ function Candidates() {
     per_page: 10
   });
   
-  // Status filter
   const [statusFilter, setStatusFilter] = useState('all');
   
-  // Component state for modals
+  //  state for modals
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -64,7 +63,7 @@ function Candidates() {
             total: response.data.total || 0,
             per_page: response.data.per_page || 10
           });
-          return; // Exit early 
+          return;  
         } 
         // Status 
         else if (response.status === 'success' && response.data) {
@@ -75,7 +74,7 @@ function Candidates() {
           setCandidates([]);
         }
         
-        // Set pagination 
+        //  pagination 
         setPagination({
           current_page: response.current_page || pagination.current_page,
           last_page: response.last_page || pagination.last_page,
@@ -140,7 +139,7 @@ function Candidates() {
     setViewModalOpen(false);
   };
   
-  // Handle transition from view to edit
+  // Handle  from view to edit
   const handleViewToEdit = () => {
     setViewModalOpen(false);
     setEditModalOpen(true);

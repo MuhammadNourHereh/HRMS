@@ -13,33 +13,11 @@ class TaskController extends Controller
     public function getTasks(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $sortBy = $request->input('sort_by', 'created_at');
-        $sortDir = $request->input('sort_dir', 'desc');
-        $status = $request->input('status', null);
-        $projectId = $request->input('project_id', null);
-        $employeeId = $request->input('employee_id', null);
-
-        $query = Task::with(['project', 'employee']);
-
-        // Filter by status if provided
-        if ($status) {
-            $query->where('status', $status);
-        }
-
-        // Filter by project if provided
-        if ($projectId) {
-            $query->where('project_id', $projectId);
-        }
-
-        // Filter by employee if provided
-        if ($employeeId) {
-            $query->where('employee_id', $employeeId);
-        }
-
-        // Sort  results
-        $query->orderBy($sortBy, $sortDir);
-
-        $tasks = $query->paginate($perPage);
+    
+    $query = Task::with(['project', 'employee'])
+        ->orderBy('created_at', 'desc');
+    
+    $tasks = $query->paginate($perPage);
 
         return response()->json([
             'status' => 'success',
@@ -55,7 +33,7 @@ class TaskController extends Controller
 
         $query = Task::with(['project', 'employee']);
 
-        // Filter by project if provided
+        // Filter by project
         if ($projectId) {
             $query->where('project_id', $projectId);
         }
@@ -76,9 +54,6 @@ class TaskController extends Controller
             ]
         ]);
     }
-
-
-    // get task by id
 
     public function getTaskById($id)
     {
@@ -111,7 +86,7 @@ class TaskController extends Controller
         }
 
         if ($id === 'add') {
-            // Create new task
+            
             $task = Task::create([
                 'project_id' => $request->project_id,
                 'title' => $request->title,
@@ -255,31 +230,4 @@ class TaskController extends Controller
         ]);
     }
 
-
-    // get task statistics
-
-    public function getTasksStats()
-    {
-        $totalTasks = Task::count();
-        $pendingTasks = Task::where('status', 'pending')->count();
-        $inProgressTasks = Task::where('status', 'in_progress')->count();
-        $completedTasks = Task::where('status', 'completed')->count();
-
-        // Overdue tasks
-        $overdueTasks = Task::where('due_date', '<', now())
-            ->whereNotIn('status', ['completed'])
-            ->count();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => [
-                'total_tasks' => $totalTasks,
-                'pending_tasks' => $pendingTasks,
-                'in_progress_tasks' => $inProgressTasks,
-                'completed_tasks' => $completedTasks,
-                'overdue_tasks' => $overdueTasks,
-                'completion_rate' => $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0
-            ]
-        ]);
-    }
 }

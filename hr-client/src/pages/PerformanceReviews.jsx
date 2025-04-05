@@ -28,7 +28,6 @@ const PerformanceReviews = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch all necessary data
     fetchAllPerformanceReviews(allPerformanceReviewsPagination.current_page);
     fetchReviewCycles();
     fetchEmployees();

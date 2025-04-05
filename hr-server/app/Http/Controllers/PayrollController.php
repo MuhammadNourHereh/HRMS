@@ -11,8 +11,7 @@ class PayrollController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 5);
-        $payrolls = Payroll::all()
-            ->paginate($perPage);
+        $payrolls = Payroll::with(['employee'])->paginate($perPage);
         return response()->json($payrolls, 200);
     }
 

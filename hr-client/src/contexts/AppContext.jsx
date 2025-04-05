@@ -100,6 +100,7 @@ export function AppProvider({ children }) {
         try {
             const response = await remote.getPayrolls(page, perPage);
             setPayrolls(response.data || []);
+            console.log("payrolls",response.data)
             setPayrollsPagination({
                 currentPage: response.current_page || 1,
                 lastPage: response.last_page || 1,
@@ -198,7 +199,6 @@ export function AppProvider({ children }) {
 
             // Set employees data
             setEmployees(response.data.data || []);
-
             // Set pagination
             setPagination({
                 current_page: response.data.current_page,
