@@ -1,5 +1,6 @@
 import DebitSummaryTable from '../components/DebitSummaryTable';
-import { usePayrollsApprove } from './usePayrollApprove';
+import { usePayrollsApprove } from '../hooks/usePayrollApprove';
+
 
 const PayrollsApprove = () => {
     const {
