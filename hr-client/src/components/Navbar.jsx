@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import logo from './logo.png';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -7,7 +8,7 @@ function Navbar() {
   const [loading, setLoading] = useState(false);
   const [showResponse, setShowResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState([]); // Store last 5 conversations
-
+  const navigate = useNavigate()
   const handleSearch = async (event) => {
     event.preventDefault();
 
@@ -97,7 +98,9 @@ function Navbar() {
       </div>
       <div className="nav-right">
         <a href="#" title="Settings"><i className="fa-solid fa-gear"></i></a>
-        <a href="#" title="Profile"><i className="fa-solid fa-user"></i></a>
+        <a title="Profile"
+        onClick={() => {navigate('/login')}}
+        ><i className="fa-solid fa-user"></i></a>
       </div>
 
       {loading ? (
